@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {UploadService} from './upload.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-upload',
@@ -7,8 +9,8 @@ import {UploadService} from './upload.service';
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
-  getFile:any;
-  constructor(private _serv : UploadService) { }
+  getData:any;
+  constructor(private _serv : UploadService, private route:ActivatedRoute,  private router: Router) { }
   
   ngOnInit() {
     this.uploadFetchService();
@@ -16,10 +18,14 @@ export class UploadComponent implements OnInit {
 
   uploadFetchService(){
     this._serv.getReposForUser().subscribe(
-      function(res) {
-        this.getFile = res;
-        console.log(this.getFile);
-      });
-  } 
+      data => {
+        this.getData = data;
+        console.log(this.getData);
+      })
+  }
+
+  parseData(info){
+    this.router.navigate(['upload/edit', info]);
+  }
 
 }

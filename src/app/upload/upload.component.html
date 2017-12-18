@@ -1,3 +1,102 @@
-<p>
-  upload works!
-</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="form-header">Document Search</h1>
+            <div class="form-panel">
+              <h2 class="form-panel__header">Search Existing Documents</h2>
+              <div class="form-panel__body">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group row">
+                      <label for="input1" class="col col-form-label">Document ID</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="input1">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="input2" class="col col-form-label">Document Type</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="input2">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="input3" class="col col-form-label">Uploader CWS</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="input3">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group row">
+                      <label for="input4" class="col col-form-label">Document Name</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="input4">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="input5" class="col col-form-label">Status</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="input5">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="input6" class="col col-form-label">Uploaded Date</label>
+                      <div class="col">
+                        <input type="text" class="form-control" id="input6">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-panel">
+              <h2 class="form-panel__header">Search Results</h2>
+              <div class="form-panel__body">
+                <table class="table table-bordered table-responsive">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Status</th>
+                      <th scope="col">Document ID</th>
+                      <th scope="col">Document Name</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Uploader</th>
+                      <th scope="col">Upload Date</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of getData">
+                      <td>{{item.status}}</td>
+                      <td>{{item.documentID}}</td>
+                      <td>{{item.documentName}}</td>
+                      <td>{{item.documentID}}</td>
+                      <td>{{item.submittedUser}}</td>
+                      <td>{{item.uploadedDate | date: 'dd/MM/yyyy'}}</td>
+                      <td>
+                        <a (click)="parseData(item.documentID)"class="btn btn-primary btn-sm btn-block">Review</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+              <h2 class="form-header">Document Upload</h2>
+              <div class="form-group">
+                <div class="d-flex flex-row-reverse">
+                  <label class="custom-file">
+                    <input type="file" id="fileInput" class="custom-file-input">
+                    <span class="custom-file-control"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="d-flex flex-row-reverse">
+                  <a class="btn btn-primary">Upload</a>
+                </div>
+              </div>
+            </div>
+    </div>
+</div>
