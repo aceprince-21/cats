@@ -19,7 +19,7 @@ export class UploadComponent implements OnInit {
       function(res) {
         this.getFile = res;
         console.log(this.getFile);
-    );
+      });
   } 
 
 }
