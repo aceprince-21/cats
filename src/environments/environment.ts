@@ -15,16 +15,16 @@ export const environment = {
     url : "http://localhost:8080/documents/api/upload"
   },
   getData:{
-    url : "../assets/mock/response.json"
-   //url : "http://localhost:8080/documents/api/upload"
+    //url : "../assets/mock/response.json"
+      url : "http://localhost:8080/user/document/A001D1000"
  },
   hostApp:{
-     url : "../assets/mock/hostapp.json"
-    //url : "http://localhost:8080/documents/api/upload"
+    // url : "../assets/mock/hostapp.json"
+      url : " http://localhost:8080/document/hostapps"
   },
   doctype:{
-    url : "../assets/mock/doctype.json"
-   //url : "http://localhost:8080/documents/api/upload"
+    //url : "../assets/mock/doctype.json"
+    url : "http://localhost:8080/document/doctypes"
  }
  
 };
