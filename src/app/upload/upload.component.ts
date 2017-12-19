@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class UploadComponent implements OnInit {
   getData:any;
+  result:any;
   constructor(private _serv : UploadService, private route:ActivatedRoute,  private router: Router) { }
   
   ngOnInit() {
@@ -28,4 +29,16 @@ export class UploadComponent implements OnInit {
     this.router.navigate(['upload/edit', info]);
   }
 
+uploadfile(event) {  
+let fileList: FileList = event.target.files;  
+if (fileList.length > 0) {  
+let file: File = fileList[0];  
+let formData: FormData = new FormData();  
+formData.append('file', file, file.name); 
+console.log(formData); 
+this._serv.getReposForUpload(formData).subscribe(error => console.log(error))
+} 
+ 
+window.location.reload();  
+} 
 }

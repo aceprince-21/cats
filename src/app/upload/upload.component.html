@@ -87,7 +87,8 @@
               <div class="form-group">
                 <div class="d-flex flex-row-reverse">
                   <label class="custom-file">
-                    <input type="file" id="fileInput" class="custom-file-input">
+                    <!--<input type="file" id="fileInput" (click)="uploadfile()" class="custom-file-input"> -->
+                    <input type="file" #file (change) = "uploadfile($event)" class="custom-file-input" />
                     <span class="custom-file-control"></span>
                   </label>
                 </div>

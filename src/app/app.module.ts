@@ -14,6 +14,8 @@ import { EdituploadService} from './editupload/editupload.service';
 import { UploadService } from './upload/upload.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BasicfilterPipe } from './pipe/filter/basicfilter.pipe';
+import { CommonModule, APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { FormsModule } from '@angular/forms' 
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: 'upload', pathMatch: 'full' },
@@ -28,11 +30,14 @@ export const ROUTES: Routes = [
     FooterComponent,
     UploadComponent,
     EditUploadComponent,
-    BasicfilterPipe
+    BasicfilterPipe,
+
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    CommonModule, 
+    FormsModule, 
     AngularFontAwesomeModule,
     RouterModule.forRoot(ROUTES),
     BsDropdownModule.forRoot(),
