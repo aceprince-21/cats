@@ -8,7 +8,7 @@ export const environment = {
   
   mainData:{
     method: "get",
-    url : "../assets/mock/data.json"
+    url : "http://localhost:8080/user/document"
   },
   postData:{
     method: "get",

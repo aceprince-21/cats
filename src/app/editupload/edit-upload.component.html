@@ -11,12 +11,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of passData">
-          <td>{{item.documentID}}</td>
-          <td>{{item.documentName}}</td>
-          <td>{{item.submittedUser}}</td>
-          <td>{{item.uploadedDate}}</td>
-          <td><a  target = "blank" href="{{item.documentURL}}">Download</a> </td>
+        <tr>
+          <td>{{passData.documentID}}</td>
+          <td>{{passData.documentName}}</td>
+          <td>{{passData.submittedUser}}</td>
+          <td>{{passData.uploadedDate}}</td>
+          <td><a  target = "blank" href="{{passData.documentURL}}">Download</a> </td>
         </tr>
       </tbody>
     </table>
@@ -55,8 +55,8 @@
               </div>
               <div class="col-sm-4">
                 <table class="table table-bordered m-0">
-                  <tbody id="appsChosen" *ngFor = "let selecthost of passData">
-                    <tr *ngFor = "let hostsapp of selecthost.hostAppList">
+                  <tbody id="appsChosen" >
+                    <tr *ngFor = "let hostsapp of passData.hostAppList">
                            <td >
                               <a>{{hostsapp.hostAppName}}</a> 
                            </td>
