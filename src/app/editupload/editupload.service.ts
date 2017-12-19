@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class EdituploadService {
@@ -11,7 +11,19 @@ export class EdituploadService {
 
   EditPage(): Observable<any> {
     return this.http
-      .get(`https://jsonplaceholder.typicode.com/posts/1`)
+      .get(environment.getData.url)
+      .map((res: any) => res.json())
+  }
+
+  getHostapp(): Observable<any> {
+    return this.http
+      .get(environment.hostApp.url)
+      .map((res: any) => res.json())
+  }
+
+  doctype(): Observable<any> {
+    return this.http
+      .get(environment.doctype.url)
       .map((res: any) => res.json())
   }
 

@@ -13,6 +13,18 @@ export const environment = {
   postData:{
     method: "get",
     url : "http://localhost:8080/documents/api/upload"
-  }
+  },
+  getData:{
+    url : "../assets/mock/response.json"
+   //url : "http://localhost:8080/documents/api/upload"
+ },
+  hostApp:{
+     url : "../assets/mock/hostapp.json"
+    //url : "http://localhost:8080/documents/api/upload"
+  },
+  doctype:{
+    url : "../assets/mock/doctype.json"
+   //url : "http://localhost:8080/documents/api/upload"
+ }
  
 };

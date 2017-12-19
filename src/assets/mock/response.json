@@ -1,0 +1,31 @@
+[{
+    "documentID": "A001D1000",
+    "documentName": "Data Goverence document",
+    "documentURL": "http://ftp.cat.com/documents/datagoverencedocument.pdf",
+    "status": "Active",
+    "docTypeID": "1",
+    "docTypeName": "1",
+    "dealerConsent": true,
+    "customerConsent": false,
+    "intUserConsent": true,
+    "partCompConsent": true,
+    "perUserAssentReq": false,
+    "effectiveDate": "2017-12-13",
+    "terminationDate": "2017-12-23",
+    "submittedUser": "CAT Product Owner",
+    "uploadedDate": "2017-12-13",
+    "hostAppList": [
+        {
+            "hostAppID": "1",
+            "hostAppName": "xyz"
+        },
+        {
+            "hostAppID": "2",
+            "hostAppName": "abc"
+        },
+        {
+            "hostAppID": "3",
+            "hostAppName": "xyyx"
+        }
+    ]
+}]

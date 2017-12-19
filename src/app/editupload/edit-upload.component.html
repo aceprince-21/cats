@@ -16,7 +16,7 @@
           <td>{{item.documentName}}</td>
           <td>{{item.submittedUser}}</td>
           <td>{{item.uploadedDate}}</td>
-          <td>http://ftp.cat.com/asdfiwefjiwefjl</td>
+          <td><a  target = "blank" href="{{item.documentURL}}">Download</a> </td>
         </tr>
       </tbody>
     </table>
@@ -28,7 +28,11 @@
             <div class="row align-items-center">
               <div class="col-sm-4 offset-sm-1">
                 <table class="table table-bordered m-0">
-                  <tbody id="appsNotChosen"><tr><td>DSP</td></tr><tr><td>My.cat.com</td></tr><tr><td>PLWeb</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></tbody>
+                  <tbody id="appsNotChosen">
+                    <tr *ngFor = "let host of getHost">
+                        <td><a>{{host.hostAppName}}</a></td>
+                    </tr>
+                   </tbody>
                 </table>
               </div>
               <div class="col-sm-2">
@@ -51,7 +55,13 @@
               </div>
               <div class="col-sm-4">
                 <table class="table table-bordered m-0">
-                  <tbody id="appsChosen"><tr><td>VisionLink</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></tbody>
+                  <tbody id="appsChosen" *ngFor = "let selecthost of passData | basicfilter : {'documentID' : filterItem}">
+                    <tr *ngFor = "let hostsapp of selecthost.hostAppList">
+                           <td >
+                              <a>{{hostsapp.hostAppName}}</a> 
+                           </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

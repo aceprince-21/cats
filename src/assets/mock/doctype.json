@@ -1,0 +1,15 @@
+
+[
+    {
+        "docTypeID": "1",
+        "docTypeName": "Data Governance"
+    },
+    {
+        "docTypeID": "2",
+        "docTypeName": "End User License Agreement"
+    },
+    {
+        "docTypeID": "3",
+        "docTypeName": "Terms of Sale"
+    }
+]

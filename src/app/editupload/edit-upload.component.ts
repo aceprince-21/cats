@@ -13,9 +13,14 @@ export class EditUploadComponent implements OnInit {
 
   constructor(private _passdata: UploadService, private _serveEdit: EdituploadService, private route:ActivatedRoute,  private router: Router) { }
   private passData;
+  private getHost;
+  private getDocType;
+  private get
   private filterItem;
   ngOnInit() {
     this.uploadFetchService();
+    this.hostAppService();
+    this.doctypeService();
     this.route.params.subscribe((params: Params) => {
           this.filterItem = params.data;
     });
@@ -23,9 +28,24 @@ export class EditUploadComponent implements OnInit {
   }
 
   uploadFetchService(){
-    this._passdata.getReposForUser().subscribe(
+    this._serveEdit.EditPage().subscribe(
       data => {
         this.passData = data;
+      })
+  }
+
+  doctypeService(){
+    this._serveEdit.doctype().subscribe(
+      data => {
+        this.getDocType = data;
+      })
+  }
+
+  hostAppService(){
+    this._serveEdit.getHostapp().subscribe(
+      data => {
+        this.getHost = data;
+        console.log(this.getHost);
       })
   }
 

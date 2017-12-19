@@ -1,0 +1,34 @@
+[
+    {
+        "hostAppID": "1",
+        "hostAppName": "VisionLink"
+    },
+    {
+        "hostAppID": "2",
+        "hostAppName": "PLWeb"
+    },
+    {
+        "hostAppID": "3",
+        "hostAppName": "DSP"
+    },
+    {
+        "hostAppID": "4",
+        "hostAppName": "My.cat.com"
+    },
+    {
+        "hostAppID": "5",
+        "hostAppName": "New Host App CAT"
+    },
+    {
+        "hostAppID": "6",
+        "hostAppName": "New Host App CAT 6"
+    },
+    {
+        "hostAppID": "7",
+        "hostAppName": "New Host App CAT 7"
+    },
+    {
+        "hostAppID": "8",
+        "hostAppName": "New Host App CAT 8"
+    }
+]
