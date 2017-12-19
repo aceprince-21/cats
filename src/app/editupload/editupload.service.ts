@@ -9,9 +9,9 @@ export class EdituploadService {
 
   constructor(private http : Http) { }
 
-  EditPage(): Observable<any> {
+  EditPage(e): Observable<any> {
     return this.http
-      .get(environment.getData.url)
+      .get(environment.getData.url+e)
       .map((res: any) => res.json())
   }
 

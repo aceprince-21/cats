@@ -16,7 +16,7 @@ export const environment = {
   },
   getData:{
     //url : "../assets/mock/response.json"
-      url : "http://localhost:8080/user/document/A001D1000"
+      url : "http://localhost:8080/user/document/"
  },
   hostApp:{
     // url : "../assets/mock/hostapp.json"

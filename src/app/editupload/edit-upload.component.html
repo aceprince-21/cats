@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of passData | basicfilter : {'documentID' : filterItem}">
+        <tr *ngFor="let item of passData">
           <td>{{item.documentID}}</td>
           <td>{{item.documentName}}</td>
           <td>{{item.submittedUser}}</td>
@@ -55,7 +55,7 @@
               </div>
               <div class="col-sm-4">
                 <table class="table table-bordered m-0">
-                  <tbody id="appsChosen" *ngFor = "let selecthost of passData | basicfilter : {'documentID' : filterItem}">
+                  <tbody id="appsChosen" *ngFor = "let selecthost of passData">
                     <tr *ngFor = "let hostsapp of selecthost.hostAppList">
                            <td >
                               <a>{{hostsapp.hostAppName}}</a> 

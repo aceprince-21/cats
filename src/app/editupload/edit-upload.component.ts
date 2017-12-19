@@ -18,17 +18,17 @@ export class EditUploadComponent implements OnInit {
   private get
   private filterItem;
   ngOnInit() {
-    this.uploadFetchService();
+   
     this.hostAppService();
     this.doctypeService();
     this.route.params.subscribe((params: Params) => {
           this.filterItem = params.data;
     });
-    
+    this.uploadFetchService(this.filterItem);
   }
 
-  uploadFetchService(){
-    this._serveEdit.EditPage().subscribe(
+  uploadFetchService(e){
+    this._serveEdit.EditPage(e).subscribe(
       data => {
         this.passData = data;
       })
