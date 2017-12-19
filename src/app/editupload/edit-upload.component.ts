@@ -17,7 +17,7 @@ export class EditUploadComponent implements OnInit {
   ngOnInit() {
     this.uploadFetchService();
     this.route.params.subscribe((params: Params) => {
-      this.filterItem = params.data;
+          this.filterItem = params.data;
     });
     
   }
