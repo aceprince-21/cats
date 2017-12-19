@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule} from "@angular/router";
+import { Routes, RouterModule} from "@angular/router";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -13,6 +13,7 @@ import { EditUploadComponent } from './editupload/edit-upload.component';
 import { EdituploadService} from './editupload/editupload.service';
 import { UploadService } from './upload/upload.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { BasicfilterPipe } from './pipe/filter/basicfilter.pipe';
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: 'upload', pathMatch: 'full' },
@@ -26,7 +27,8 @@ export const ROUTES: Routes = [
     HeaderComponent,
     FooterComponent,
     UploadComponent,
-    EditUploadComponent
+    EditUploadComponent,
+    BasicfilterPipe
   ],
   imports: [
     BrowserModule,
