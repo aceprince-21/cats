@@ -5,11 +5,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 
 export class BasicfilterPipe implements PipeTransform {
-  transform(items: any[], filter): any {  
-    console.log(filter.documentID);
-    if (!items || !filter) {  
-        return items;  
-    }  
-    return items.filter(item => item.documentID.indexOf(filter.documentID) !== -1);  
+  
+  transform(value: any[], args?:any ): any {
+    let getnewItem;
+
+    let keys = [];
+    if(value.length >0 && args.length > 0){
+   
+    }
+   
+    return keys;
 }  
 }

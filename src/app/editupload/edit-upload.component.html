@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid wraper">
     <h1 class="form-header">Document Upload</h1>
     <table class="table table-bordered table-responsive">
       <thead class="thead-light">
@@ -10,7 +10,7 @@
           <th scope="col">File URL</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf = "passData">
         <tr>
           <td>{{passData.documentID}}</td>
           <td>{{passData.documentName}}</td>
@@ -28,38 +28,42 @@
             <div class="row align-items-center">
               <div class="col-sm-4 offset-sm-1">
                 <table class="table table-bordered m-0">
-                  <tbody id="appsNotChosen">
-                    <tr *ngFor = "let host of getHost">
-                        <td><a>{{host.hostAppName}}</a></td>
+                  <tbody id="appsNotChosen" *ngIf="getHost">
+                    <tr *ngFor = "let host of getHost; let i = index">
+                        <td (click)="leftSelectedArray(host, i)" [ngClass]="{'active': host.active === 'true' }"><a >{{host.hostAppName}}</a></td>
+                        <td *ngIf = "host.active === 'true'" (click) = "removeItem(host, i)"><a class="fa fa-times" aria-hidden="true" ></a></td>
+                        <td *ngIf = "!host.active"><a class="fa fa-check" aria-hidden="true"></a></td>
                     </tr>
                    </tbody>
                 </table>
               </div>
               <div class="col-sm-2">
-                <button type="button" class="btn btn-primary btn-block" id="appsBtnAddAll">
+                <button (click) = "moveAlltoright()"type="button" class="btn btn-primary btn-block" id="appsBtnAddAll">
                   <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                   <span class="sr-only">Add All</span>
                 </button>
-                <button type="button" class="btn btn-dark btn-block" id="appsBtnAddSelected">
+                <button (click) = "moveSelectedtoright()" type="button" class="btn btn-dark btn-block" id="appsBtnAddSelected">
                   <i class="fa fa-angle-right" aria-hidden="true"></i>
                   <span class="sr-only">Add Selected</span>
                 </button>
-                <button type="button" class="btn btn-dark btn-block" id="appsBtnRemoveSelected">
+                <button (click) = "moveSelectedtoleft()" type="button" class="btn btn-dark btn-block" id="appsBtnRemoveSelected">
                   <i class="fa fa-angle-left" aria-hidden="true"></i>
                   <span class="sr-only">Remove Selected</span>
                 </button>
-                <button type="button" class="btn btn-primary btn-block" id="appsBtnRemoveAll">
+                <button (click) = "moveAlltoleft()" type="button" class="btn btn-primary btn-block" id="appsBtnRemoveAll">
                   <i class="fa fa-angle-double-left" aria-hidden="true"></i>
                   <span class="sr-only">Remove All</span>
                 </button>
               </div>
               <div class="col-sm-4">
                 <table class="table table-bordered m-0">
-                  <tbody id="appsChosen" >
-                    <tr *ngFor = "let hostsapp of passData.hostAppList">
-                           <td >
-                              <a>{{hostsapp.hostAppName}}</a> 
+                  <tbody id="appsChosen" *ngIf = "filterItemss">
+                    <tr *ngFor = "let hostsapp of filterItemss; let i = index">
+                           <td (click)="righttSelectedArray(hostsapp, i)"  [ngClass]="{'active': hostsapp.active === 'true' }" *ngIf="hostsapp.hostAppName != 'null'">
+                              <a>{{hostsapp.hostAppName}}</a>
                            </td>
+                           <td *ngIf = "hostsapp.active === 'true'" (click) = "removerightItem(hostsapp, i)"><a class="fa fa-times" aria-hidden="true" ></a></td>
+                           <td *ngIf = "!hostsapp.active"><a class="fa fa-check" aria-hidden="true"></a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -137,23 +141,20 @@
         <div class="form-group">
           <label class="d-block">What is the Document Type?</label>
           <select class="custom-select">
-            <option disabled="" selected="">Choose one...</option>
-            <option value="1">Data Governance</option>
-            <option value="2">End User License Agreement</option>
-            <option value="3">Terms of Sale</option>
+            <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeName" [selected]="item.docTypeName === passData.documentName">{{item.docTypeName}}</option>
           </select>
         </div>
         <div class="row mb-5">
           <div class="col-sm-6">
             <div class="form-group">
-              <label for="datepicker1">Effective Date</label>
-              <input type="text" class="form-control hasDatepicker" id="datepicker1" placeholder="mm/dd/yyyy">
+              <label for="datepicker2">Start Date</label>
+              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate"> </ng-datepicker>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
               <label for="datepicker2">Termination Date</label>
-              <input type="text" class="form-control hasDatepicker" id="datepicker2" placeholder="mm/dd/yyyy">
+              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.terminationDate"> </ng-datepicker>
             </div>
           </div>
         </div>

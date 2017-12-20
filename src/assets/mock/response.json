@@ -1,6 +1,6 @@
-[{
+{
     "documentID": "A001D1000",
-    "documentName": "Data Goverence document",
+    "documentName": "End User License Agreement",
     "documentURL": "http://ftp.cat.com/documents/datagoverencedocument.pdf",
     "status": "Active",
     "docTypeID": "1",
@@ -17,15 +17,15 @@
     "hostAppList": [
         {
             "hostAppID": "1",
-            "hostAppName": "xyz"
+            "hostAppName": "VisionLink"
         },
         {
             "hostAppID": "2",
-            "hostAppName": "abc"
+            "hostAppName": "PLWeb"
         },
         {
             "hostAppID": "3",
-            "hostAppName": "xyyx"
+            "hostAppName": "DSP"
         }
     ]
-}]
+}

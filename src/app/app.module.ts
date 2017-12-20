@@ -15,7 +15,8 @@ import { UploadService } from './upload/upload.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BasicfilterPipe } from './pipe/filter/basicfilter.pipe';
 import { CommonModule, APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { FormsModule } from '@angular/forms' 
+import { FormsModule } from '@angular/forms';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: 'upload', pathMatch: 'full' },
@@ -37,7 +38,8 @@ export const ROUTES: Routes = [
     BrowserModule,
     HttpModule,
     CommonModule, 
-    FormsModule, 
+    FormsModule,
+    NgDatepickerModule,
     AngularFontAwesomeModule,
     RouterModule.forRoot(ROUTES),
     BsDropdownModule.forRoot(),

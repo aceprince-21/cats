@@ -63,6 +63,9 @@
     vertical-align: top;
     border-top: 1px solid #ffcd11;
 }
+.table th, .table td.active{
+    background: palegreen;
+}
 
 .btn-primary {
     color: #111;
@@ -126,3 +129,13 @@
     padding: 0em;
     border-radius: 0px;
 }
+.wraper{
+    margin-bottom: 50px;
+}
+
+.ngx-datepicker-container .ngx-datepicker-input {
+    width: 100% !important; margin:0px; border: 0px !important;
+}
+
+
+.ngx-datepicker-container .ngx-datepicker-calendar-container {z-index: 9999;}
