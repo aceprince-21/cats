@@ -10,6 +10,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { UploadComponent } from './upload/upload.component';
 import { EditUploadComponent } from './editupload/edit-upload.component';
+import { ReportsComponent } from './reports/reports.component';
+import { SettingComponent } from './setting/setting.component';
+import { AdminComponent } from './admin/admin.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { EdituploadService} from './editupload/editupload.service';
 import { UploadService } from './upload/upload.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
@@ -17,11 +21,17 @@ import { BasicfilterPipe } from './pipe/filter/basicfilter.pipe';
 import { CommonModule, APP_BASE_HREF, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgDatepickerModule } from 'ng2-datepicker';
+import { HelpComponent } from './help/help.component';
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: 'upload', pathMatch: 'full' },
   { path: 'upload', component: UploadComponent },
-  { path: 'upload/edit/:data', component: EditUploadComponent }
+  { path: 'reports', component: ReportsComponent },
+  { path: 'setting', component: SettingComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'help', component: HelpComponent  },
+  { path: 'upload/edit/:data', component: EditUploadComponent}
 ];
 
 @NgModule({
@@ -31,8 +41,12 @@ export const ROUTES: Routes = [
     FooterComponent,
     UploadComponent,
     EditUploadComponent,
+    ReportsComponent,
+    AdminComponent,
+    SettingComponent,
+    DashboardComponent,
     BasicfilterPipe,
-
+    HelpComponent,
   ],
   imports: [
     BrowserModule,

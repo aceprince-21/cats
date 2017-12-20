@@ -21,7 +21,7 @@ export const environment = {
  },
   hostApp:{
     //url : "../assets/mock/hostapp.json"
-    url : " http://localhost:8080/document/hostapps"
+    url : "http://localhost:8080/document/hostapps"
   },
   doctype:{
     //url : "../assets/mock/doctype.json"
