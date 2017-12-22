@@ -139,3 +139,5 @@
 .no-mar{margin:0 0 2rem;}
 
 .ngx-datepicker-container .ngx-datepicker-calendar-container {z-index: 9999;}
+.ngx-pagination { padding: 0px; margin:0px;}
+.ngx-pagination .current{ background:#ffcd11 !important; font-weight: bold; color: #111 !important}

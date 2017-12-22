@@ -206,11 +206,12 @@ export class EditUploadComponent implements OnInit {
        if(this.CollectData.hostAppList === ""  || this.CollectData.hostAppList  === null){ this.CollectData.hostAppList = this.passData.hostAppList };
        this.CollectData.hostAppList = this.filterItemss;
        this.CollectData.documentID = this.passData.documentID;
+       this.CollectData.docTypeName = this.passData.docTypeName;
        this.CollectData.status = this.passData.status;
        this.CollectData.submittedUser = this.passData.submittedUser;
        this.CollectData.documentURL = this.passData.documentURL;
+       this.CollectData.uploadedDate = Date();
        //Pass this.CollectData into the Service...
-
        this._serveEdit.sendResponse(this.CollectData).subscribe(error => console.log(error));
        console.log(this.CollectData);
     }

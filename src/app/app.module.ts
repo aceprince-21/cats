@@ -22,6 +22,7 @@ import { CommonModule, APP_BASE_HREF, LocationStrategy, HashLocationStrateg
 import { FormsModule } from '@angular/forms';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { HelpComponent } from './help/help.component';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: 'upload', pathMatch: 'full' },
@@ -55,6 +56,7 @@ export const ROUTES: Routes = [
     FormsModule,
     NgDatepickerModule,
     AngularFontAwesomeModule,
+    NgxPaginationModule,
     RouterModule.forRoot(ROUTES),
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),

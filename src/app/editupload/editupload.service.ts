@@ -12,7 +12,7 @@ export class EdituploadService {
 
   EditPage(e): Observable<any> {
     return this.http
-      .get(environment.getData.url)
+      .get(environment.getData.url+e)
       .map((res: any) => res.json())
   }
 
@@ -31,8 +31,7 @@ export class EdituploadService {
   sendResponse(files): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(environment.editedResponse.url,files, options)
-               .map((res:Response) => res.json());
+    return this.http.post(environment.editedResponse.url,files, options).map((res:Response) => res.json());
   }
 
 }

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import {environment} from '../../environments/environment';
 import { Headers, RequestOptions } from '@angular/http';
 
+
 @Injectable()
 export class UploadService {
 

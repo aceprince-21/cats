@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {UploadService} from './upload.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
-
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -11,16 +10,20 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class UploadComponent implements OnInit {
   getData:any;
   result:any;
+  private perPage = 0;
+  private totalCount = 0;
   constructor(private _serv : UploadService, private route:ActivatedRoute,  private router: Router) { }
   
   ngOnInit() {
     this.uploadFetchService();
+    this.perPage = 1;
   }
 
   uploadFetchService(){
     this._serv.getReposForUser().subscribe(
       data => {
         this.getData = data;
+        this.totalCount = data.length;
         console.log(this.getData);
       })
   }
