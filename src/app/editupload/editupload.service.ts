@@ -12,7 +12,7 @@ export class EdituploadService {
 
   EditPage(e): Observable<any> {
     return this.http
-      .get(environment.getData.url)
+      .get(environment.getData.url+e)
       .map((res: any) => res.json())
   }
 
