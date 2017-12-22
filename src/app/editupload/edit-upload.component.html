@@ -31,8 +31,6 @@
                   <tbody id="appsNotChosen" *ngIf="getHost">
                     <tr *ngFor = "let host of getHost; let i = index">
                         <td (click)="leftSelectedArray(host, i)" [ngClass]="{'active': host.active === 'true' }"><a >{{host.hostAppName}}</a></td>
-                        <td *ngIf = "host.active === 'true'" (click) = "removeItem(host, i)"><a class="fa fa-times" aria-hidden="true" ></a></td>
-                        <td *ngIf = "!host.active"><a class="fa fa-check" aria-hidden="true"></a></td>
                     </tr>
                    </tbody>
                 </table>
@@ -62,8 +60,6 @@
                            <td (click)="righttSelectedArray(hostsapp, i)"  [ngClass]="{'active': hostsapp.active === 'true' }" *ngIf="hostsapp.hostAppName != 'null'">
                               <a>{{hostsapp.hostAppName}}</a>
                            </td>
-                           <td *ngIf = "hostsapp.active === 'true'" (click) = "removerightItem(hostsapp, i)"><a class="fa fa-times" aria-hidden="true" ></a></td>
-                           <td *ngIf = "!hostsapp.active"><a class="fa fa-check" aria-hidden="true"></a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -75,12 +71,12 @@
           <label class="d-block">Do Dealers Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question1" id="inlineRadio1" value="yes" checked=""> Yes
+              <input class="form-check-input" type="radio" name="question1" id="inlineRadio1" value="yes" [checked]="passData.dealerConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question1" id="inlineRadio2" value="no"> No
+              <input class="form-check-input" type="radio" name="question1" id="inlineRadio2" [checked]="passData.dealerConsent === false"> No
             </label>
           </div>
         </div>
@@ -88,12 +84,12 @@
           <label class="d-block">Do Customers Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question2" id="inlineRadio3" value="yes" checked=""> Yes
+              <input class="form-check-input" type="radio" name="question2" id="inlineRadio3" value="yes" [checked]="passData.customerConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question2" id="inlineRadio4" value="no"> No
+              <input class="form-check-input" type="radio" name="question2" id="inlineRadio4" value="no" [checked]="passData.customerConsent === false"> No
             </label>
           </div>
         </div>
@@ -101,12 +97,12 @@
           <label class="d-block">Do Internal (CAT) Users Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question3" id="inlineRadio5" value="yes" checked=""> Yes
+              <input class="form-check-input" type="radio" name="question3" id="inlineRadio5" value="yes" [checked]="passData.intUserConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question3" id="inlineRadio6" value="no"> No
+              <input class="form-check-input" type="radio" name="question3" id="inlineRadio6" value="no" [checked]="passData.intUserConsent === false"> No
             </label>
           </div>
         </div>
@@ -114,12 +110,12 @@
           <label class="d-block">Do Partner Companies Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question4" id="inlineRadio7" value="yes" checked=""> Yes
+              <input class="form-check-input" type="radio" name="question4" id="inlineRadio7" value="yes" [checked]="passData.partCompConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question4" id="inlineRadio8" value="no"> No
+              <input class="form-check-input" type="radio" name="question4" id="inlineRadio8" value="no" [checked]="passData.partCompConsent === false"> No
             </label>
           </div>
         </div>
@@ -127,21 +123,37 @@
           <label class="d-block">Is Per User Assent Required?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question5" id="inlineRadio9" value="yes" checked=""> Yes
+              <input class="form-check-input" type="radio" name="question5" id="inlineRadio9" value="yes" [checked]="passData.perUserAssentReq === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question5" id="inlineRadio10" value="no"> No
+              <input class="form-check-input" type="radio" name="question5" id="inlineRadio10" value="no" [checked]="passData.perUserAssentReq === false"> No
             </label>
           </div>
         </div>
       </div>
       <div class="col-sm-6">
+              <h2 class="form-header no-mar">file Upload</h2>
+              <div class="form-group">
+                <div class="d-flex flex-row-reverse">
+                  <label class="custom-file">
+                    <!--<input type="file" id="fileInput" (click)="uploadfile()" class="custom-file-input"> -->
+                    <input type="file" #file (change) = "uploadfile($event)" class="custom-file-input" />
+                    <span class="custom-file-control"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="d-flex flex-row-reverse">
+                  <a class="btn btn-primary">Upload</a>
+                </div>
+              </div>
+              <hr/>
         <div class="form-group">
           <label class="d-block">What is the Document Type?</label>
-          <select class="custom-select">
-            <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeName" [selected]="item.docTypeName === passData.documentName">{{item.docTypeName}}</option>
+          <select class="custom-select col-lg-6">
+            <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeName" [selected]="item.docTypeID === passData.docTypeID">{{item.docTypeName}}</option>
           </select>
         </div>
         <div class="row mb-5">
@@ -161,8 +173,8 @@
         <div class="row">
           <div class="col-sm-6">
             <!-- Using anchor tag instead of button for prototype purposes only -->
-            <a href="documents-search.html" class="btn btn-primary btn-block">Save and Exit</a>
-            <a href="documents-search.html" class="btn btn-primary btn-block">Do Not Save and Exit</a>
+            <a (click)="submit()" class="btn btn-primary btn-block">Save and Exit</a>
+            <a (click)="goBack()" class="btn btn-primary btn-block">Do Not Save and Exit</a>
           </div>
         </div>
       </div>

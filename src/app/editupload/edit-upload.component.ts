@@ -4,7 +4,7 @@ import {EdituploadService } from './editupload.service';
 import {UploadService} from '../upload/upload.service';
 import { BasicfilterPipe } from '../pipe/filter/basicfilter.pipe';
 import { DatepickerOptions } from 'ng2-datepicker';
-import * as frLocale from 'date-fns/locale/fr';
+import {uploadModel} from './exportmodel';
 
 @Component({
   selector: 'app-edit-upload',
@@ -27,10 +27,9 @@ export class EditUploadComponent implements OnInit {
   options: DatepickerOptions = {
     minYear: 1970,
     maxYear: 2030,
-    displayFormat: 'MMM D[,] YYYY',
+    displayFormat: 'DD-MM-YYYY',
     barTitleFormat: 'MMMM YYYY',
     firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
-    locale: frLocale
   };
 
   ngOnInit() {
@@ -41,8 +40,6 @@ export class EditUploadComponent implements OnInit {
     });
     this.uploadFetchService(this.filterItem);
 
-  
-  
   }
 
   uploadFetchService(e){
@@ -73,6 +70,7 @@ export class EditUploadComponent implements OnInit {
     let getHost = this.getHost;
     let applist = this.filterItemss;
     let keys = [];
+    
         for(let i=0; i<getHost.length; i++){
            for(let j=0; j<applist.length; j++){
                 if(getHost[i].hostAppID === applist[j].hostAppID ){
@@ -84,54 +82,66 @@ export class EditUploadComponent implements OnInit {
         const dataT =  keys.filter((value, index, array) => {
           return array.indexOf(value) === index;
         });
-
-        applist =  applist.filter((value, index, array) => {
-          return array.indexOf(value) === index;
-        });
-
+        this.hostapplist =[];
+        this.getHost = [];
         this.hostapplist  = applist;
         this.getHost = dataT;
   }
 
-  leftSelectedArray(host,ind){
-    
-    host.active = 'true';
-    this.leftSelectedItem.push(host);
-    const newitem = this.leftSelectedItem.filter((value, index, array) => {
-        return array.indexOf(value) === index;
-    });
-    this.leftSelectedItem = newitem;
+  filterrightItems(x){
+    let getHost = x;
+    let applist = this.filterItemss;
+    let keyss = [];
+    x.forEach((element) => {
+              keyss = applist.filter(e => e !== element);
+      });
+        this.filterItemss  = keyss;
+        uploadModel.hostAppList = this.filterItemss;
   }
+
+  leftSelectedArray(host,ind){
+    if(host.active === 'true'){
+       host.active = '';
+       console.log(host);
+       const remIem = this.leftSelectedItem.filter(e => e !== host)
+       this.leftSelectedItem = remIem;
+       host.active = ''
+    }
+    else{
+      this.leftSelectedItem.push(host);
+      const newitem = this.leftSelectedItem.filter((value, index, array) => {
+          return array.indexOf(value) === index;
+      });
+      this.leftSelectedItem = newitem;
+      host.active = 'true'
+    }
+  }
+
 
   righttSelectedArray(host,ind){
-    host.active = 'true';
-    this.rightSelectedItem.push(host);
-    const newitem = this.rightSelectedItem.filter((value, index, array) => {
-        return array.indexOf(value) === index;
-    });
-    this.rightSelectedItem = newitem;
-  }
+    if(host.active === 'true'){
+       host.active = '';
+       console.log(host);
+       const remIem = this.rightSelectedItem.filter(e => e !== host)
+       this.rightSelectedItem = remIem;
+       host.active = ''
+    }
+    else{
+      this.rightSelectedItem.push(host);
 
-
-  removeItem(host, ind){
-    host.active = '';
-    console.log(host);
-     const remIem = this.leftSelectedItem.filter(e => e !== host)
-     this.leftSelectedItem = remIem;
-  }
-
-  removerightItem(host, ind){
-    host.active = '';
-    console.log(host);
-     const remIem = this.rightSelectedItem.filter(e => e !== host)
-     this.leftSelectedItem = remIem;
+      const newitem = this.rightSelectedItem.filter((value, index, array) => {
+          return array.indexOf(value) === index;
+      });
+      this.rightSelectedItem = newitem;
+      host.active = 'true'
+    }
   }
 
   moveAlltoright(){
     const rightTable = this.filterItemss;
     const leftTable =  this.getHost;
     let MoveTable = rightTable.concat(leftTable);
-    this.filterItemss = MoveTable;
+    this.filterItemss = this.removeTrue(MoveTable);
     this.filterExistingItems();
   }
 
@@ -139,7 +149,7 @@ export class EditUploadComponent implements OnInit {
     const rightTable = this.filterItemss;
     const leftTable =  this.leftSelectedItem;
     let MoveTable = rightTable.concat(leftTable);
-    this.filterItemss = MoveTable;
+    this.filterItemss =  this.removeTrue(MoveTable);
     this.leftSelectedItem = [];
     this.filterExistingItems();
   }
@@ -148,18 +158,46 @@ export class EditUploadComponent implements OnInit {
     const rightTable =  this.rightSelectedItem;
     const leftTable =  this.getHost;
     let MoveTable = leftTable.concat(rightTable);
-    this.getHost = MoveTable;
-    console.log(this.getHost);
-    this.filterExistingItems();
+    this.getHost = this.removeTrue(MoveTable);
+    console.log(MoveTable);
+    this.filterrightItems(this.rightSelectedItem);
+    this.rightSelectedItem = [];
   }
 
   moveAlltoleft(){
     const rightTable = this.filterItemss;
     const leftTable =  this.getHost;
     let MoveTable = rightTable.concat(leftTable);
-    this.getHost = MoveTable;
+    console.log(MoveTable);
+    this.getHost = this.removeTrue(MoveTable);
     this.filterItemss = [];
     this.filterExistingItems();
   }
 
+  removeTrue(array){
+    array.forEach((element,index) => {
+       element.active = '';
+    });
+    return array;
+ }
+
+  uploadfile(event) {
+    let fileList: FileList = event.target.files;  
+    if (fileList.length > 0) {  
+    let file: File = fileList[0];  
+    let formData: FormData = new FormData();  
+    formData.append('file', file, file.name); 
+    console.log(formData); 
+    this._passdata.getReposForUpload(formData).subscribe(error => console.log(error))
+    } 
+    window.location.reload();  
+    }
+
+    submit(){
+
+    }
+
+    goBack(){
+       this.router.navigate(['/upload']);
+    }
 }

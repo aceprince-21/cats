@@ -1,0 +1,51 @@
+.custom-file-input {
+    min-width: 14rem;
+    max-width: 100%;
+    height: calc(1.4rem + 2px);
+    margin: 0;
+    opacity: 0;
+}
+
+.custom-file-control {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 5;
+    height: calc(1.4rem + 2px);
+    padding: 0.1rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #fff;
+    border: 1px solid #ffcd11;
+    border-radius: 0;
+}
+
+.custom-file-control::before {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    z-index: 6;
+    display: block;
+    height: calc(1.4rem + 2px);
+    padding: 0.1rem 0.75rem;
+    line-height: 15px;
+    color: #495057;
+    background-color: #ffcd11;
+    border: 1px solid #ffcd11;
+    border-radius: 0 0 0 0;
+}
+
+.custom-file-control:lang(en)::before {
+    content: "Browse";
+}
+
+.custom-file-control:lang(en):empty::after {
+    content: "Choose file...";
+}
