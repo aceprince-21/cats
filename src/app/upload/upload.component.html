@@ -80,10 +80,8 @@
                   </tbody>
                 
                 </table>
-                <div class="row" *ngIf="perPage < totalCount"><pagination-controls class="col-lg-11"(pageChange)="p = $event"></pagination-controls> <span class="col-lg-1 pull-right"><select #perPageVal (change) = "perPage = perPageVal.value">
-                   <option [value]= 10>10</option>
-                   <option [value]= 15>15</option>
-                   <option [value]= 25>25</option>
+                <div class="row" *ngIf="perPage <= totalCount"><pagination-controls class="col-lg-9"(pageChange)="p = $event"></pagination-controls> <span class="col-lg-3 pull-right">&nbsp; &nbsp; &nbsp; &nbsp;Records Per Page &nbsp; <select class="pull-right"   [(ngModel)]="perPage" #perPageVal (change) = "perPage = perPageVal.value">
+                   <option *ngFor = "let dropDown of DropDowns"[ngValue]="10">{{dropDown}}</option>
                 </select> </span> </div>
               </div>
             </div>

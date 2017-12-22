@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {UploadService} from './upload.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import {configs} from '../../environments/config'
 
 @Component({
   selector: 'app-upload',
@@ -11,12 +12,15 @@ export class UploadComponent implements OnInit {
   getData:any;
   result:any;
   private perPage = 0;
+  private Configs = [];
+  private DropDowns = [];
   private totalCount = 0;
   constructor(private _serv : UploadService, private route:ActivatedRoute,  private router: Router) { }
   
   ngOnInit() {
     this.uploadFetchService();
     this.perPage = 1;
+    this.DropDowns = configs.DropDowns;
   }
 
   uploadFetchService(){

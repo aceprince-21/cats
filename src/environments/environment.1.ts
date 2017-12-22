@@ -26,6 +26,6 @@ export const environment = {
  editedResponse:{
    url : "http://localhost:8080/document/doctypes"
  }
- 
+
  
 };
