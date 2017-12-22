@@ -5,7 +5,7 @@
     "status": "Active",
     "docTypeID": "1",
     "docTypeName": "1",
-    "dealerConsent": true,
+    "dealerConsent": false,
     "customerConsent": false,
     "intUserConsent": true,
     "partCompConsent": true,
