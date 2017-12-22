@@ -30,7 +30,7 @@
 .form-control {
     display: block;
     width: 100%;
-    padding: 0.1rem 0.75rem;
+    padding:0;
     font-size: 0.8rem;
     line-height: 1.5;
     color: #495057;
@@ -94,10 +94,9 @@
 
 .custom-select {
     display: inline-block;
-    max-width: 100%;
-    height: calc(1.4rem + 2px);
-    padding: 0.1rem 1.75rem 0.1rem 0.75rem;
-    line-height: 1.5;
+    height:30px;
+    padding:5px;
+    width: 48%;
     color: #495057;
     vertical-align: middle;
     background: #fff url(data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' v…'0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E) no-repeat right 0.75rem center;
@@ -137,5 +136,6 @@
     width: 100% !important; margin:0px; border: 0px !important;
 }
 
+.no-mar{margin:0 0 2rem;}
 
 .ngx-datepicker-container .ngx-datepicker-calendar-container {z-index: 9999;}

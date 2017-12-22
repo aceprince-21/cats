@@ -71,12 +71,12 @@
           <label class="d-block">Do Dealers Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question1" id="inlineRadio1" value="yes" [checked]="passData.dealerConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question1" value="true"  #dealerConsent (change)="CollectData.dealerConsent = dealerConsent.value" [checked]="passData.dealerConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question1" id="inlineRadio2" [checked]="passData.dealerConsent === false"> No
+              <input class="form-check-input" type="radio" name="question1" value="false" #dealerConsentf (change)="CollectData.dealerConsent = dealerConsentf.value" [checked]="passData.dealerConsent === false"> No
             </label>
           </div>
         </div>
@@ -84,12 +84,12 @@
           <label class="d-block">Do Customers Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question2" id="inlineRadio3" value="yes" [checked]="passData.customerConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question2"  value="true" #customerConsent (change)="CollectData.customerConsent = customerConsent.value" [checked]="passData.customerConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question2" id="inlineRadio4" value="no" [checked]="passData.customerConsent === false"> No
+              <input class="form-check-input" type="radio" name="question2"  value="false"  #customerConsentf (change)="CollectData.customerConsent = customerConsentf.value" [checked]="passData.customerConsent === false"> No
             </label>
           </div>
         </div>
@@ -97,12 +97,12 @@
           <label class="d-block">Do Internal (CAT) Users Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question3" id="inlineRadio5" value="yes" [checked]="passData.intUserConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question3"  value="true"  #intUserConsent (change)="CollectData.intUserConsent = intUserConsent.value" [checked]="passData.intUserConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question3" id="inlineRadio6" value="no" [checked]="passData.intUserConsent === false"> No
+              <input class="form-check-input" type="radio" name="question3"  value="false" #intUserConsentf (change)="CollectData.intUserConsent = intUserConsentf.value" [checked]="passData.intUserConsent === false"> No
             </label>
           </div>
         </div>
@@ -110,12 +110,12 @@
           <label class="d-block">Do Partner Companies Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question4" id="inlineRadio7" value="yes" [checked]="passData.partCompConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question4"  value="true" #partCompConsent (change)="CollectData.partCompConsent = partCompConsent.value" [checked]="passData.partCompConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question4" id="inlineRadio8" value="no" [checked]="passData.partCompConsent === false"> No
+              <input class="form-check-input" type="radio" name="question4" value="false" #partCompConsentf (change)="CollectData.partCompConsent = partCompConsentf.value" [checked]="passData.partCompConsent === false"> No
             </label>
           </div>
         </div>
@@ -123,12 +123,12 @@
           <label class="d-block">Is Per User Assent Required?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question5" id="inlineRadio9" value="yes" [checked]="passData.perUserAssentReq === true"> Yes
+              <input class="form-check-input" type="radio" name="question5"  value="true" #perUserAssentReq (change)="CollectData.perUserAssentReq = perUserAssentReq.value" [checked]="passData.perUserAssentReq === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question5" id="inlineRadio10" value="no" [checked]="passData.perUserAssentReq === false"> No
+              <input class="form-check-input" type="radio" name="question5"  value="false" #perUserAssentReqf (change)="CollectData.perUserAssentReq = perUserAssentReqf.value"  [checked]="passData.perUserAssentReq === false"> No
             </label>
           </div>
         </div>
@@ -152,21 +152,21 @@
               <hr/>
         <div class="form-group">
           <label class="d-block">What is the Document Type?</label>
-          <select class="custom-select col-lg-6">
-            <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeName" [selected]="item.docTypeID === passData.docTypeID">{{item.docTypeName}}</option>
+          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (change)="CollectData.docTypeID = doctypes.value" >
+            <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeName"  [selected]="item.docTypeID === passData.docTypeID">{{item.docTypeName}}</option>
           </select>
         </div>
         <div class="row mb-5">
           <div class="col-sm-6">
             <div class="form-group">
               <label for="datepicker2">Start Date</label>
-              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate"> </ng-datepicker>
+              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value"> </ng-datepicker>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
               <label for="datepicker2">Termination Date</label>
-              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.terminationDate"> </ng-datepicker>
+              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.terminationDate" #endDate (change)="CollectData.terminationDate = endDate.value" > </ng-datepicker>
             </div>
           </div>
         </div>

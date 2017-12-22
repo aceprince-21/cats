@@ -23,6 +23,7 @@ export class EditUploadComponent implements OnInit {
   private hostapplist:any = [];
   private leftSelectedItem:any = [];
   private rightSelectedItem:any = [];
+  private CollectData:any = [];
   
   options: DatepickerOptions = {
     minYear: 1970,
@@ -39,7 +40,7 @@ export class EditUploadComponent implements OnInit {
           this.filterItem = params.data;
     });
     this.uploadFetchService(this.filterItem);
-
+    this.CollectData = uploadModel;
   }
 
   uploadFetchService(e){
@@ -194,7 +195,24 @@ export class EditUploadComponent implements OnInit {
     }
 
     submit(){
+       if(this.CollectData.dealerConsent === ""  || this.CollectData.dealerConsent  === null){ this.CollectData.dealerConsent = this.passData.dealerConsent };
+       if(this.CollectData.customerConsent === ""  || this.CollectData.customerConsent  === null){ this.CollectData.customerConsent = this.passData.customerConsent };
+       if(this.CollectData.intUserConsent === ""  || this.CollectData.intUserConsent  === null){ this.CollectData.intUserConsent = this.passData.intUserConsent };
+       if(this.CollectData.partCompConsent === ""  || this.CollectData.partCompConsent  === null){ this.CollectData.partCompConsent = this.passData.partCompConsent };
+       if(this.CollectData.perUserAssentReq === ""  || this.CollectData.perUserAssentReq  === null){ this.CollectData.perUserAssentReq = this.passData.perUserAssentReq };
+       if(this.CollectData.docTypeID === ""  || this.CollectData.docTypeID  === null){ this.CollectData.docTypeID = this.passData.docTypeID };
+       if(this.CollectData.effectiveDate === ""  || this.CollectData.effectiveDate  === null){ this.CollectData.effectiveDate = this.passData.effectiveDate };
+       if(this.CollectData.terminationDate === ""  || this.CollectData.terminationDate  === null){ this.CollectData.terminationDate = this.passData.terminationDate };
+       if(this.CollectData.hostAppList === ""  || this.CollectData.hostAppList  === null){ this.CollectData.hostAppList = this.passData.hostAppList };
+       this.CollectData.hostAppList = this.filterItemss;
+       this.CollectData.documentID = this.passData.documentID;
+       this.CollectData.status = this.passData.status;
+       this.CollectData.submittedUser = this.passData.submittedUser;
+       this.CollectData.documentURL = this.passData.documentURL;
+       //Pass this.CollectData into the Service...
 
+       this._serveEdit.sendResponse(this.CollectData).subscribe(error => console.log(error));
+       console.log(this.CollectData);
     }
 
     goBack(){
