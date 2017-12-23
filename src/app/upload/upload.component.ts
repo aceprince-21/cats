@@ -19,7 +19,7 @@ export class UploadComponent implements OnInit {
   
   ngOnInit() {
     this.uploadFetchService();
-    this.perPage = 1;
+    this.perPage = 5;
     this.DropDowns = configs.DropDowns;
   }
 

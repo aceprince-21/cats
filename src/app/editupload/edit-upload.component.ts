@@ -28,7 +28,7 @@ export class EditUploadComponent implements OnInit {
   options: DatepickerOptions = {
     minYear: 1970,
     maxYear: 2030,
-    displayFormat: 'DD-MM-YYYY',
+    displayFormat: 'MM-DD-YYYY',
     barTitleFormat: 'MMMM YYYY',
     firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
   };
@@ -211,8 +211,12 @@ export class EditUploadComponent implements OnInit {
        this.CollectData.submittedUser = this.passData.submittedUser;
        this.CollectData.documentURL = this.passData.documentURL;
        this.CollectData.uploadedDate = Date();
+
        //Pass this.CollectData into the Service...
-       this._serveEdit.sendResponse(this.CollectData).subscribe(error => console.log(error));
+
+       if(this.filterItemss !== '' || this.filterItemss !== null){
+          this._serveEdit.sendResponse(this.CollectData).subscribe(error => console.log(error));
+       }
        console.log(this.CollectData);
     }
 
