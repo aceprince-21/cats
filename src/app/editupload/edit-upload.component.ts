@@ -9,7 +9,7 @@ import {uploadModel} from './exportmodel';
 @Component({
   selector: 'app-edit-upload',
   templateUrl: './edit-upload.component.html',
-  styleUrls: ['./edit-upload.component.css']
+  styleUrls: ['./edit-upload.component.scss']
 })
 export class EditUploadComponent implements OnInit {
 

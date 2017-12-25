@@ -1,0 +1,12 @@
+.app-picker {
+  margin-bottom: 1.5rem;
+  background-color: #eee;
+  font-size: $font-size-base;
+  padding: 1em;
+  border: 1px solid #ddd;
+}
+.app-picker__app-list {
+  max-height: 130px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

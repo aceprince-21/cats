@@ -1,0 +1,20 @@
+// Override styles from Bootstrap using the same selector Boostrap uses
+// Only do this if it's not possible to customize by using a variable setting
+
+.btn {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.bg-black {
+  background-color: #000;
+}
+.custom-file-control {
+  overflow: hidden;
+}
+.custom-file-control::before {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.table-bordered th, .table-bordered td {
+  background-color: #fff;
+}

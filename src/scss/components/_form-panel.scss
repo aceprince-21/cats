@@ -1,0 +1,19 @@
+.form-panel {
+  margin-bottom: 1.5rem;
+}
+.form-panel__header {
+  text-transform: uppercase;
+  font-size: $font-size-base;
+  background-color: $primary;
+  padding: 0.25em 0.5em;
+  margin: 0;
+}
+.form-panel__body {
+  background-color: #eee;
+  font-size: $font-size-base;
+  padding: 1em;
+  border: 1px solid #ddd;
+}
+.form-panel__header + .form-panel__body {
+  border-top-style: none;
+}

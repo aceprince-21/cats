@@ -1,0 +1,27 @@
+// This file lists variables to override Bootstrap defaults
+// You can find all possible variables at:
+// node_modules/bootstrap/scss/_variables.scss
+
+$primary: #ffcd11;
+$link-color: #007bff; // Keep blue links
+$font-size-base: 0.8rem;
+
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
+
+$input-btn-padding-y: 0.1rem;
+$input-btn-padding-y-sm: 0;
+
+$custom-select-padding-y: 0.1rem;
+
+$input-border-color: $primary;
+$input-group-addon-bg: $primary; // Sets $custom-file-button-bg
+
+$navbar-dark-color: #fff;
+$navbar-dark-hover-color: $primary;
+$navbar-dark-active-color: $primary;
+
+$table-cell-padding: 0.15rem 0.65rem;
+$table-border-color: $primary;
+$table-head-bg: $primary;
