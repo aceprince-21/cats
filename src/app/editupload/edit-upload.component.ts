@@ -43,17 +43,19 @@ export class EditUploadComponent implements OnInit {
     this.CollectData = uploadModel;
     this.route.params.subscribe((params: Params) => {
           this.filterItem = params.data;
+          const get_path = this.route.url.value[1].path; 
           console.log(this.filterItem);
-          if(this.filterItem !== undefined){
+          if(get_path!= 'upload'){
             this.uploadFetchService(this.filterItem);
             this.docSetting = true;
           }
+          else{
+         
+          }
     });
-    
     this.SetUpformdata();
-    
-    
   }
+
   SetUpformdata(){
     this.CollectData.uploadedDate = this.CurrentDate('-',0);
     this.CollectData.effectiveDate = this.CurrentDate('-',0);

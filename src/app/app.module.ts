@@ -32,8 +32,8 @@ export const ROUTES: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'help', component: HelpComponent  },
-  { path: 'mydocuments/upload', component: EditUploadComponent},
-  { path: 'mydocuments/edit/:data', component: EditUploadComponent}
+  { path: 'mydocuments/upload/:data', component: EditUploadComponent},
+  { path: 'mydocuments/edit/:files', component: EditUploadComponent}
 ];
 
 @NgModule({

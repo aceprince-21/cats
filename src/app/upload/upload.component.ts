@@ -43,8 +43,10 @@ let file: File = fileList[0];
 let formData: FormData = new FormData();  
 formData.append('file', file, file.name); 
 console.log(formData); 
-this._serv.getReposForUpload(formData).subscribe(error => console.log(error))
-} 
-this.router.navigate(['mydocuments/upload']);
+this._serv.getReposForUpload(formData).subscribe(
+  done => console.log('done'),
+  error => console.log(error))
+}
+this.router.navigate(['mydocuments/upload', 'newDoc']) 
 } 
 }
