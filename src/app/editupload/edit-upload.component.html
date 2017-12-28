@@ -81,71 +81,69 @@
               <h5>Atleast select one application</h5>
           </div>
           </div>
-
         </div>
-      
-        <div class="form-group">
+        <div class="form-group" [ngClass]= "{error: !dealerCon}">
           <label class="d-block">Do Dealers Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question1" value="true"  #dealerConsent (change)="CollectData.dealerConsent = dealerConsent.value" [checked]="passData.dealerConsent === true"> Yes
+              <input class="form-check-input" [(ngModel)]="dealerCon" type="radio" name="question1" value="true"  #dealerConsent (change)="CollectData.dealerConsent = dealerConsent.value" [checked]="passData.dealerConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question1" value="false" #dealerConsentf (change)="CollectData.dealerConsent = dealerConsentf.value" [checked]="passData.dealerConsent === false"> No
+              <input class="form-check-input" [(ngModel)]="dealerCon" type="radio" name="question1" value="false" #dealerConsentf (change)="CollectData.dealerConsent = dealerConsentf.value" [checked]="passData.dealerConsent === false"> No
             </label>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" [ngClass]= "{error: !customerCon}">
           <label class="d-block">Do Customers Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question2"  value="true" #customerConsent (change)="CollectData.customerConsent = customerConsent.value" [checked]="passData.customerConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question2"  [(ngModel)]="customerCon" value="true" #customerConsent (change)="CollectData.customerConsent = customerConsent.value" [checked]="passData.customerConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question2"  value="false"  #customerConsentf (change)="CollectData.customerConsent = customerConsentf.value" [checked]="passData.customerConsent === false"> No
+              <input class="form-check-input" type="radio" name="question2" [(ngModel)]="customerCon" value="false"  #customerConsentf (change)="CollectData.customerConsent = customerConsentf.value" [checked]="passData.customerConsent === false"> No
             </label>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" [ngClass]= "{error: !intUser}">
           <label class="d-block">Do Internal (CAT) Users Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question3"  value="true"  #intUserConsent (change)="CollectData.intUserConsent = intUserConsent.value" [checked]="passData.intUserConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question3" [(ngModel)]= "intUser" value="true"  #intUserConsent (change)="CollectData.intUserConsent = intUserConsent.value" [checked]="passData.intUserConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question3"  value="false" #intUserConsentf (change)="CollectData.intUserConsent = intUserConsentf.value" [checked]="passData.intUserConsent === false"> No
+              <input class="form-check-input" type="radio" name="question3" [(ngModel)]= "intUser"  value="false" #intUserConsentf (change)="CollectData.intUserConsent = intUserConsentf.value" [checked]="passData.intUserConsent === false"> No
             </label>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" [ngClass]= "{error: !partComp}">
           <label class="d-block">Do Partner Companies Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question4"  value="true" #partCompConsent (change)="CollectData.partCompConsent = partCompConsent.value" [checked]="passData.partCompConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question4"  [(ngModel)]= "partComp" value="true" #partCompConsent (change)="CollectData.partCompConsent = partCompConsent.value" [checked]="passData.partCompConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question4" value="false" #partCompConsentf (change)="CollectData.partCompConsent = partCompConsentf.value" [checked]="passData.partCompConsent === false"> No
+              <input class="form-check-input" type="radio" name="question4" [(ngModel)]= "partComp" value="false" #partCompConsentf (change)="CollectData.partCompConsent = partCompConsentf.value" [checked]="passData.partCompConsent === false"> No
             </label>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" [ngClass]= "{error: !perUser}">
           <label class="d-block">Is Per User Assent Required?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question5"  value="true" #perUserAssentReq (change)="CollectData.perUserAssentReq = perUserAssentReq.value" [checked]="passData.perUserAssentReq === true"> Yes
+              <input class="form-check-input" type="radio" name="question5"  [(ngModel)]= "perUser" value="true" #perUserAssentReq (change)="CollectData.perUserAssentReq = perUserAssentReq.value" [checked]="passData.perUserAssentReq === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question5"  value="false" #perUserAssentReqf (change)="CollectData.perUserAssentReq = perUserAssentReqf.value"  [checked]="passData.perUserAssentReq === false"> No
+              <input class="form-check-input" type="radio" name="question5"  [(ngModel)]= "perUser" value="false" #perUserAssentReqf (change)="CollectData.perUserAssentReq = perUserAssentReqf.value"  [checked]="passData.perUserAssentReq === false"> No
             </label>
           </div>
         </div>
@@ -167,14 +165,14 @@
                 </div>
               </div>
               <hr/>
-        <div class="form-group" *ngIf = "docSetting === true">
+        <div class="form-group" *ngIf = "docSetting === true" >
           <label class="d-block">What is the Document Type?</label>
           <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = doctypes.value" >
             <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeName"  [selected]="item.docTypeID === passData.docTypeID">{{item.docTypeName}}</option>
           </select>
         </div>
 
-        <div class="form-group" *ngIf = "docSetting === false">
+        <div class="form-group" *ngIf = "docSetting === false" [ngClass] = "error : !selectedItem">
           <label class="d-block">What is the Document Type?</label>
           <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = selectedItem" >
             
