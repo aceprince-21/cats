@@ -73,16 +73,18 @@
                       <td>{{item.submittedUser}}</td>
                       <td>{{item.uploadedDate | date: 'dd/MM/yyyy'}}</td>
                       <td>
-                        <a (click)="parseData(item.documentID)"class="btn btn-primary btn-sm btn-block">Review</a>
+                        <a (click)="parseData(item.documentID)"class="btn btn-primary btn-sm btn-block">Review / Edit</a>
                       </td>
                     </tr>
                      
                   </tbody>
                 
                 </table>
-                <div class="row" *ngIf="perPage <= totalCount"><pagination-controls class="col-lg-9"(pageChange)="p = $event"></pagination-controls> <span class="col-lg-3 pull-right">&nbsp; &nbsp; &nbsp; &nbsp;Records Per Page &nbsp; <select class="pull-right"   [(ngModel)]="perPage" #perPageVal (change) = "perPage = perPageVal.value">
-                   <option *ngFor = "let dropDown of DropDowns"[ngValue]="10">{{dropDown}}</option>
-                </select> </span> </div>
+                <div class="row" *ngIf="perPage <= totalCount">
+                  <pagination-controls class="col-lg-9"(pageChange)="p = $event"></pagination-controls> <span class="col-lg-3 pull-right">&nbsp; &nbsp; &nbsp; &nbsp;Records Per Page &nbsp;
+                  <select class="pull-right"   [(ngModel)]="perPage" #perPageVal>
+                    <option *ngFor = "let dropDown of DropDowns" [ngValue]="dropDown" >{{dropDown}}</option>
+                  </select> </span> </div>
               </div>
             </div>
           </div>

@@ -25,14 +25,15 @@ import { HelpComponent } from './help/help.component';
 import {NgxPaginationModule} from 'ngx-pagination'; 
 
 export const ROUTES: Routes = [
-  { path: '', redirectTo: 'upload', pathMatch: 'full' },
-  { path: 'upload', component: UploadComponent },
+  { path: '', redirectTo: 'mydocuments', pathMatch: 'full' },
+  { path: 'mydocuments', component: UploadComponent },
   { path: 'reports', component: ReportsComponent },
   { path: 'setting', component: SettingComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'help', component: HelpComponent  },
-  { path: 'upload/edit/:data', component: EditUploadComponent}
+  { path: 'mydocuments/upload', component: EditUploadComponent},
+  { path: 'mydocuments/edit/:data', component: EditUploadComponent}
 ];
 
 @NgModule({

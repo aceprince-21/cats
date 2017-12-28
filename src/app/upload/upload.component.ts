@@ -13,16 +13,16 @@ export class UploadComponent implements OnInit {
   result:any;
   private perPage = 0;
   private Configs = [];
-  private DropDowns = [];
+  private DropDowns:any;
   private totalCount = 0;
   constructor(private _serv : UploadService, private route:ActivatedRoute,  private router: Router) { }
   
   ngOnInit() {
     this.uploadFetchService();
-    this.perPage = 5;
+    
     this.DropDowns = configs.DropDowns;
+    this.perPage = configs.DropDowns[0];
   }
-
   uploadFetchService(){
     this._serv.getReposForUser().subscribe(
       data => {
@@ -33,7 +33,7 @@ export class UploadComponent implements OnInit {
   }
 
   parseData(info){
-    this.router.navigate(['upload/edit', info]);
+    this.router.navigate(['mydocuments/edit', info]);
   }
 
 uploadfile(event) {  
@@ -45,7 +45,6 @@ formData.append('file', file, file.name);
 console.log(formData); 
 this._serv.getReposForUpload(formData).subscribe(error => console.log(error))
 } 
- 
-window.location.reload();  
+this.router.navigate(['mydocuments/upload']);
 } 
 }

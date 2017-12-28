@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {EdituploadService } from './editupload.service';
-import {UploadService} from '../upload/upload.service';
+import { EdituploadService } from './editupload.service';
+import { UploadService} from '../upload/upload.service';
 import { BasicfilterPipe } from '../pipe/filter/basicfilter.pipe';
 import { DatepickerOptions } from 'ng2-datepicker';
-import {uploadModel} from './exportmodel';
+import { uploadModel} from './exportmodel';
+import { configs} from '../../environments/config'
 
 @Component({
   selector: 'app-edit-upload',
@@ -24,6 +25,9 @@ export class EditUploadComponent implements OnInit {
   private leftSelectedItem:any = [];
   private rightSelectedItem:any = [];
   private CollectData:any = [];
+  private docSetting:boolean = false;
+  private newEffectiveDate:any = null;
+  private newTerminationDate:any = null;
   
   options: DatepickerOptions = {
     minYear: 1970,
@@ -36,13 +40,42 @@ export class EditUploadComponent implements OnInit {
   ngOnInit() {
     this.hostAppService();
     this.doctypeService();
+    this.CollectData = uploadModel;
     this.route.params.subscribe((params: Params) => {
           this.filterItem = params.data;
+          console.log(this.filterItem);
+          if(this.filterItem !== undefined){
+            this.uploadFetchService(this.filterItem);
+            this.docSetting = true;
+          }
     });
-    this.uploadFetchService(this.filterItem);
-    this.CollectData = uploadModel;
+    
+    this.SetUpformdata();
+    
+    
+  }
+  SetUpformdata(){
+    this.CollectData.uploadedDate = this.CurrentDate('-',0);
+    this.CollectData.effectiveDate = this.CurrentDate('-',0);
+    this.CollectData.terminationDate = this.CurrentDate('-',2);
   }
 
+  CurrentDate(sym,sel){
+    const Months =  configs.Months;
+    let getMontValue = 0;
+    let date = Date();
+    let month = date.split(' ')[1];
+    let curentDate  = parseInt(date.split(' ')[2]);
+    let Year = date.split(' ')[3];
+    month =  month.toLowerCase();
+
+      for(let i=0; i< Months.length; i++){
+        if(Months[i] === month){
+          getMontValue = i+1;
+        }
+      }
+      return getMontValue+sym+(curentDate+sel)+sym+Year;
+  }
   uploadFetchService(e){
     this._serveEdit.EditPage(e).subscribe(
       data => {
@@ -210,7 +243,6 @@ export class EditUploadComponent implements OnInit {
        this.CollectData.status = this.passData.status;
        this.CollectData.submittedUser = this.passData.submittedUser;
        this.CollectData.documentURL = this.passData.documentURL;
-       this.CollectData.uploadedDate = Date();
 
        //Pass this.CollectData into the Service...
 

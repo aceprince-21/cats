@@ -1,3 +1,4 @@
 export const configs = {
-    DropDowns :[10,25,50,100]
+    DropDowns :[5,10,25,50,100],
+    Months: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'july', 'aug', 'sep', 'oct', 'nov', 'dec']
 }

@@ -1,5 +1,6 @@
 <div class="container-fluid wraper">
     <h1 class="form-header">Document Upload</h1>
+    <span class="block-class" *ngIf = "docSetting === false">File Uploaded Sucessfully</span>
     <table class="table table-bordered table-responsive">
       <thead class="thead-light">
         <tr>
@@ -10,15 +11,25 @@
           <th scope="col">File URL</th>
         </tr>
       </thead>
-      <tbody *ngIf = "passData">
-        <tr>
+      <tbody *ngIf = "passData && docSetting === true" >
+       <tr>
           <td>{{passData.documentID}}</td>
           <td>{{passData.documentName}}</td>
           <td>{{passData.submittedUser}}</td>
           <td>{{passData.uploadedDate}}</td>
           <td><a  target = "blank" href="{{passData.documentURL}}">Download</a> </td>
         </tr>
-      </tbody>
+      </tbody> 
+
+      <tbody *ngIf = "docSetting === false">
+        <tr>
+           <td>{{CollectData.documentID}}</td>
+           <td>{{CollectData.docTypeID}}</td>
+           <td>{{CollectData.submittedUser}}</td>
+           <td>{{CollectData.uploadedDate}}</td>
+           <td><a  target = "blank" href="{{passData.documentURL}}">Download</a> </td>
+         </tr>
+       </tbody> 
     </table>
     <div class="row">
       <div class="col-sm-6">
@@ -140,7 +151,7 @@
         </div>
       </div>
       <div class="col-sm-6">
-              <h2 class="form-header no-mar">file Upload</h2>
+              <h2 class="form-header no-mar">Optional file upload</h2>
               <div class="form-group">
                 <div class="d-flex flex-row-reverse">
                   <label class="custom-file">
@@ -156,24 +167,44 @@
                 </div>
               </div>
               <hr/>
-        <div class="form-group">
+        <div class="form-group" *ngIf = "docSetting === true">
           <label class="d-block">What is the Document Type?</label>
-          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (change)="CollectData.docTypeID = doctypes.value" >
+          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = doctypes.value" >
             <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeName"  [selected]="item.docTypeID === passData.docTypeID">{{item.docTypeName}}</option>
           </select>
         </div>
+
+        <div class="form-group" *ngIf = "docSetting === false">
+          <label class="d-block">What is the Document Type?</label>
+          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = selectedItem" >
+            
+            <option *ngFor = "let item of getDocType; let i = index" [ngValue]="item.docTypeName" >{{item.docTypeName}}</option>
+          </select>
+        </div>
+
         <div class="row mb-5">
           <div class="col-sm-6">
-            <div class="form-group">
+            <div class="form-group" *ngIf = "docSetting === true">
               <label for="datepicker2">Start Date</label>
               <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value"> </ng-datepicker>
             </div>
+
+            <div class="form-group" *ngIf = "docSetting === false">
+                <label for="datepicker2">Start Date</label>
+                <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newEffectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value"> </ng-datepicker>
+              </div>
+
           </div>
           <div class="col-sm-6">
-            <div class="form-group">
+            <div class="form-group" *ngIf = "docSetting === true">
               <label for="datepicker2">Termination Date</label>
               <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.terminationDate" #endDate (change)="CollectData.terminationDate = endDate.value" > </ng-datepicker>
             </div>
+
+            <div class="form-group" *ngIf = "docSetting === false">
+                <label for="datepicker2">Termination Date</label>
+                <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newTerminationDate" #endDate (change)="CollectData.terminationDate = endDate.value" > </ng-datepicker>
+              </div>
           </div>
         </div>
         <div class="row">
