@@ -50,8 +50,7 @@ export class UploadComponent implements OnInit {
   }
 
   uploadfile() {
-    let fileList: FileList = this.selfile;
-    console.log(fileList);
+    let fileList = this.selfile;
     if (this.fileSize > 2899417) {
       this.CheckSize = true;
     }
@@ -59,14 +58,21 @@ export class UploadComponent implements OnInit {
       this.CheckSize = false;
     }
 
-    if (fileList.length > 0 && this.fileSize < 2899417) {
-      let file: File = fileList[0];
+    if (this.fileSize < 2899417) {
+      let file = fileList;
+      console.log(fileList);
       let formData: FormData = new FormData();
       formData.append('file', file);
+      formData.append('userName', 'Amritha');
       this._serv.getReposForUpload(formData).subscribe(
-        done => console.log('done'),
+        done => this.uploadDocument(done),
         error =>  console.log(error))
     }
-    this.router.navigate(['mydocuments/upload', 'newDoc']) 
+   // this.router.navigate(['mydocuments/upload', 'newDoc']) 
   }
+  uploadDocument(e){
+  console.log(e.document_id);
+  this.router.navigate(['mydocuments/upload', e.document_id])
+
+}
 }

@@ -18,6 +18,7 @@ export class UploadService {
   }
 
 getReposForUpload(files): Observable<any> {
+  console.log('test::::',files);
     let headers = new Headers({ 'Content-Type': undefined });
     let options = new RequestOptions({ headers: headers });
     return this.http.post(environment.postData.url,files, options)

@@ -44,8 +44,8 @@ export class EditUploadComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.hostAppService();
-    this.doctypeService();
+    //this.hostAppService();
+   // this.doctypeService();
     this.CollectData = uploadModel;
     this.route.params.subscribe((params: Params) => {
       this.filterItem = params.data;
@@ -95,6 +95,7 @@ export class EditUploadComponent implements OnInit {
         this.filterItemss = data.hostAppList;
         this.filterExistingItems();
       })
+      console.log(this.passData);
   }
 
   doctypeService() {

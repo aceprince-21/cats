@@ -23,11 +23,11 @@
 
       <tbody *ngIf = "docSetting === false">
         <tr>
-           <td>{{passData.documentID}}</td>
-           <td>{{passData.docTypeID}}</td>
-           <td>{{passData.submittedUser}}</td>
-           <td>{{passData.uploadedDate}}</td>
-           <td><a  target = "blank" href="{{passData.documentURL}}">Download</a> </td>
+           <td>{{passData.document_id}}</td>
+           <td>{{passData.document_name}}</td>
+           <td>{{passData.uploaded_by}}</td>
+           <td>{{passData.uploaded_date}}</td>
+           <td><a  target = "blank" href="http://localhost:8080/documents/files/{{passData.document_id}}">Download</a> </td>
          </tr>
        </tbody> 
     </table>

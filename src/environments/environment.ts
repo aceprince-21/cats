@@ -8,15 +8,15 @@ export const environment = {
   },
   postData: {
     method: "get",
-    url: "http://localhost:8080/documents/api/upload"
+    url: "http://localhost:8080/documents/upload"
   },
   getData: {
     //url : "../assets/mock/response.json"
     url: "http://localhost:8080/user/document/"
   },
   setData:{
-      url : "../assets/mock/upload.json"
-    },
+	 url : "http://localhost:8080/documents/upload/"
+  }, 
   hostApp: {
     //url : "../assets/mock/hostapp.json"
     url: "http://localhost:8080/document/hostapps"
@@ -48,9 +48,6 @@ export const environment = {
 //   getData: {
 //     url : "../assets/mock/response.json"
 //    // url: "http://localhost:8080/user/document/"
-//   },
-//   setData:{
-//     url : "../assets/mock/upload.json"
 //   },
 //   hostApp: {
 //     url : "../assets/mock/hostapp.json"
