@@ -13,10 +13,10 @@ export class EdituploadService {
   EditPage(val,e): Observable<any> {
     let newVal = '';
     if(val === 0){
-       newVal = environment.getData.url
+       newVal = environment.getData.url+e
     }
     else{
-      newVal = environment.setData.url
+      newVal = environment.setData.url+e
     }
     return this.http
       .get(newVal)

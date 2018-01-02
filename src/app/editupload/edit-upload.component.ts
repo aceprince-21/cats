@@ -279,13 +279,13 @@ export class EditUploadComponent implements OnInit {
       this.NewUploadData.docTypeID = false;
     }else{this.NewUploadData.docTypeID  = true;}
 
-    this.NewUploadData.validDate = this.DateValidation(this.newEffectiveDate,this.newTerminationDate);
+   
 
    if(this.NewUploadData.docTypeID === this.NewUploadData.hostAppList === this.NewUploadData.terminationDate ===  this.NewUploadData.effectiveDate
      === this.NewUploadData.perUserAssentReq === this.NewUploadData.partCompConsent === this.NewUploadData.intUserConsent ===
-     this.NewUploadData.customerConsent === this.NewUploadData.dealerConsent === this.NewUploadData.validDate === true 
+     this.NewUploadData.customerConsent === this.NewUploadData.dealerConsent === true 
   ){
-    
+    this.NewUploadData.validDate = this.DateValidation(this.newEffectiveDate, this.newTerminationDate);
      this.messageBox = true;
         setTimeout(() => {
           this.messageBox = false;
@@ -299,9 +299,10 @@ export class EditUploadComponent implements OnInit {
     if (this.filterItemss.length === 0) {
       this.NewUploadData.hostAppList = false;
     }else{this.NewUploadData.hostAppList = true;}
-    this.NewUploadData.validDate = this.DateValidation(this.newEffectiveDate,this.newTerminationDate);
+   
 
-    if(this.NewUploadData.hostAppList  ===  this.NewUploadData.validDate === true){
+    if(this.NewUploadData.hostAppList === true){
+      this.NewUploadData.validDate = this.DateValidation(this.newEffectiveDate,this.newTerminationDate);
       this.messageBox = true;
       setTimeout(() => {
         this.messageBox = false;
@@ -315,8 +316,9 @@ export class EditUploadComponent implements OnInit {
   }
 
   DateValidation(x,y){
-    let startData = x.split('-');
-    let endDate = y.split('-');
+    console.log(x);
+    let startData = x.split(" ");
+    let endDate = y.split(" ");
 
     if(startData[2] <= endDate[2]){
        if(startData[1] <= endDate[1]){
