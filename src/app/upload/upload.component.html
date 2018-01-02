@@ -52,7 +52,7 @@
             <div class="form-panel">
               <h2 class="form-panel__header">Search Results</h2>
               <div class="form-panel__body">
-                <table class="table table-bordered table-responsive">
+                <table class="table table-bordered">
                   <thead class="thead-light">
                     <tr>
                       <th scope="col">Status</th>
@@ -81,7 +81,7 @@
                   </tbody>
                 
                 </table>
-                <div class="row" *ngIf="perPage <= totalCount">
+                <div class="row">
                   <pagination-controls class="col-lg-9"(pageChange)="p = $event"></pagination-controls> <span class="col-lg-3 pull-right">&nbsp; &nbsp; &nbsp; &nbsp;Records Per Page &nbsp;
                   <select class="pull-right"   [(ngModel)]="perPage" #perPageVal>
                     <option *ngFor = "let dropDown of DropDowns" [ngValue]="dropDown" >{{dropDown}}</option>
@@ -96,15 +96,16 @@
                 <div class="d-flex flex-row-reverse">
                   <label class="custom-file">
                     <!--<input type="file" id="fileInput" (click)="uploadfile()" class="custom-file-input"> -->
-                    <input type="file" #file (change) = "uploadfile($event)" class="custom-file-input" />
-                    <span class="custom-file-control"></span>
+                    <input type="file" accept="*" #file (change) = "fileEvent($event)" class="custom-file-input" />
+                    <span class="custom-file-control">{{fileName}}</span>
                   </label>
                 </div>
               </div>
               <div class="form-group">
-                <div class="d-flex flex-row-reverse">
-                  <a class="btn btn-primary">Upload</a>
+                <div class="d-flex flex-row-reverse"> 
+                  <button [disabled] ="CheckSize" (click) = "uploadfile()" class="btn btn-primary">Upload</button>
                 </div>
+                <span *ngIf="CheckSize" class="pull-right">File Size is too high upload below 2 MB</span>
               </div>
             </div>
     </div>

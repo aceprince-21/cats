@@ -1,7 +1,7 @@
 <div class="container-fluid wraper">
     <h1 class="form-header">Document Upload</h1>
     <span class="block-class" *ngIf = "docSetting === false">File Uploaded Sucessfully</span>
-    <table class="table table-bordered table-responsive">
+    <table class="table table-bordered">
       <thead class="thead-light">
         <tr>
           <th scope="col">Document ID</th>
@@ -23,10 +23,10 @@
 
       <tbody *ngIf = "docSetting === false">
         <tr>
-           <td>{{CollectData.documentID}}</td>
-           <td>{{CollectData.docTypeID}}</td>
-           <td>{{CollectData.submittedUser}}</td>
-           <td>{{CollectData.uploadedDate}}</td>
+           <td>{{passData.documentID}}</td>
+           <td>{{passData.docTypeID}}</td>
+           <td>{{passData.submittedUser}}</td>
+           <td>{{passData.uploadedDate}}</td>
            <td><a  target = "blank" href="{{passData.documentURL}}">Download</a> </td>
          </tr>
        </tbody> 
@@ -68,7 +68,7 @@
                 <table class="table table-bordered m-0">
                   <tbody id="appsChosen" *ngIf = "filterItemss">
                     <tr *ngFor = "let hostsapp of filterItemss; let i = index">
-                           <td (click)="righttSelectedArray(hostsapp, i)"  [ngClass]="{'active': hostsapp.active === 'true' }" *ngIf="hostsapp.hostAppName != 'null'">
+                           <td (click)="righttSelectedArray(hostsapp, i)"  [ngClass]="{'active': hostsapp.active === 'true' }">
                               <a>{{hostsapp.hostAppName}}</a>
                            </td>
                     </tr>
@@ -76,69 +76,69 @@
                 </table>
               </div>
             </div>
-            <div class="col-lg-12 center" *ngIf = "filterItemss.length <=0">
-              <hr/>
-              <h5>Atleast select one application</h5>
+         
           </div>
+          <div [ngClass]= "{error: NewUploadData.hostAppList === false}">
+              <h5 class="message row center">Atleast select one application</h5>
           </div>
         </div>
-        <div class="form-group" [ngClass]= "{error: !dealerCon}">
+        <div class="form-group" [ngClass]= "{error: NewUploadData.dealerConsent === false}">
           <label class="d-block">Do Dealers Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" [(ngModel)]="dealerCon" type="radio" name="question1" value="true"  #dealerConsent (change)="CollectData.dealerConsent = dealerConsent.value" [checked]="passData.dealerConsent === true"> Yes
+              <input class="form-check-input" [(ngModel)]="dealerCon" type="radio" name="question1" value="true"  #dealerConsent (change)="CollectData.dealerConsent = dealerConsent.value; " [checked]="passData.dealerConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" [(ngModel)]="dealerCon" type="radio" name="question1" value="false" #dealerConsentf (change)="CollectData.dealerConsent = dealerConsentf.value" [checked]="passData.dealerConsent === false"> No
+              <input class="form-check-input" [(ngModel)]="dealerCon" type="radio" name="question1" value="false" #dealerConsentf (change)="CollectData.dealerConsent = dealerConsentf.value;" [checked]="passData.dealerConsent === false"> No
             </label>
           </div>
           <span class="message">Please select any one option</span>
         </div>
-        <div class="form-group" [ngClass]= "{error: !customerCon}">
+        <div class="form-group" [ngClass]= "{error: NewUploadData.customerConsent === false}">
           <label class="d-block">Do Customers Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question2"  [(ngModel)]="customerCon" value="true" #customerConsent (change)="CollectData.customerConsent = customerConsent.value" [checked]="passData.customerConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question2"  [(ngModel)]="customerCon" value="true" #customerConsent (change)="CollectData.customerConsent = customerConsent.value;" [checked]="passData.customerConsent === true"> Yes
             </label>
           </div>
-          <div class="form-check form-check-inline">
+          <div class="form-check form-check-inline" >
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question2" [(ngModel)]="customerCon" value="false"  #customerConsentf (change)="CollectData.customerConsent = customerConsentf.value" [checked]="passData.customerConsent === false"> No
+              <input class="form-check-input" type="radio" name="question2" [(ngModel)]="customerCon" value="false"  #customerConsentf (change)="CollectData.customerConsent = customerConsentf.value;" [checked]="passData.customerConsent === false"> No
             </label>
           </div>
           <span class="message">Please select any one option</span>
         </div>
-        <div class="form-group" [ngClass]= "{error: !intUser}">
+        <div class="form-group" [ngClass]= "{error: NewUploadData.intUserConsent === false}">
           <label class="d-block">Do Internal (CAT) Users Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question3" [(ngModel)]= "intUser" value="true"  #intUserConsent (change)="CollectData.intUserConsent = intUserConsent.value" [checked]="passData.intUserConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question3" [(ngModel)]= "intUser" value="true"  #intUserConsent (change)="CollectData.intUserConsent = intUserConsent.value;" [checked]="passData.intUserConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question3" [(ngModel)]= "intUser"  value="false" #intUserConsentf (change)="CollectData.intUserConsent = intUserConsentf.value" [checked]="passData.intUserConsent === false"> No
+              <input class="form-check-input" type="radio" name="question3" [(ngModel)]= "intUser"  value="false" #intUserConsentf (change)="CollectData.intUserConsent = intUserConsentf.value;" [checked]="passData.intUserConsent === false"> No
             </label>
           </div>
           <span class="message">Please select any one option</span>
         </div>
-        <div class="form-group" [ngClass]= "{error: !partComp}">
+        <div class="form-group" [ngClass]= "{error: NewUploadData.partCompConsent === false}">
           <label class="d-block">Do Partner Companies Need To Consent?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question4"  [(ngModel)]= "partComp" value="true" #partCompConsent (change)="CollectData.partCompConsent = partCompConsent.value" [checked]="passData.partCompConsent === true"> Yes
+              <input class="form-check-input" type="radio" name="question4"  [(ngModel)]= "partComp" value="true" #partCompConsent (change)="CollectData.partCompConsent = partCompConsent.value;" [checked]="passData.partCompConsent === true"> Yes
             </label>
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
-              <input class="form-check-input" type="radio" name="question4" [(ngModel)]= "partComp" value="false" #partCompConsentf (change)="CollectData.partCompConsent = partCompConsentf.value" [checked]="passData.partCompConsent === false"> No
+              <input class="form-check-input" type="radio" name="question4" [(ngModel)]= "partComp" value="false" #partCompConsentf (change)="CollectData.partCompConsent = partCompConsentf.value;" [checked]="passData.partCompConsent === false"> No
             </label>
           </div>
           <span class="message">Please select any one option</span>
         </div>
-        <div class="form-group" [ngClass]= "{error: !perUser}">
+        <div class="form-group" [ngClass]= "{error: NewUploadData.perUserAssentReq === false}">
           <label class="d-block">Is Per User Assent Required?</label>
           <div class="form-check form-check-inline">
             <label class="form-check-label">
@@ -156,45 +156,50 @@
       <div class="col-sm-6">
               <h2 class="form-header no-mar">Optional file upload</h2>
               <div class="form-group">
-                <div class="d-flex flex-row-reverse">
-                  <label class="custom-file">
-                    <!--<input type="file" id="fileInput" (click)="uploadfile()" class="custom-file-input"> -->
-                    <input type="file" #file (change) = "uploadfile($event)" class="custom-file-input" />
-                    <span class="custom-file-control"></span>
-                  </label>
+                  <div class="d-flex flex-row-reverse">
+                    <label class="custom-file">
+                      <input type="file" accept="*" #file (change) = "fileEvent($event)" class="custom-file-input" />
+                      <span class="custom-file-control">{{fileName}}</span>
+                    </label>
+                  </div>
+                  
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="d-flex flex-row-reverse">
-                  <a class="btn btn-primary">Upload</a>
+                <div class="form-group">
+                  <div class="d-flex flex-row-reverse"> 
+                    <button [disabled] ="CheckSize" (click) = "uploadfile()" class="btn btn-primary">Upload</button>
+                  </div>
+                  <span *ngIf="CheckSize" class="pull-right">File Size is too high upload below 2 MB</span>
                 </div>
-              </div>
-              <hr/>
-        <div class="form-group" *ngIf = "docSetting === true" >
+        <div class="form-group" *ngIf = "docSetting === true"  >
           <label class="d-block">What is the Document Type?</label>
           <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = doctypes.value" >
             <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeName"  [selected]="item.docTypeID === passData.docTypeID">{{item.docTypeName}}</option>
           </select>
         </div>
 
-        <div class="form-group" *ngIf = "docSetting === false">
+        <div class="form-group" *ngIf = "docSetting === false" >
           <label class="d-block">What is the Document Type?</label>
-          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = selectedItem" >
+          <div [ngClass]= "{error: NewUploadData.docTypeID === false}">
+          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = selectedItem; NewUploadData.docTypeID  = true" >
             
             <option *ngFor = "let item of getDocType; let i = index" [ngValue]="item.docTypeName" >{{item.docTypeName}}</option>
           </select>
+          <br/>
+          <span class="message">Please select any one option</span>
+         </div>
         </div>
 
-        <div class="row mb-5">
+        <div class="row">
           <div class="col-sm-6">
             <div class="form-group" *ngIf = "docSetting === true">
               <label for="datepicker2">Start Date</label>
-              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value"> </ng-datepicker>
+              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value;"> </ng-datepicker>
             </div>
 
-            <div class="form-group" *ngIf = "docSetting === false">
+            <div class="form-group" *ngIf = "docSetting === false"  [ngClass]= "{error: NewUploadData.effectiveDate === false}">
                 <label for="datepicker2">Start Date</label>
-                <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newEffectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value"> </ng-datepicker>
+                <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newEffectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value; NewUploadData.effectiveDate = true"> </ng-datepicker>
+                <span class="message">Select Start Date</span>
               </div>
 
           </div>
@@ -203,11 +208,11 @@
               <label for="datepicker2">Termination Date</label>
               <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.terminationDate" #endDate (change)="CollectData.terminationDate = endDate.value" > </ng-datepicker>
             </div>
-
-            <div class="form-group" *ngIf = "docSetting === false">
+            <div class="form-group" *ngIf = "docSetting === false"  [ngClass]= "{error: NewUploadData.terminationDate === false}">
                 <label for="datepicker2">Termination Date</label>
-                <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newTerminationDate" #endDate (change)="CollectData.terminationDate = endDate.value" > </ng-datepicker>
-              </div>
+                <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newTerminationDate" #endDate (change)="CollectData.terminationDate = endDate.value; NewUploadData.terminationDate = true" > </ng-datepicker>
+                <span class="message">Select End Date</span>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -219,4 +224,10 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="big-box messageBox" [ngClass]="{'active': messageBox === true}">
+        <div class="box">
+           <h1>Document has been Submitted</h1>
+        </div>
   </div>
