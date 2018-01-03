@@ -19,14 +19,14 @@ export const environment = {
   }, 
   hostApp: {
     //url : "../assets/mock/hostapp.json"
-    url: "http://localhost:8080/document/hostapps"
+    url: "http://localhost:8080/document/hostapp-search"
   },
   doctype: {
     //url : "../assets/mock/doctype.json"
-    url: "http://localhost:8080/document/doctypes"
+    url: "http://localhost:8080/document/doctype-search"
   },
   editedResponse: {
-    url: "http://localhost:8080/document/doctypes"
+    url: "http://localhost:8080/document/doctype-search"
   }
 
 

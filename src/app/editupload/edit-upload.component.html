@@ -154,6 +154,7 @@
         </div>
       </div>
       <div class="col-sm-6">
+        <div *ngIf = "docSetting === true">
               <h2 class="form-header no-mar">Optional file upload</h2>
               <div class="form-group">
                   <div class="d-flex flex-row-reverse">
@@ -169,6 +170,7 @@
                     <button [disabled] ="CheckSize" (click) = "uploadfile()" class="btn btn-primary">Upload</button>
                   </div>
                   <span *ngIf="CheckSize" class="pull-right">File Size is too high upload below 2 MB</span>
+                </div>
                 </div>
         <div class="form-group" *ngIf = "docSetting === true"  >
           <label class="d-block">What is the Document Type?</label>
