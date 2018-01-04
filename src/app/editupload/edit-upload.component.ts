@@ -31,9 +31,19 @@ export class EditUploadComponent implements OnInit {
   private fileName: any;
   private selfile: any;
   private fileSize: any;
+  private fileType: any;
   private CheckSize: boolean = false;
+  private CheckUpload: boolean = false;
   private messageBox:boolean = false;
-
+  private dealerCon;
+  private customerCon;
+  private intUser;
+  private partComp;
+  private perUser;
+  private selectedItem;
+  private startDate;
+  private endDate;
+  
   options: DatepickerOptions = {
     minYear: 1970,
     maxYear: 2030,
@@ -55,7 +65,6 @@ export class EditUploadComponent implements OnInit {
       if (get_path != 'upload') {
         this.uploadFetchService(0, this.filterItem.data);
         this.docSetting = true;
-        this.SetUpformdata();
       }
       else {
         this.uploadFetchService(1, this.filterItem.data);
@@ -69,11 +78,6 @@ export class EditUploadComponent implements OnInit {
     });
   }
 
-  SetUpformdata() {
-    this.CollectData.uploadedDate = this.CurrentDate('-', 0);
-    this.CollectData.effectiveDate = this.CurrentDate('-', 0);
-    this.CollectData.terminationDate = this.CurrentDate('-', 2);
-  }
 
   CurrentDate(sym, sel) {
     const Months = configs.Months;
@@ -107,12 +111,6 @@ export class EditUploadComponent implements OnInit {
 		this.passData.intUserConsent = false;
 		this.passData.partCompConsent = false;
 		this.passData.perUserAssentReq = false;
-		
-		this.CollectData.dealerConsent = true;
-		this.CollectData.customerConsent = true;
-		this.CollectData.intUserConsent = true;
-		this.CollectData.partCompConsent = true;
-		this.CollectData.perUserAssentReq = true;
 	   }
 	   
       })
@@ -275,6 +273,7 @@ export class EditUploadComponent implements OnInit {
     if (this.filterItemss.length === 0) {
         this.NewUploadData.hostAppList === false;
     }else{
+		 this.CollectData.hostAppList = this.filterItemss;
 		 this.NewUploadData.hostAppList === true;
 	}
 	
@@ -302,99 +301,106 @@ export class EditUploadComponent implements OnInit {
 	if (this.filterItemss.length === 0) {
         this.NewUploadData.hostAppList === false;
     }else{
-		
-				let fileList = this.selfile;
-				
-				if (this.fileSize > 2899417) {
-				  this.CheckSize = true;
-				}
-				else {
-				  this.CheckSize = false;
-				}
-
-				if (this.fileSize < 2899417) {
-				  let file = fileList;
-				  console.log(fileList);
-				  let formData: FormData = new FormData();
-				  formData.append('file', file);
+			 let formData: FormData = new FormData();
+				  if(this.selfile){
+					 let file = this.selfile;
+					 formData.append('file', file);
+				    }
+					else{
+						formData.append('file', '');
+					}
+				  console.log(this.CollectData);
 				  formData.append('Data', this.CollectData);
-				  this._serveEdit.sendResponse(formData).subscribe(
-					done => this.reuploadDocument(done),
-					error =>  console.log(error))
-				}
+				  this._serveEdit.reUpload(formData).subscribe(
+				  done => this.reuploadDocument(done),
+				  error =>  console.log(error))
 	}
 }
 
 
 uploadData(){
-	
-	if (!this.CollectData.docTypeID) {
-      this.NewUploadData.docTypeID = false;
-    }else{
-		 this.NewUploadData.docTypeID = true;
-	}
-	
-	if (!this.CollectData.dealerConsent) {
-      this.NewUploadData.dealerConsent = false
-    }else{
-		this.NewUploadData.dealerConsent = true
-	}
+     this.CollectData = [];
 
-    if (!this.CollectData.customerConsent) {
-      this.NewUploadData.customerConsent = false
-    }else{
-		this.NewUploadData.customerConsent = true;
-	}
+	 /* dealerCon; customerCon; intUser; partComp; perUser; selectedItem; newEffectiveDate; newTerminationDate*/
 
-    if (!this.CollectData.intUserConsent){
-      this.NewUploadData.intUserConsent = false
-    }else{
-	   this.NewUploadData.intUserConsent = true;
-	}
+       if (this.filterItemss.length === 0) {
+		  this.CollectData.hostAppList = [];
+          this.NewUploadData.hostAppList === false;
+		}else{
+			 this.CollectData.hostAppList = this.filterItemss;
+			 this.NewUploadData.hostAppList = true;
+		}
+		
+		if (!this.dealerCon){
+			this.CollectData.dealerConsent = false
+			this.NewUploadData.dealerConsent = true;
+		}else{
+			this.CollectData.dealerConsent = true;
+			this.NewUploadData.dealerConsent = true;
+		}
+		
+		if (!this.customerCon){
+			this.CollectData.customerConsent = false;
+			this.NewUploadData.customerConsent = true;
+		}else{
+			this.CollectData.customerConsent = true;
+			this.NewUploadData.customerConsent = true;
+		}
+		
+		if (!this.intUser){
+			this.CollectData.intUserConsent = false;
+			this.NewUploadData.intUserConsent = true;
+		}else{
+			this.CollectData.intUserConsent = true;
+			this.NewUploadData.intUserConsent = true;
+		}
+		
+		if (!this.partComp){
+			this.CollectData.partCompConsent = false;
+			this.NewUploadData.partCompConsent = true;
+		}else{
+			this.CollectData.partCompConsent = true;
+			this.NewUploadData.partCompConsent = true;
+		}
+		
+		if (!this.perUser){
+			this.CollectData.perUserAssentReq = false;
+			this.NewUploadData.perUserAssentReq = true;
+		}else{
+			this.CollectData.perUserAssentReq = true;
+			this.NewUploadData.perUserAssentReq = true;
+		}
+		
+		if (!this.selectedItem || this.selectedItem === null ){
+			this.NewUploadData.docTypeID = false;
+		}else{
+			this.CollectData.docTypeID = this.selectedItem;
+			this.NewUploadData.docTypeID = true;
+		}
+		
+		
+		this.CollectData.documentID = this.passData.document_id;
+		this.CollectData.documentName = this.passData.document_name;
+		this.CollectData.submittedUser = this.passData.uploaded_by;
+		this.CollectData.uploadedDate = this.passData.uploaded_date;
+		
+		this.CollectData.effectiveDate = this.newEffectiveDate;
+		this.CollectData.terminationDate = this.newTerminationDate;
+				
+        console.log(this.CollectData);
+		
+		 if( this.NewUploadData.hostAppList === this.NewUploadData.dealerConsent === this.NewUploadData.customerConsent === this.NewUploadData.intUserConsent === this.NewUploadData.partCompConsent === this.NewUploadData.perUserAssentReq === this.NewUploadData.docTypeID === true){
+			  let formData: FormData = new FormData();
+		   formData.append('Data', this.CollectData);
+		   this._serveEdit.sendResponse(formData).subscribe(
+				  done => this.reuploadDocument(done),
+				  error =>  console.log(error))
+		 }
 
-    if (!this.CollectData.partCompConsent) {
-      this.NewUploadData.partCompConsent = false
-    }else{
-	  this.NewUploadData.partCompConsent = true;
-	}
-
-    if (!this.CollectData.perUserAssentReq) {
-      this.NewUploadData.perUserAssentReq = false
-    }else{
-	   this.NewUploadData.perUserAssentReq = true
-	}
-
-    if (this.filterItemss.length === 0) {
-        this.NewUploadData.hostAppList = false;
-		return;
-    }else{
-		 this.NewUploadData.hostAppList = true;
-	}
-	
-     if (!this.CollectData.effectiveDate) {
-      this.NewUploadData.effectiveDate = false
-    }else{
-		  this.NewUploadData.effectiveDate = true
-	}
-	
-	if (!this.CollectData.terminationDate) {
-      this.NewUploadData.terminationDate = false
-    }else{
-		  this.NewUploadData.terminationDate = true
-	} 
-	
-	if(this.NewUploadData.docTypeID ===  this.NewUploadData.terminationDate === this.NewUploadData.effectiveDate === this.NewUploadData.hostAppList === this.NewUploadData.perUserAssentReq === this.NewUploadData.partCompConsent === this.NewUploadData.intUserConsent === this.NewUploadData.customerConsent === this.NewUploadData.dealerConsent === true){
-		             this.messageBox = true;
-		           //  this._serveEdit.getReposForUpload(formData).subscribe(
-					// done => this.reuploadDocument(done),
-					// error =>  console.log(error))
-	}
 }
 
   reuploadDocument(e){
-  console.log(e.document_id);
           setTimeout(() => {
-		 this.messageBox = false;
           this.router.navigate(['/mydocuments']);
           },2000);
   }
@@ -425,15 +431,30 @@ uploadData(){
     this.selfile = file;
     this.fileName = file.name;
     this.fileSize = file.size;
-
+	this.fileType  =  file.type;
+	this.CheckSize = true;
+	
+	if(this.fileType === 'application/pdf' && this.fileSize < 2899417){
+		this.CheckUpload = true;
+	}
+	else{
+		this.CheckUpload = false;
+	}
   }
 
   uploadfile() {
-    if (this.fileSize > 2899417) {
-      this.CheckSize = true;
-    }
-    else {
-      this.CheckSize = false;
-    }
+    /*let fileList = this.selfile;
+	
+    if (this.fileSize < 2899417 && 	this.CheckUpload === true) {
+       let file = fileList;
+      console.log(fileList);
+      let formData: FormData = new FormData();
+      formData.append('file', file);
+      formData.append('userName', 'Amritha');
+      this._serv.sendResponse(formData).subscribe(
+        done => this.uploadDocument(done),
+        error =>  console.log(error)) 
+    }*/
   }
+  
 }

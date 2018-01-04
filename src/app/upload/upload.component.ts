@@ -51,7 +51,7 @@ export class UploadComponent implements OnInit {
 	this.fileType  =  file.type;
 	this.CheckSize = true;
 	
-	if(this.fileType === 'application/pdf'){
+	if(this.fileType === 'application/pdf' && this.fileSize < 2899417){
 		this.CheckUpload = true;
 	}
 	else{

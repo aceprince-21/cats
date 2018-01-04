@@ -37,9 +37,15 @@ export class EdituploadService {
   }
 
   sendResponse(files): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let headers = new Headers({ 'Content-Type':  undefined  });
     let options = new RequestOptions({ headers: headers });
     return this.http.post(environment.editedResponse.url,files, options).map((res:Response) => res.json());
+  }
+  
+  reUpload(files): Observable<any>{
+    let headers = new Headers({ 'Content-Type': undefined });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.put(environment.reUploaddResponse.url,files, options).map((res:Response) => res.json());
   }
 
 }

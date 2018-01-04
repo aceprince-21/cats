@@ -105,6 +105,12 @@
 		color:#d50000;
 		display:none;
    }
+   .basic{
+	  display:block;
+	}
+	.error{
+	  display:none;
+	}
 }
 
 .infobox.error{
@@ -123,5 +129,15 @@
 	.red{
 	  display:block;
 	  color:#fff;
+	}
+}
+
+.infobox.high{
+     .basic{
+	  display:none;
+	}
+	.error{
+	  display:block;
+	  color:#d50000
 	}
 }
