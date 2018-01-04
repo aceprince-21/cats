@@ -27,6 +27,12 @@ export const environment = {
   },
   editedResponse: {
     url: "http://localhost:8080/document/doctype-search"
+  },
+  reUploaddResponse: {
+    url: "http://localhost:8080/document/edit/"
+  },
+   deleteResponse: {
+    url: "http://localhost:8080/document/delete/"
   }
 
 
