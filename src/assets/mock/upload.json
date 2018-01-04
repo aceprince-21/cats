@@ -1,6 +1,6 @@
 {
-    "documentID": "A001D1000",
-    "documentName": "",
+    "document_id": "A001D1000",
+    "document_name": "data_upload.pdf",
     "documentURL": "http://ftp.cat.com/documents/datagoverencedocument.pdf",
     "status": "",
     "docTypeID": "",
@@ -12,8 +12,8 @@
     "perUserAssentReq": "",
     "effectiveDate": "",
     "terminationDate": "",
-    "submittedUser": "CAT Product Owner",
-    "uploadedDate": "2017-12-13",
+    "uploaded_by": "CAT Product Owner",
+    "uploaded_date": "2017-12-13",
     "hostAppList": [
 
     ]

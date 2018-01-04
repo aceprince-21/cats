@@ -18,7 +18,9 @@ export class UploadComponent implements OnInit {
   private fileName: any;
   private selfile: any;
   private fileSize: any;
+  private fileType: any;
   private CheckSize: boolean = false;
+  private CheckUpload: boolean = false;
   constructor(private _serv: UploadService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -46,19 +48,21 @@ export class UploadComponent implements OnInit {
     this.selfile = file;
     this.fileName = file.name;
     this.fileSize = file.size;
-
+	this.fileType  =  file.type;
+	this.CheckSize = true;
+	
+	if(this.fileType === 'application/pdf'){
+		this.CheckUpload = true;
+	}
+	else{
+		this.CheckUpload = false;
+	}
   }
 
   uploadfile() {
     let fileList = this.selfile;
-    if (this.fileSize > 2899417) {
-      this.CheckSize = true;
-    }
-    else {
-      this.CheckSize = false;
-    }
-
-    if (this.fileSize < 2899417) {
+	
+    if (this.fileSize < 2899417 && 	this.CheckUpload === true) {
       let file = fileList;
       console.log(fileList);
       let formData: FormData = new FormData();
@@ -70,9 +74,9 @@ export class UploadComponent implements OnInit {
     }
    // this.router.navigate(['mydocuments/upload', 'newDoc']) 
   }
+  
   uploadDocument(e){
   console.log(e.document_id);
   this.router.navigate(['mydocuments/upload', e.document_id])
-
 }
 }

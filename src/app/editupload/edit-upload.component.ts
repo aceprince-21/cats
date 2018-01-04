@@ -13,7 +13,6 @@ import { configs } from '../../environments/config'
   styleUrls: ['./edit-upload.component.scss']
 })
 export class EditUploadComponent implements OnInit {
-
   constructor(private _passdata: UploadService, private _serveEdit: EdituploadService, private route: ActivatedRoute, private router: Router) { }
   private passData: any = [];
   private getHost: any = [];
@@ -38,31 +37,36 @@ export class EditUploadComponent implements OnInit {
   options: DatepickerOptions = {
     minYear: 1970,
     maxYear: 2030,
-    displayFormat: 'MM-DD-YYYY',
+    displayFormat: 'MM/DD/YYYY',
     barTitleFormat: 'MMMM YYYY',
     firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
   };
 
   ngOnInit() {
-    //this.hostAppService();
-   // this.doctypeService();
+    this.hostAppService();
+    this.doctypeService();
     this.CollectData = uploadModel;
-    this.route.params.subscribe((params: Params) => {
-      this.filterItem = params.data;
-      const get_path = this.router.url.split('/')[2];
-      console.log(get_path);
-      if (get_path != 'upload') {
-        this.uploadFetchService(0, this.filterItem);
-        this.docSetting = true;
 
+    this.route.params.subscribe((params: Params) => {
+		/**files  / data**/
+      this.filterItem = params;
+      const get_path = this.router.url.split('/')[2];
+	  console.log(get_path);
+      if (get_path != 'upload') {
+        this.uploadFetchService(0, this.filterItem.data);
+        this.docSetting = true;
         this.SetUpformdata();
       }
       else {
-        this.uploadFetchService(1, this.filterItem);
+        this.uploadFetchService(1, this.filterItem.data);
         this.CollectData = this.passData;
+        this.newEffectiveDate = Date();
+		this.newTerminationDate  = new Date();
+		let newDate =  this.newEffectiveDate;
+		newDate = parseInt(newDate.split(' ')[2]);
+		this.newTerminationDate.setDate(newDate + 15);
       }
     });
-
   }
 
   SetUpformdata() {
@@ -94,8 +98,25 @@ export class EditUploadComponent implements OnInit {
         this.passData = data;
         this.filterItemss = data.hostAppList;
         this.filterExistingItems();
+		
+		/*Yet to Confirm this logic is required */
+	    if(val === 1){
+		
+      	this.passData.dealerConsent = false;
+		this.passData.customerConsent = false;
+		this.passData.intUserConsent = false;
+		this.passData.partCompConsent = false;
+		this.passData.perUserAssentReq = false;
+		
+		this.CollectData.dealerConsent = true;
+		this.CollectData.customerConsent = true;
+		this.CollectData.intUserConsent = true;
+		this.CollectData.partCompConsent = true;
+		this.CollectData.perUserAssentReq = true;
+	   }
+	   
       })
-      console.log(this.passData);
+
   }
 
   doctypeService() {
@@ -115,7 +136,7 @@ export class EditUploadComponent implements OnInit {
 
   filterExistingItems() {
     let getHost = this.getHost;
-    let applist = this.filterItemss;
+    const applist = this.filterItemss;
     let keys = [];
 
     for (let i = 0; i < getHost.length; i++) {
@@ -137,7 +158,7 @@ export class EditUploadComponent implements OnInit {
 
   filterrightItems(x) {
     let getHost = x;
-    let applist = this.filterItemss;
+    const applist = this.filterItemss;
     let keyss = [];
     x.forEach((element) => {
       keyss = applist.filter(e => e !== element);
@@ -229,89 +250,155 @@ export class EditUploadComponent implements OnInit {
   }
 
 
-  submit() {
-
-    if(this.docSetting === false){
-    if (!this.CollectData.dealerConsent ) {
+  editdata() {
+		
+    if (this.CollectData.dealerConsent === "") {
       this.CollectData.dealerConsent = this.passData.dealerConsent;
-      this.NewUploadData.dealerConsent = false;
-    }else{this.NewUploadData.dealerConsent = true;}
+    }
+
+    if (this.CollectData.customerConsent === "") {
+      this.CollectData.customerConsent = this.passData.customerConsent;
+    }
+
+    if (this.CollectData.intUserConsent === ""){
+      this.CollectData.intUserConsent = this.passData.intUserConsent;
+    }
+
+    if (this.CollectData.partCompConsent === "") {
+      this.CollectData.partCompConsent = this.passData.partCompConsent;
+    }
+
+    if (this.CollectData.perUserAssentReq == "") {
+      this.CollectData.perUserAssentReq = this.passData.perUserAssentReq;
+    }
+
+    if (this.filterItemss.length === 0) {
+        this.NewUploadData.hostAppList === false;
+    }else{
+		 this.NewUploadData.hostAppList === true;
+	}
+	
+    if (this.CollectData.effectiveDate == "") {
+      this.CollectData.effectiveDate = this.passData.effectiveDate;
+    }
+	
+	if (this.CollectData.terminationDate == "") {
+      this.CollectData.terminationDate = this.passData.terminationDate;
+    }
+	
+	if (this.CollectData.docTypeID == "") {
+      this.CollectData.docTypeID = this.passData.docTypeID;
+	  this.CollectData.docTypeName = this.passData.docTypeName;
+    }
+	
+	
+	
+    this.CollectData.documentID = this.passData.documentID;
+	this.CollectData.documentName =this.passData.documentName;
+	this.CollectData.documentURL = this.passData.documentURL;
+	this.CollectData.submittedUser = this.passData.submittedUser;
+
+	
+	if (this.filterItemss.length === 0) {
+        this.NewUploadData.hostAppList === false;
+    }else{
+		
+				let fileList = this.selfile;
+				
+				if (this.fileSize > 2899417) {
+				  this.CheckSize = true;
+				}
+				else {
+				  this.CheckSize = false;
+				}
+
+				if (this.fileSize < 2899417) {
+				  let file = fileList;
+				  console.log(fileList);
+				  let formData: FormData = new FormData();
+				  formData.append('file', file);
+				  formData.append('Data', this.CollectData);
+				  this._serveEdit.sendResponse(formData).subscribe(
+					done => this.reuploadDocument(done),
+					error =>  console.log(error))
+				}
+	}
+}
+
+
+uploadData(){
+	
+	if (!this.CollectData.docTypeID) {
+      this.NewUploadData.docTypeID = false;
+    }else{
+		 this.NewUploadData.docTypeID = true;
+	}
+	
+	if (!this.CollectData.dealerConsent) {
+      this.NewUploadData.dealerConsent = false
+    }else{
+		this.NewUploadData.dealerConsent = true
+	}
 
     if (!this.CollectData.customerConsent) {
-      this.CollectData.customerConsent = this.passData.customerConsent;
-      this.NewUploadData.customerConsent = false;
-    }else{this.NewUploadData.customerConsent = true;}
+      this.NewUploadData.customerConsent = false
+    }else{
+		this.NewUploadData.customerConsent = true;
+	}
 
-    if (!this.CollectData.intUserConsent) {
-      this.CollectData.intUserConsent = this.passData.intUserConsent;
-      this.NewUploadData.intUserConsent = false;
-    }else{this.NewUploadData.intUserConsent = true;}
+    if (!this.CollectData.intUserConsent){
+      this.NewUploadData.intUserConsent = false
+    }else{
+	   this.NewUploadData.intUserConsent = true;
+	}
 
     if (!this.CollectData.partCompConsent) {
-      this.CollectData.partCompConsent = this.passData.partCompConsent;
-      this.NewUploadData.partCompConsent = false;
-    }else{this.NewUploadData.partCompConsent = true;}
+      this.NewUploadData.partCompConsent = false
+    }else{
+	  this.NewUploadData.partCompConsent = true;
+	}
 
     if (!this.CollectData.perUserAssentReq) {
-      this.CollectData.perUserAssentReq = this.passData.perUserAssentReq;
-      this.NewUploadData.perUserAssentReq = false;
-    }else{this.NewUploadData.perUserAssentReq = true;}
-
-
-    if (!this.newEffectiveDate) {
-      this.CollectData.effectiveDate = this.newEffectiveDate ;
-      this.NewUploadData.effectiveDate = false;
-    }else{this.NewUploadData.effectiveDate = true;}
-
-    
-
-    if (!this.newTerminationDate) {
-      this.CollectData.terminationDate = this.passData.terminationDate;
-      this.NewUploadData.terminationDate = false;
-    }else{this.NewUploadData.terminationDate = true;}
+      this.NewUploadData.perUserAssentReq = false
+    }else{
+	   this.NewUploadData.perUserAssentReq = true
+	}
 
     if (this.filterItemss.length === 0) {
-      this.CollectData.hostAppList - this.filterItem;
-      this.NewUploadData.hostAppList = false;
-    }else{this.NewUploadData.hostAppList = true;}
-
-
-    if (!this.CollectData.docTypeID) {
-      this.NewUploadData.docTypeID = false;
-    }else{this.NewUploadData.docTypeID  = true;}
-
-   
-
-   if(this.NewUploadData.docTypeID === this.NewUploadData.hostAppList === this.NewUploadData.terminationDate ===  this.NewUploadData.effectiveDate
-     === this.NewUploadData.perUserAssentReq === this.NewUploadData.partCompConsent === this.NewUploadData.intUserConsent ===
-     this.NewUploadData.customerConsent === this.NewUploadData.dealerConsent === true 
-  ){
-    this.NewUploadData.validDate = this.DateValidation(this.newEffectiveDate, this.newTerminationDate);
-     this.messageBox = true;
-        setTimeout(() => {
-          this.messageBox = false;
-          this.router.navigate(['/upload']);
-        },2000);
-
-   }
-
-  }
-  else{
-    if (this.filterItemss.length === 0) {
-      this.NewUploadData.hostAppList = false;
-    }else{this.NewUploadData.hostAppList = true;}
-   
-
-    if(this.NewUploadData.hostAppList === true){
-      this.NewUploadData.validDate = this.DateValidation(this.newEffectiveDate,this.newTerminationDate);
-      this.messageBox = true;
-      setTimeout(() => {
-        this.messageBox = false;
-        this.router.navigate(['/upload']);
-      },2000);
-    }
-  }
+        this.NewUploadData.hostAppList = false;
+		return;
+    }else{
+		 this.NewUploadData.hostAppList = true;
+	}
+	
+     if (!this.CollectData.effectiveDate) {
+      this.NewUploadData.effectiveDate = false
+    }else{
+		  this.NewUploadData.effectiveDate = true
+	}
+	
+	if (!this.CollectData.terminationDate) {
+      this.NewUploadData.terminationDate = false
+    }else{
+		  this.NewUploadData.terminationDate = true
+	} 
+	
+	if(this.NewUploadData.docTypeID ===  this.NewUploadData.terminationDate === this.NewUploadData.effectiveDate === this.NewUploadData.hostAppList === this.NewUploadData.perUserAssentReq === this.NewUploadData.partCompConsent === this.NewUploadData.intUserConsent === this.NewUploadData.customerConsent === this.NewUploadData.dealerConsent === true){
+		             this.messageBox = true;
+		           //  this._serveEdit.getReposForUpload(formData).subscribe(
+					// done => this.reuploadDocument(done),
+					// error =>  console.log(error))
+	}
 }
+
+  reuploadDocument(e){
+  console.log(e.document_id);
+          setTimeout(() => {
+		 this.messageBox = false;
+          this.router.navigate(['/mydocuments']);
+          },2000);
+  }
+ 
   goBack() {
     this.router.navigate(['/upload']);
   }
@@ -348,6 +435,5 @@ export class EditUploadComponent implements OnInit {
     else {
       this.CheckSize = false;
     }
-
   }
 }

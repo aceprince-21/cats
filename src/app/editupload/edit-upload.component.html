@@ -1,6 +1,6 @@
 <div class="container-fluid wraper">
     <h1 class="form-header">Document Upload</h1>
-    <span class="block-class" *ngIf = "docSetting === false">File Uploaded Sucessfully</span>
+    <span class="block-class" *ngIf = "docSetting === false">document Uploaded successfully</span>
     <table class="table table-bordered">
       <thead class="thead-light">
         <tr>
@@ -17,7 +17,7 @@
           <td>{{passData.documentName}}</td>
           <td>{{passData.submittedUser}}</td>
           <td>{{passData.uploadedDate}}</td>
-          <td><a  target = "blank" href="{{passData.documentURL}}">Download</a> </td>
+          <td><a  target = "blank" href="http://localhost:8080/documents/files/{{passData.documentURL}}">Download</a> </td>
         </tr>
       </tbody> 
 
@@ -41,7 +41,7 @@
                 <table class="table table-bordered m-0">
                   <tbody id="appsNotChosen" *ngIf="getHost">
                     <tr *ngFor = "let host of getHost; let i = index">
-                        <td (click)="leftSelectedArray(host, i)" [ngClass]="{'active': host.active === 'true' }"><a >{{host.hostAppName}}</a></td>
+                        <td (click)="leftSelectedArray(host, i)" [ngClass]="{'active': host.active === 'true'}"><a >{{host.hostAppName}}</a></td>
                     </tr>
                    </tbody>
                 </table>
@@ -78,7 +78,7 @@
             </div>
          
           </div>
-          <div [ngClass]= "{error: NewUploadData.hostAppList === false}">
+          <div [ngClass]="{error: NewUploadData.hostAppList == false}">
               <h5 class="message row center">Atleast select one application</h5>
           </div>
         </div>
@@ -179,7 +179,7 @@
           </select>
         </div>
 
-        <div class="form-group" *ngIf = "docSetting === false" >
+        <div class="form-group" *ngIf = "docSetting === false" [ngClass]= "{error: NewUploadData.docTypeID === false}">
           <label class="d-block">What is the Document Type?</label>
           <div [ngClass]= "{error: NewUploadData.docTypeID === false}">
           <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = selectedItem; NewUploadData.docTypeID  = true" >
@@ -194,12 +194,12 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="form-group" *ngIf = "docSetting === true">
-              <label for="datepicker2">Start Date</label>
+              <label for="datepicker2">Effective Date</label>
               <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value;"> </ng-datepicker>
             </div>
 
             <div class="form-group" *ngIf = "docSetting === false"  [ngClass]= "{error: NewUploadData.effectiveDate === false}">
-                <label for="datepicker2">Start Date</label>
+                <label for="datepicker2">Effective Date</label>
                 <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newEffectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value; NewUploadData.effectiveDate = true"> </ng-datepicker>
                 <span class="message">Select Start Date</span>
               </div>
@@ -218,10 +218,15 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-6" *ngIf = "docSetting === true">
             <!-- Using anchor tag instead of button for prototype purposes only -->
-            <a (click)="submit()" class="btn btn-primary btn-block">Save and Exit</a>
+            <a (click)="editdata()" class="btn btn-primary btn-block">Save and Exit</a>
             <a (click)="goBack()" class="btn btn-primary btn-block">Do Not Save and Exit</a>
+          </div>
+		   <div class="col-sm-6" *ngIf = "docSetting === false">
+            <!-- Using anchor tag instead of button for prototype purposes only -->
+            <a (click)="uploadData()" class="btn btn-primary btn-block">Save and Exit</a>
+            <a (click)="delete(passData.documentID)" class="btn btn-primary btn-block">Do Not Save and Exit</a>
           </div>
         </div>
       </div>
