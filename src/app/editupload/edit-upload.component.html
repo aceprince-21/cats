@@ -1,4 +1,5 @@
 <div class="container-fluid wraper">
+  <form enctype="multipart/form-data" method="POST"> 
     <h1 class="form-header">Document Upload</h1>
     <span class="block-class" *ngIf = "docSetting === false">document Uploaded successfully</span>
     <table class="table table-bordered">
@@ -155,7 +156,7 @@
       </div>
       <div class="col-sm-6">
         <div *ngIf = "docSetting === true">
-              <h2 class="form-header no-mar">Optional file upload</h2>
+              <h2 class="form-header no-mar">Re Upload Document</h2>
               <div class="form-group">
                   <div class="d-flex flex-row-reverse">
                     <label class="custom-file">
@@ -237,5 +238,6 @@
         </div>
       </div>
     </div>
+   </form>
   </div>
 
