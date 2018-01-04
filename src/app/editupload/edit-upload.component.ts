@@ -456,5 +456,12 @@ uploadData(){
         error =>  console.log(error)) 
     }*/
   }
+
+  delete(params){
+    this._serveEdit.deleteItem(params).subscribe(
+      done => this.reuploadDocument(done),
+      error =>  console.log(error))
+    }
+  }
   
 }

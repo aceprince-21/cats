@@ -48,4 +48,10 @@ export class EdituploadService {
     return this.http.put(environment.reUploaddResponse.url,files, options).map((res:Response) => res.json());
   }
 
+  deleteItem(params): Observable <any> {
+    return this.http
+      .get(environment.deleteResponse.url+params)
+      .map((res: any) => res.json())
+  }
+
 }
