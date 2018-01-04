@@ -462,6 +462,6 @@ uploadData(){
       done => this.reuploadDocument(done),
       error =>  console.log(error))
     }
-  }
+  
   
 }
