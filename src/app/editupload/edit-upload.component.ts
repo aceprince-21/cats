@@ -271,10 +271,10 @@ export class EditUploadComponent implements OnInit {
     }
 
     if (this.filterItemss.length === 0) {
-        this.NewUploadData.hostAppList === false;
+        this.NewUploadData.hostAppList = false;
     }else{
 		 this.CollectData.hostAppList = this.filterItemss;
-		 this.NewUploadData.hostAppList === true;
+		 this.NewUploadData.hostAppList = true;
 	}
 	
     if (this.CollectData.effectiveDate == "") {
@@ -298,8 +298,8 @@ export class EditUploadComponent implements OnInit {
 	this.CollectData.submittedUser = this.passData.submittedUser;
 
 	
-	if (this.filterItemss.length === 0) {
-        this.NewUploadData.hostAppList === false;
+	if (!this.filterItemss) {
+        this.NewUploadData.hostAppList = false;
     }else{
 			 let formData: FormData = new FormData();
 				  if(this.selfile){
@@ -325,7 +325,7 @@ uploadData(){
 
        if (this.filterItemss.length === 0) {
 		  this.CollectData.hostAppList = [];
-          this.NewUploadData.hostAppList === false;
+          this.NewUploadData.hostAppList = false;
 		}else{
 			 this.CollectData.hostAppList = this.filterItemss;
 			 this.NewUploadData.hostAppList = true;

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UploadService } from './upload.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { configs } from '../../environments/config'
+import { configs } from '../../environments/config';
 
 @Component({
   selector: 'app-upload',
