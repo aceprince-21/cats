@@ -168,7 +168,7 @@
                 </div>
                 <div class="form-group">
                   <div class="d-flex flex-row-reverse"> 
-                   <!-- <button [disabled] ="CheckSize" (click) = "uploadfile()" class="btn btn-primary">Upload</button> -->
+                   <button [disabled] ="CheckSize" (click) = "uploadfile()" class="btn btn-primary">Upload</button>
                   </div>
                   <div *ngIf="CheckSize === true" class="col-lg-12 infobox" [ngClass]="{error : fileType != 'application/pdf', high: fileSize >= 2899417}">
 		          <span class="arrow"></span>
@@ -235,6 +235,12 @@
             <a (click)="uploadData()" class="btn btn-primary btn-block">Save and Exit</a>
             <a (click)="delete(passData.documentID)" class="btn btn-primary btn-block">Do Not Save and Exit</a>
           </div>
+          <div class="errormsg" *ngIf="ErrorMsg != null ">
+              <span class="iconsize"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+              <span>{{ErrorMsg}}</span>
+          </div>
+          
+
         </div>
       </div>
     </div>

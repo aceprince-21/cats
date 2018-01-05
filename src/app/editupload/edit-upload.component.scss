@@ -135,3 +135,20 @@
 	  color:#d50000
 	}
 }
+
+.errormsg{
+    margin:20px;
+    width:100%;
+    padding: 20px;
+    color:#fff;
+    background: #d50000;
+    font-size:1em;
+    i{
+        color: #fff;
+        font-size: 4em;
+        float: left;
+    }
+    span{
+        float:left;
+    }
+}

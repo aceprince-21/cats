@@ -43,6 +43,7 @@ export class EditUploadComponent implements OnInit {
   private selectedItem;
   private startDate;
   private endDate;
+  private ErrorMsg;
   
   options: DatepickerOptions = {
     minYear: 1970,
@@ -313,17 +314,17 @@ export class EditUploadComponent implements OnInit {
 				  formData.append('Data', this.CollectData);
 				  this._serveEdit.reUpload(formData).subscribe(
 				  done => this.reuploadDocument(done),
-				  error =>  console.log(error))
+				  error =>  this.erroeMsg(error))
 	}
 }
 
 
 uploadData(){
      this.CollectData = [];
-
+     let newItem:any = [];
 	 /* dealerCon; customerCon; intUser; partComp; perUser; selectedItem; newEffectiveDate; newTerminationDate*/
 
-       if (this.filterItemss.length === 0) {
+  if (this.filterItemss.length == 0) {
 		  this.CollectData.hostAppList = [];
           this.NewUploadData.hostAppList = false;
 		}else{
@@ -378,35 +379,39 @@ uploadData(){
 			this.NewUploadData.docTypeID = true;
 		}
 		
-		
+		this.CollectData.status = this.passData.status;
 		this.CollectData.documentID = this.passData.document_id;
 		this.CollectData.documentName = this.passData.document_name;
 		this.CollectData.submittedUser = this.passData.uploaded_by;
 		this.CollectData.uploadedDate = this.passData.uploaded_date;
-		
 		this.CollectData.effectiveDate = this.newEffectiveDate;
 		this.CollectData.terminationDate = this.newTerminationDate;
 				
-        console.log(this.CollectData);
+      newItem.push(this.CollectData);
+      console.log(newItem);
 		
 		 if( this.NewUploadData.hostAppList === this.NewUploadData.dealerConsent === this.NewUploadData.customerConsent === this.NewUploadData.intUserConsent === this.NewUploadData.partCompConsent === this.NewUploadData.perUserAssentReq === this.NewUploadData.docTypeID === true){
 			  let formData: FormData = new FormData();
-		   formData.append('Data', this.CollectData);
+		   formData.append('Data', newItem);
 		   this._serveEdit.sendResponse(formData).subscribe(
 				  done => this.reuploadDocument(done),
-				  error =>  console.log(error))
+				  error =>  this.erroeMsg(error));
 		 }
 
 }
 
-  reuploadDocument(e){
+erroeMsg(e){
+    this.ErrorMsg = e;
+}
+
+reuploadDocument(e){
           setTimeout(() => {
           this.router.navigate(['/mydocuments']);
           },2000);
   }
  
   goBack() {
-    this.router.navigate(['/upload']);
+    this.router.navigate(['/mydocuments']);
   }
 
   DateValidation(x,y){
@@ -427,13 +432,12 @@ uploadData(){
   }
 
   fileEvent(event) {
-    let file = event.target.files[0];
-    this.selfile = file;
-    this.fileName = file.name;
-    this.fileSize = file.size;
+  let file = event.target.files[0];
+  this.selfile = file;
+  this.fileName = file.name;
+  this.fileSize = file.size;
 	this.fileType  =  file.type;
 	this.CheckSize = true;
-	
 	if(this.fileType === 'application/pdf' && this.fileSize < 2899417){
 		this.CheckUpload = true;
 	}
@@ -443,18 +447,17 @@ uploadData(){
   }
 
   uploadfile() {
-    /*let fileList = this.selfile;
-	
+    let fileList = this.selfile;
     if (this.fileSize < 2899417 && 	this.CheckUpload === true) {
-       let file = fileList;
+      let file = fileList;
       console.log(fileList);
       let formData: FormData = new FormData();
       formData.append('file', file);
       formData.append('userName', 'Amritha');
-      this._serv.sendResponse(formData).subscribe(
-        done => this.uploadDocument(done),
-        error =>  console.log(error)) 
-    }*/
+      this._passdata.getReposForUpload(formData).subscribe(
+        done => this.reuploadDocument(done),
+        error =>  console.log(error))
+    }
   }
 
   delete(params){

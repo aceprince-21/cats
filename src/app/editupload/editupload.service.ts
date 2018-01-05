@@ -13,10 +13,10 @@ export class EdituploadService {
   EditPage(val,e): Observable<any> {
     let newVal = '';
     if(val === 0){
-       newVal = environment.getData.url+e;
+       newVal = environment.getData.url;
     }
     else{
-      newVal = environment.setData.url+e;
+      newVal = environment.setData.url;
     }
 	console.log(e);
     return this.http
@@ -36,22 +36,27 @@ export class EdituploadService {
       .map((res: any) => res.json())
   }
 
-  sendResponse(files): Observable<any> {
-    let headers = new Headers({ 'Content-Type':  undefined  });
+  sendResponse (files: Object): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(environment.editedResponse.url,files, options).map((res:Response) => res.json());
+    return this.http.post(environment.editedResponse.url,files, options)
+                     .map((res:Response) => res.json())
+                     .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
   
-  reUpload(files): Observable<any>{
-    let headers = new Headers({ 'Content-Type': undefined });
+  reUpload(files: Object): Observable<any>{
+    let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.put(environment.reUploaddResponse.url,files, options).map((res:Response) => res.json());
+    return this.http.put(environment.reUploaddResponse.url,files, options)
+                    .map((res:Response) => res.json())
+                    .catch((error:any) => Observable.throw(error.json().error || 'Server error'));  
   }
 
-  deleteItem(params): Observable <any> {
+  deleteItem(params: string): Observable <any> {
     return this.http
-      .get(environment.deleteResponse.url+params)
+      .delete(environment.deleteResponse.url+{params})
       .map((res: any) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
 
 }
