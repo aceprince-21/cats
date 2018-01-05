@@ -401,7 +401,7 @@ uploadData(){
 }
 
 erroeMsg(e){
-    this.ErrorMsg = e;
+    this.ErrorMsg += e+' | ';
 }
 
 reuploadDocument(e){
@@ -456,14 +456,14 @@ reuploadDocument(e){
       formData.append('userName', 'Amritha');
       this._passdata.getReposForUpload(formData).subscribe(
         done => this.reuploadDocument(done),
-        error =>  console.log(error))
+        error =>  this.erroeMsg(error))
     }
   }
 
   delete(params){
     this._serveEdit.deleteItem(params).subscribe(
       done => this.reuploadDocument(done),
-      error =>  console.log(error))
+      error => this.erroeMsg(error))
     }
   
   

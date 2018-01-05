@@ -71,7 +71,7 @@
                       <td>{{item.documentName}}</td>
                       <td>{{item.docTypeName}}</td>
                       <td>{{item.submittedUser}}</td>
-                      <td>{{item.uploadedDate | date: 'dd/MM/yyyy'}}</td>
+                      <td>{{item.uploadedDate | date: 'MM/dd/yyyy'}}</td>
                       <td>
                         <a (click)="parseData(item.documentID)"class="btn btn-primary btn-sm btn-block">Review / Edit</a>
                       </td>

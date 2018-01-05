@@ -230,17 +230,15 @@
             <a (click)="editdata()" class="btn btn-primary btn-block">Save and Exit</a>
             <a (click)="goBack()" class="btn btn-primary btn-block">Do Not Save and Exit</a>
           </div>
-		   <div class="col-sm-6" *ngIf = "docSetting === false">
+		      <div class="col-sm-6" *ngIf = "docSetting === false">
             <!-- Using anchor tag instead of button for prototype purposes only -->
             <a (click)="uploadData()" class="btn btn-primary btn-block">Save and Exit</a>
             <a (click)="delete(passData.documentID)" class="btn btn-primary btn-block">Do Not Save and Exit</a>
           </div>
           <div class="errormsg" *ngIf="ErrorMsg != null ">
               <span class="iconsize"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
-              <span>{{ErrorMsg}}</span>
+              <span class="col-lg-8">{{ErrorMsg}}</span>
           </div>
-          
-
         </div>
       </div>
     </div>
