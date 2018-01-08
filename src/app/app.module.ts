@@ -5,6 +5,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpModule } from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -53,6 +54,7 @@ export const ROUTES: Routes = [
   imports: [
     BrowserModule,
     HttpModule,
+  	HttpClientModule,
     CommonModule, 
     FormsModule,
     NgDatepickerModule,

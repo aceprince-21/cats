@@ -13,10 +13,10 @@ export class EdituploadService {
   EditPage(val,e): Observable<any> {
     let newVal = '';
     if(val === 0){
-       newVal = environment.getData.url;
+       newVal = environment.getData.url+e;
     }
     else{
-      newVal = environment.setData.url;
+      newVal = environment.setData.url+e;
     }
 	console.log(e);
     return this.http
@@ -36,23 +36,27 @@ export class EdituploadService {
       .map((res: any) => res.json())
   }
 
-  sendResponse (files: Object): Observable<any> {
+  sendResponse (data: Object): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(environment.editedResponse.url,files, options)
-                     .map((res:Response) => res.json())
+
+console.log("url "+ environment.mainData.url);
+    return this.http.post(environment.mainData.url,JSON.stringify(data), options)
+                     .map((res:Response) => res)
                      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+
   }
   
-  reUpload(files: Object): Observable<any>{
+  reUpload(files): Observable<any>{
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.http.put(environment.reUploaddResponse.url,files, options)
-                    .map((res:Response) => res.json())
+                    .map((res:Response) => res)
                     .catch((error:any) => Observable.throw(error.json().error || 'Server error'));  
   }
 
   deleteItem(params: string): Observable <any> {
+    console.log("hai"+params);
     return this.http
       .delete(environment.deleteResponse.url+{params})
       .map((res: any) => res.json())

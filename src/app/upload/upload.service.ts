@@ -26,4 +26,13 @@ getReposForUpload(files): Observable<any> {
                
   }
 
+  getReposForReUpload(files): Observable<any> {
+  console.log('test::::',files);
+    let headers = new Headers();
+    let options = new RequestOptions({ headers: headers });
+    return this.http.put(environment.reUploadData.url,files, options)
+               .map((res:Response) => res.json());
+               
+  }
+
 }

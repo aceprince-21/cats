@@ -64,7 +64,7 @@ export class EditUploadComponent implements OnInit {
       const get_path = this.router.url.split('/')[2];
 	  console.log(get_path);
       if (get_path != 'upload') {
-        this.uploadFetchService(0, this.filterItem.data);
+        this.uploadFetchService(0, this.filterItem.files);
         this.docSetting = true;
       }
       else {
@@ -113,7 +113,7 @@ export class EditUploadComponent implements OnInit {
 		this.passData.partCompConsent = false;
 		this.passData.perUserAssentReq = false;
 	   }
-	   
+	   console.log(data);
       })
 
   }
@@ -137,7 +137,7 @@ export class EditUploadComponent implements OnInit {
     let getHost = this.getHost;
     const applist = this.filterItemss;
     let keys = [];
-
+    if(applist){
     for (let i = 0; i < getHost.length; i++) {
       for (let j = 0; j < applist.length; j++) {
         if (getHost[i].hostAppID === applist[j].hostAppID) {
@@ -145,6 +145,7 @@ export class EditUploadComponent implements OnInit {
         }
       }
     }
+	}
     keys = getHost;
     const dataT = keys.filter((value, index, array) => {
       return array.indexOf(value) === index;
@@ -215,10 +216,13 @@ export class EditUploadComponent implements OnInit {
   moveSelectedtoright() {
     const rightTable = this.filterItemss;
     const leftTable = this.leftSelectedItem;
+	if(rightTable){
     let MoveTable = rightTable.concat(leftTable);
+	
     this.filterItemss = this.removeTrue(MoveTable);
     this.leftSelectedItem = [];
     this.filterExistingItems();
+	}
   }
 
   moveSelectedtoleft() {
@@ -250,7 +254,7 @@ export class EditUploadComponent implements OnInit {
 
 
   editdata() {
-		
+		this.CollectData = {};
     if (this.CollectData.dealerConsent === "") {
       this.CollectData.dealerConsent = this.passData.dealerConsent;
     }
@@ -267,7 +271,7 @@ export class EditUploadComponent implements OnInit {
       this.CollectData.partCompConsent = this.passData.partCompConsent;
     }
 
-    if (this.CollectData.perUserAssentReq == "") {
+    if (this.CollectData.perUserAssentReq === "") {
       this.CollectData.perUserAssentReq = this.passData.perUserAssentReq;
     }
 
@@ -278,15 +282,15 @@ export class EditUploadComponent implements OnInit {
 		 this.NewUploadData.hostAppList = true;
 	}
 	
-    if (this.CollectData.effectiveDate == "") {
+    if (this.CollectData.effectiveDate === "") {
       this.CollectData.effectiveDate = this.passData.effectiveDate;
     }
 	
-	if (this.CollectData.terminationDate == "") {
+	if (this.CollectData.terminationDate === "") {
       this.CollectData.terminationDate = this.passData.terminationDate;
     }
 	
-	if (this.CollectData.docTypeID == "") {
+	if (this.CollectData.docTypeID === "") {
       this.CollectData.docTypeID = this.passData.docTypeID;
 	  this.CollectData.docTypeName = this.passData.docTypeName;
     }
@@ -295,11 +299,11 @@ export class EditUploadComponent implements OnInit {
 	
     this.CollectData.documentID = this.passData.documentID;
 	this.CollectData.documentName =this.passData.documentName;
-	this.CollectData.documentURL = this.passData.documentURL;
+	this.CollectData.documentURL = this.passData.documentID;;
 	this.CollectData.submittedUser = this.passData.submittedUser;
 
 	
-	if (!this.filterItemss) {
+	if (this.filterItemss === 0) {
         this.NewUploadData.hostAppList = false;
     }else{
 			 let formData: FormData = new FormData();
@@ -320,8 +324,7 @@ export class EditUploadComponent implements OnInit {
 
 
 uploadData(){
-     this.CollectData = [];
-     let newItem:any = [];
+     this.CollectData = {};
 	 /* dealerCon; customerCon; intUser; partComp; perUser; selectedItem; newEffectiveDate; newTerminationDate*/
 
   if (this.filterItemss.length == 0) {
@@ -379,21 +382,22 @@ uploadData(){
 			this.NewUploadData.docTypeID = true;
 		}
 		
-		this.CollectData.status = this.passData.status;
+		this.CollectData.status = 'Active';
 		this.CollectData.documentID = this.passData.document_id;
 		this.CollectData.documentName = this.passData.document_name;
 		this.CollectData.submittedUser = this.passData.uploaded_by;
-		this.CollectData.uploadedDate = this.passData.uploaded_date;
-		this.CollectData.effectiveDate = this.newEffectiveDate;
-		this.CollectData.terminationDate = this.newTerminationDate;
-				
-      newItem.push(this.CollectData);
-      console.log(newItem);
+		this.CollectData.uploadedDate = '2018-01-08';
+		this.CollectData.effectiveDate = '2018-1-6';
+		this.CollectData.terminationDate = '2018-2-2';
+    this.CollectData.documentURL = this.passData.document_id;
+
+      console.log("dataTosend ::"+JSON.stringify(this.CollectData));
+	  
 		
 		 if( this.NewUploadData.hostAppList === this.NewUploadData.dealerConsent === this.NewUploadData.customerConsent === this.NewUploadData.intUserConsent === this.NewUploadData.partCompConsent === this.NewUploadData.perUserAssentReq === this.NewUploadData.docTypeID === true){
-			  let formData: FormData = new FormData();
-		   formData.append('Data', newItem);
-		   this._serveEdit.sendResponse(formData).subscribe(
+			 // let formData: FormData = new FormData();
+		   //formData.append('documentDetails', newItem);
+		   this._serveEdit.sendResponse(this.CollectData).subscribe(
 				  done => this.reuploadDocument(done),
 				  error =>  this.erroeMsg(error));
 		 }
@@ -405,9 +409,10 @@ erroeMsg(e){
 }
 
 reuploadDocument(e){
-          setTimeout(() => {
+  console.log();
+          //setTimeout(() => {
           this.router.navigate(['/mydocuments']);
-          },2000);
+         // },2000);
   }
  
   goBack() {
@@ -432,12 +437,13 @@ reuploadDocument(e){
   }
 
   fileEvent(event) {
-  let file = event.target.files[0];
-  this.selfile = file;
-  this.fileName = file.name;
-  this.fileSize = file.size;
+    let file = event.target.files[0];
+    this.selfile = file;
+    this.fileName = file.name;
+    this.fileSize = file.size;
 	this.fileType  =  file.type;
 	this.CheckSize = true;
+	
 	if(this.fileType === 'application/pdf' && this.fileSize < 2899417){
 		this.CheckUpload = true;
 	}
@@ -453,12 +459,17 @@ reuploadDocument(e){
       console.log(fileList);
       let formData: FormData = new FormData();
       formData.append('file', file);
-      formData.append('userName', 'Amritha');
-      this._passdata.getReposForUpload(formData).subscribe(
-        done => this.reuploadDocument(done),
-        error =>  this.erroeMsg(error))
+      formData.append('docid', this.passData.documentID);
+      this._passdata.getReposForReUpload(formData).subscribe(
+        done => this.uploadDocument(done),
+        error => this.erroeMsg(error))
     }
   }
+  
+  uploadDocument(e){
+  console.log(e.document_id);
+ // this.router.navigate(['mydocuments/upload', e.document_id])
+}
 
   delete(params){
     this._serveEdit.deleteItem(params).subscribe(

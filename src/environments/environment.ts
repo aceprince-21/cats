@@ -9,6 +9,10 @@ export const environment = {
     method: "get",
     url: "http://localhost:8080/documents/upload"
   },
+  reUploadData: {
+    method: "get",
+    url: "http://localhost:8080/documents/edit"
+  },
   getData: {
     //url : "../assets/mock/response.json"
     url: "http://localhost:8080/user/document/"
