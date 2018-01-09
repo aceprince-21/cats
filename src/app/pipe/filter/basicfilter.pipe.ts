@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Pipe({
   name: 'basicfilter'
@@ -6,14 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 export class BasicfilterPipe implements PipeTransform {
   
-  transform(value: any[], args?:any ): any {
-    let getnewItem;
-
-    let keys = [];
-    if(value.length >0 && args.length > 0){
+  transform(items:any[], args?:any[], types?:boolean) {
    
-    }
-   
-    return keys;
-}  
+  }
 }

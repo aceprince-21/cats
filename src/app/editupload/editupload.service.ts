@@ -7,9 +7,7 @@ import { Headers, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class EdituploadService {
-
   constructor(private http : Http) { }
-
   EditPage(val,e): Observable<any> {
     let newVal = '';
     if(val === 0){

@@ -44,6 +44,7 @@ export class EditUploadComponent implements OnInit {
   private startDate;
   private endDate;
   private ErrorMsg;
+  private submitted:boolean = false;
   
   options: DatepickerOptions = {
     minYear: 1970,
@@ -52,12 +53,12 @@ export class EditUploadComponent implements OnInit {
     barTitleFormat: 'MMMM YYYY',
     firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
   };
+  
 
   ngOnInit() {
     this.hostAppService();
     this.doctypeService();
     this.CollectData = uploadModel;
-
     this.route.params.subscribe((params: Params) => {
 		/**files  / data**/
       this.filterItem = params;
@@ -68,9 +69,9 @@ export class EditUploadComponent implements OnInit {
         this.docSetting = true;
       }
       else {
-        this.uploadFetchService(1, this.filterItem.data);
-        this.CollectData = this.passData;
-        this.newEffectiveDate = Date();
+    this.uploadFetchService(1, this.filterItem.data);
+    this.CollectData = this.passData;
+    this.newEffectiveDate = Date();
 		this.newTerminationDate  = new Date();
 		let newDate =  this.newEffectiveDate;
 		newDate = parseInt(newDate.split(' ')[2]);
@@ -294,10 +295,8 @@ export class EditUploadComponent implements OnInit {
       this.CollectData.docTypeID = this.passData.docTypeID;
 	  this.CollectData.docTypeName = this.passData.docTypeName;
     }
-	
-	
-	
-    this.CollectData.documentID = this.passData.documentID;
+
+  this.CollectData.documentID = this.passData.documentID;
 	this.CollectData.documentName =this.passData.documentName;
 	this.CollectData.documentURL = this.passData.documentID;;
 	this.CollectData.submittedUser = this.passData.submittedUser;
@@ -467,8 +466,8 @@ reuploadDocument(e){
   }
   
   uploadDocument(e){
-  console.log(e.document_id);
- // this.router.navigate(['mydocuments/upload', e.document_id])
+  this.CheckSize = false;
+  this.submitted = true;
 }
 
   delete(params){

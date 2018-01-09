@@ -152,3 +152,35 @@
         float:left;
     }
 }
+
+
+.done{
+    position:relative;
+    background-color:palegreen;
+    width:100%;
+    float:left;
+    padding: 10px;
+    color:#fff;
+    font-size:1em;
+     .arrow{
+     position:absolute;
+     right:10px;
+     top:-11px;
+     width: 0px;
+     height: 0px;
+     border-left: 10px solid transparent;
+     border-right: 10px solid transparent;
+     border-bottom: 10px solid palegreen;;
+     }
+     h3{
+        padding: 10px 10px 0;
+     }
+     i{
+        color: #fff;
+        font-size: 4em;
+        float: left;
+    }
+    span{
+        float:left;
+    }
+}

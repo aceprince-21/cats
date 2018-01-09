@@ -2,8 +2,8 @@ export const environment = {
   production: false,
   mainData: {
     method: "get",
-   // url : "../assets/mock/data.json"
-   url: "http://localhost:8080/user/document"
+    // url : "../assets/mock/data.json"
+    url: "http://localhost:8080/user/document"
   },
   postData: {
     method: "get",
@@ -17,9 +17,9 @@ export const environment = {
     //url : "../assets/mock/response.json"
     url: "http://localhost:8080/user/document/"
   },
-  setData:{
-	 url : "http://localhost:8080/documents/upload/"
-  }, 
+  setData: {
+    url: "http://localhost:8080/documents/upload/"
+  },
   hostApp: {
     //url : "../assets/mock/hostapp.json"
     url: "http://localhost:8080/document/hostapp-search"
@@ -34,7 +34,7 @@ export const environment = {
   reUploaddResponse: {
     url: "http://localhost:8080/document/edit/"
   },
-   deleteResponse: {
+  deleteResponse: {
     url: "http://localhost:8080/document/delete/"
   }
 };
@@ -51,6 +51,10 @@ export const environment = {
 //   postData: {
 //     method: "get",
 //     url: "http://localhost:8080/documents/api/upload"
+//   },
+//   reUploadData: {
+//     method: "get",
+//     url: "http://localhost:8080/documents/edit"
 //   },
 //   getData: {
 //     url : "../assets/mock/response.json"
