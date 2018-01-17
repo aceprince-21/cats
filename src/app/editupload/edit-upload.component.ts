@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { EdituploadService } from './editupload.service';
 import { UploadService } from '../upload/upload.service';
-import { BasicfilterPipe } from '../pipe/filter/basicfilter.pipe';
 import { DatepickerOptions } from 'ng2-datepicker';
 import { uploadModel } from './exportmodel';
 import { configs } from '../../environments/config'
@@ -34,7 +33,7 @@ export class EditUploadComponent implements OnInit {
   private fileType: any;
   private CheckSize: boolean = false;
   private CheckUpload: boolean = false;
-  private messageBox:boolean = false;
+  private messageBox: boolean = false;
   private dealerCon;
   private customerCon;
   private intUser;
@@ -44,58 +43,54 @@ export class EditUploadComponent implements OnInit {
   private startDate;
   private endDate;
   private ErrorMsg;
-  private submitted:boolean = false;
-  
+  private CurrentDate = new Date();
+  private MaxDate = new Date(Date.now());
+  private DateErrorHandle = false;
+
   options: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
-    displayFormat: 'MM/DD/YYYY',
-    barTitleFormat: 'MMMM YYYY',
-    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+  minYear: 1970,
+  maxYear: 2030,
+  displayFormat: 'MM/DD/YYYY',
+  barTitleFormat: 'MMMM YYYY',
+  firstCalendarDay: 0 // 0 - Sunday, 1 - Monday
   };
-  
 
   ngOnInit() {
     this.hostAppService();
     this.doctypeService();
     this.CollectData = uploadModel;
+    
     this.route.params.subscribe((params: Params) => {
-		/**files  / data**/
+      /**files  / data**/
       this.filterItem = params;
       const get_path = this.router.url.split('/')[2];
-	  console.log(get_path);
+      console.log(get_path);
       if (get_path != 'upload') {
         this.uploadFetchService(0, this.filterItem.files);
         this.docSetting = true;
       }
       else {
-    this.uploadFetchService(1, this.filterItem.data);
-    this.CollectData = this.passData;
-    this.newEffectiveDate = Date();
-		this.newTerminationDate  = new Date();
-		let newDate =  this.newEffectiveDate;
-		newDate = parseInt(newDate.split(' ')[2]);
-		this.newTerminationDate.setDate(newDate + 15);
+        this.uploadFetchService(1, this.filterItem.data);
+        this.CollectData = this.passData;
+        this.newEffectiveDate = this.CurrentDate;
+        this.newTerminationDate = this.MaxDate;
       }
     });
+	this.validation();
   }
 
-
-  CurrentDate(sym, sel) {
+validation(){
+	 if(this.newEffectiveDate > this.newTerminationDate){
+		 	this.DateErrorHandle = true;
+	 }
+	 else{
+		 this.DateErrorHandle = false;
+	 }
+}
+  CurrentDates(sym, sel) {
     const Months = configs.Months;
-    let getMontValue = 0;
-    let date = Date();
-    let month = date.split(' ')[1];
-    let curentDate = parseInt(date.split(' ')[2]);
-    let Year = date.split(' ')[3];
-    month = month.toLowerCase();
-
-    for (let i = 0; i < Months.length; i++) {
-      if (Months[i] === month) {
-        getMontValue = i + 1;
-      }
-    }
-    return getMontValue + sym + (curentDate + sel) + sym + Year;
+	let getMontValue = 0;
+    return getMontValue;
   }
 
   uploadFetchService(val, e) {
@@ -103,72 +98,21 @@ export class EditUploadComponent implements OnInit {
       data => {
         this.passData = data;
         this.filterItemss = data.hostAppList;
-        this.filterExistingItems();
-		
-		/*Yet to Confirm this logic is required */
-	    if(val === 1){
-		
-      	this.passData.dealerConsent = false;
-		this.passData.customerConsent = false;
-		this.passData.intUserConsent = false;
-		this.passData.partCompConsent = false;
-		this.passData.perUserAssentReq = false;
-	   }
-	   console.log(data);
-      })
-
-  }
-
-  doctypeService() {
-    this._serveEdit.doctype().subscribe(
-      data => {
-        this.getDocType = data;
-      })
-  }
-
-
-  hostAppService() {
-    this._serveEdit.getHostapp().subscribe(
-      data => {
-        this.getHost = data;
-      })
-  }
-
-  filterExistingItems() {
-    let getHost = this.getHost;
-    const applist = this.filterItemss;
-    let keys = [];
-    if(applist){
-    for (let i = 0; i < getHost.length; i++) {
-      for (let j = 0; j < applist.length; j++) {
-        if (getHost[i].hostAppID === applist[j].hostAppID) {
-          getHost.splice(i, 1);
+        this.hostAppService();
+        /*Yet to Confirm this logic is required */
+        if (val === 1) {
+          this.passData.dealerConsent = false;
+          this.passData.customerConsent = false;
+          this.passData.intUserConsent = false;
+          this.passData.partCompConsent = false;
+          this.passData.perUserAssentReq = false;
         }
-      }
-    }
-	}
-    keys = getHost;
-    const dataT = keys.filter((value, index, array) => {
-      return array.indexOf(value) === index;
-    });
-    this.hostapplist = [];
-    this.getHost = [];
-    this.hostapplist = applist;
-    this.getHost = dataT;
+        console.log(data);
+      })
   }
+  
 
-  filterrightItems(x) {
-    let getHost = x;
-    const applist = this.filterItemss;
-    let keyss = [];
-    x.forEach((element) => {
-      keyss = applist.filter(e => e !== element);
-    });
-    this.filterItemss = keyss;
-    uploadModel.hostAppList = this.filterItemss;
-  }
-
-  leftSelectedArray(host, ind) {
+    leftSelectedArray(host, ind) {
     if (host.active === 'true') {
       host.active = '';
       console.log(host);
@@ -185,9 +129,8 @@ export class EditUploadComponent implements OnInit {
       host.active = 'true'
     }
   }
-
-
-  righttSelectedArray(host, ind) {
+  
+   righttSelectedArray(host, ind) {
     if (host.active === 'true') {
       host.active = '';
       console.log(host);
@@ -205,37 +148,61 @@ export class EditUploadComponent implements OnInit {
       host.active = 'true'
     }
   }
-
-  moveAlltoright() {
-    const rightTable = this.filterItemss;
-    const leftTable = this.getHost;
-    let MoveTable = rightTable.concat(leftTable);
-    this.filterItemss = this.removeTrue(MoveTable);
-    this.filterExistingItems();
+  
+  initialFilter(){
+	   const currentItem = this.getHost;
+	   const remItem = this.filterItemss;
+	     console.log(remItem ,currentItem );
+	      for(let i=0; i<currentItem.length; i++){
+			   for(let j=0; j<remItem.length; j++){
+			         if(currentItem[i].hostAppID === remItem[j].hostAppID ){
+						 currentItem.splice(i,1);
+					 }
+		         }
+		  }
+	   this.filterItemss = this.filterItemss.filter(function(elem, i, array) {
+        return array.indexOf(elem) === i;
+       });
+	   
+	   this.getHost = this.getHost.filter(function(elem, i, array) {
+        return array.indexOf(elem) === i;
+       });
+	   
   }
-
-  moveSelectedtoright() {
-    const rightTable = this.filterItemss;
-    const leftTable = this.leftSelectedItem;
-	if(rightTable){
-    let MoveTable = rightTable.concat(leftTable);
-	
-    this.filterItemss = this.removeTrue(MoveTable);
-    this.leftSelectedItem = [];
-    this.filterExistingItems();
-	}
+  
+  moveSelectedtoright(){
+      const leftItem = this.leftSelectedItem;
+	  let rightItem = this.filterItemss;
+	  this.filterItemss = rightItem.concat(leftItem);
+	  this.filterItemss = this.filterItemss.filter(function(elem, i, array) {
+        return array.indexOf(elem) === i;
+       });
+	  this.removeTrue(this.getHost);
+	  this.initialFilter();
+	  this.leftSelectedItem = [];
   }
 
   moveSelectedtoleft() {
-    const rightTable = this.rightSelectedItem;
-    const leftTable = this.getHost;
-    let MoveTable = leftTable.concat(rightTable);
-    this.getHost = this.removeTrue(MoveTable);
-    console.log(MoveTable);
-    this.filterrightItems(this.rightSelectedItem);
-    this.rightSelectedItem = [];
-  }
+	  const rightItem = this.rightSelectedItem;
+	  const currentItem = this.getHost;
+	  console.log(rightItem);
+	  let alltItem = this.filterItemss;
+	  for(let i=0; i<alltItem.length; i++){
+			   for(let j=0; j<rightItem.length; j++){
+			         if(alltItem[i].hostAppID === rightItem[j].hostAppID ){
+						 this.filterItemss.splice(i,1);
+					 }
+		         }
+		  }
 
+	  this.getHost = currentItem.concat(rightItem);
+	   this.getHost = this.getHost.filter(function(elem, i, array) {
+        return array.indexOf(elem) === i;
+       });
+	   	  this.removeTrue(this.getHost);
+		  this.rightSelectedItem = [];
+  }
+  
   moveAlltoleft() {
     const rightTable = this.filterItemss;
     const leftTable = this.getHost;
@@ -243,195 +210,244 @@ export class EditUploadComponent implements OnInit {
     console.log(MoveTable);
     this.getHost = this.removeTrue(MoveTable);
     this.filterItemss = [];
-    this.filterExistingItems();
+    this.initialFilter();
   }
-
+  
+ moveAlltoright() {
+    const rightTable = this.filterItemss;
+    const leftTable = this.getHost;
+    let MoveTable = rightTable.concat(leftTable);
+    this.filterItemss = this.removeTrue(MoveTable);
+    this.initialFilter();
+  }
+  
   removeTrue(array) {
     array.forEach((element, index) => {
       element.active = '';
     });
     return array;
   }
+  
 
+  doctypeService() {
+    this._serveEdit.doctype().subscribe(
+      data => {
+        this.getDocType = data;
+      })
+  }
+
+
+  hostAppService() {
+    this._serveEdit.getHostapp().subscribe(
+      data => {
+        this.getHost = data;
+		this.initialFilter();
+      })
+  }
 
   editdata() {
-		this.CollectData = {};
-    if (this.CollectData.dealerConsent === "") {
+    this.CollectData = {};
+	 /* dealerCon; customerCon; intUser; partComp; perUser;*/
+	 console.log(this.dealerCon);
+    if (!this.dealerCon) {
       this.CollectData.dealerConsent = this.passData.dealerConsent;
     }
-
-    if (this.CollectData.customerConsent === "") {
+	else{
+		 this.CollectData.dealerConsent  = this.dealerCon;
+	}
+	
+    if (!this.customerCon) {
       this.CollectData.customerConsent = this.passData.customerConsent;
-    }
+    }else{
+		 this.CollectData.customerConsent = this.customerCon;
+	}
 
-    if (this.CollectData.intUserConsent === ""){
+    if (!this.intUser) {
       this.CollectData.intUserConsent = this.passData.intUserConsent;
-    }
+    }else{
+	   this.CollectData.intUserConsent = this.intUser;
+	}
 
-    if (this.CollectData.partCompConsent === "") {
+    if (!this.partComp) {
       this.CollectData.partCompConsent = this.passData.partCompConsent;
-    }
+    }else{
+	  this.CollectData.partCompConsent = this.partComp;
+	}
 
-    if (this.CollectData.perUserAssentReq === "") {
+    if (!this.perUser) {
       this.CollectData.perUserAssentReq = this.passData.perUserAssentReq;
-    }
+    }else{
+		this.CollectData.perUserAssentReq = this.perUser;
+	}
 
     if (this.filterItemss.length === 0) {
-        this.NewUploadData.hostAppList = false;
-    }else{
-		 this.CollectData.hostAppList = this.filterItemss;
-		 this.NewUploadData.hostAppList = true;
-	}
-	
-    if (this.CollectData.effectiveDate === "") {
+      this.NewUploadData.hostAppList = false;
+    } else {
+      this.CollectData.hostAppList = this.filterItemss;
+      this.NewUploadData.hostAppList = true;
+    }
+
+    if (!this.CollectData.effectiveDate) {
       this.CollectData.effectiveDate = this.passData.effectiveDate;
     }
-	
-	if (this.CollectData.terminationDate === "") {
+
+    if (!this.CollectData.terminationDate) {
       this.CollectData.terminationDate = this.passData.terminationDate;
     }
-	
-	if (this.CollectData.docTypeID === "") {
+
+    if (!this.CollectData.docTypeID) {
       this.CollectData.docTypeID = this.passData.docTypeID;
-	  this.CollectData.docTypeName = this.passData.docTypeName;
+      this.CollectData.docTypeName = this.passData.docTypeName;
     }
 
-  this.CollectData.documentID = this.passData.documentID;
-	this.CollectData.documentName =this.passData.documentName;
-	this.CollectData.documentURL = this.passData.documentID;;
-	this.CollectData.submittedUser = this.passData.submittedUser;
+    this.CollectData.documentID = this.passData.documentID;
+    this.CollectData.documentName = this.passData.documentName;
+    this.CollectData.documentURL = this.passData.documentID;
+    this.CollectData.submittedUser = this.passData.submittedUser;
+    this.CollectData.status = 'Active';
+    this.CollectData.effectiveDate = '2018-1-6';
+    this.CollectData.terminationDate = '2018-2-2';
 
-	
-	if (this.filterItemss === 0) {
-        this.NewUploadData.hostAppList = false;
-    }else{
-			 let formData: FormData = new FormData();
-				  if(this.selfile){
-					 let file = this.selfile;
-					 formData.append('file', file);
-				    }
-					else{
-						formData.append('file', '');
-					}
-				  console.log(this.CollectData);
-				  formData.append('Data', this.CollectData);
-				  this._serveEdit.reUpload(formData).subscribe(
-				  done => this.reuploadDocument(done),
-				  error =>  this.erroeMsg(error))
-	}
-}
+    if (this.filterItemss === 0) {
+      this.NewUploadData.hostAppList = false;
+    } else {
+      //let formData: FormData = new FormData();
+      console.log(this.CollectData);
+      if (this.passData.checkFile === true) {
+        this._serveEdit.sendResponse(this.CollectData).subscribe(
+          done => this.reuploadDocument(done),
+          error => this.erroeMsg(error));
+      }
+      else {
+        this._serveEdit.reUpload(this.CollectData).subscribe(
+          done => this.reuploadDocument(done),
+          error => this.erroeMsg(error))
+      }
 
 
-uploadData(){
-     this.CollectData = {};
-	 /* dealerCon; customerCon; intUser; partComp; perUser; selectedItem; newEffectiveDate; newTerminationDate*/
+    }
+  }
 
-  if (this.filterItemss.length == 0) {
-		  this.CollectData.hostAppList = [];
-          this.NewUploadData.hostAppList = false;
-		}else{
-			 this.CollectData.hostAppList = this.filterItemss;
-			 this.NewUploadData.hostAppList = true;
-		}
-		
-		if (!this.dealerCon){
-			this.CollectData.dealerConsent = false
-			this.NewUploadData.dealerConsent = true;
-		}else{
-			this.CollectData.dealerConsent = true;
-			this.NewUploadData.dealerConsent = true;
-		}
-		
-		if (!this.customerCon){
-			this.CollectData.customerConsent = false;
-			this.NewUploadData.customerConsent = true;
-		}else{
-			this.CollectData.customerConsent = true;
-			this.NewUploadData.customerConsent = true;
-		}
-		
-		if (!this.intUser){
-			this.CollectData.intUserConsent = false;
-			this.NewUploadData.intUserConsent = true;
-		}else{
-			this.CollectData.intUserConsent = true;
-			this.NewUploadData.intUserConsent = true;
-		}
-		
-		if (!this.partComp){
-			this.CollectData.partCompConsent = false;
-			this.NewUploadData.partCompConsent = true;
-		}else{
-			this.CollectData.partCompConsent = true;
-			this.NewUploadData.partCompConsent = true;
-		}
-		
-		if (!this.perUser){
-			this.CollectData.perUserAssentReq = false;
-			this.NewUploadData.perUserAssentReq = true;
-		}else{
-			this.CollectData.perUserAssentReq = true;
-			this.NewUploadData.perUserAssentReq = true;
-		}
-		
-		if (!this.selectedItem || this.selectedItem === null ){
-			this.NewUploadData.docTypeID = false;
-		}else{
-			this.CollectData.docTypeID = this.selectedItem;
-			this.NewUploadData.docTypeID = true;
-		}
-		
-		this.CollectData.status = 'Active';
-		this.CollectData.documentID = this.passData.document_id;
-		this.CollectData.documentName = this.passData.document_name;
-		this.CollectData.submittedUser = this.passData.uploaded_by;
-		this.CollectData.uploadedDate = '2018-01-08';
-		this.CollectData.effectiveDate = '2018-1-6';
-		this.CollectData.terminationDate = '2018-2-2';
+
+  uploadData() {
+    this.CollectData = {};
+    /* dealerCon; customerCon; intUser; partComp; perUser; selectedItem; newEffectiveDate; newTerminationDate*/
+
+    if (this.filterItemss.length == 0) {
+      this.CollectData.hostAppList = [];
+      this.NewUploadData.hostAppList = false;
+    } else {
+      this.CollectData.hostAppList = this.filterItemss;
+      this.NewUploadData.hostAppList = true;
+    }
+
+    if (!this.dealerCon) {
+      this.CollectData.dealerConsent = false
+      this.NewUploadData.dealerConsent = true;
+    } else {
+      this.CollectData.dealerConsent = true;
+      this.NewUploadData.dealerConsent = true;
+    }
+
+    if (!this.customerCon) {
+      this.CollectData.customerConsent = false;
+      this.NewUploadData.customerConsent = true;
+    } else {
+      this.CollectData.customerConsent = true;
+      this.NewUploadData.customerConsent = true;
+    }
+
+    if (!this.intUser) {
+      this.CollectData.intUserConsent = false;
+      this.NewUploadData.intUserConsent = true;
+    } else {
+      this.CollectData.intUserConsent = true;
+      this.NewUploadData.intUserConsent = true;
+    }
+
+    if (!this.partComp) {
+      this.CollectData.partCompConsent = false;
+      this.NewUploadData.partCompConsent = true;
+    } else {
+      this.CollectData.partCompConsent = true;
+      this.NewUploadData.partCompConsent = true;
+    }
+
+    if (!this.perUser) {
+      this.CollectData.perUserAssentReq = false;
+      this.NewUploadData.perUserAssentReq = true;
+    } else {
+      this.CollectData.perUserAssentReq = true;
+      this.NewUploadData.perUserAssentReq = true;
+    }
+
+    if (!this.selectedItem || this.selectedItem === null) {
+      this.NewUploadData.docTypeID = false;
+    } else {
+      this.CollectData.docTypeID = this.selectedItem;
+      this.NewUploadData.docTypeID = true;
+    }
+
+    const effDate = this.CurrentDates(this.newEffectiveDate, '-');
+    const terDate = this.CurrentDates(this.newTerminationDate, '-');
+    const curDate = this.CurrentDates(Date(), '-');
+	 console.log(curDate);
+    this.CollectData.status = 'Active';
+    this.CollectData.documentID = this.passData.document_id;
+    this.CollectData.documentName = this.passData.document_name;
+    this.CollectData.submittedUser = this.passData.uploaded_by;
+    this.CollectData.uploadedDate =  curDate;
+    this.CollectData.effectiveDate =  effDate;
+    this.CollectData.terminationDate = terDate ; 
     this.CollectData.documentURL = this.passData.document_id;
 
-      console.log("dataTosend ::"+JSON.stringify(this.CollectData));
-	  
-		
-		 if( this.NewUploadData.hostAppList === this.NewUploadData.dealerConsent === this.NewUploadData.customerConsent === this.NewUploadData.intUserConsent === this.NewUploadData.partCompConsent === this.NewUploadData.perUserAssentReq === this.NewUploadData.docTypeID === true){
-			 // let formData: FormData = new FormData();
-		   //formData.append('documentDetails', newItem);
-		   this._serveEdit.sendResponse(this.CollectData).subscribe(
-				  done => this.reuploadDocument(done),
-				  error =>  this.erroeMsg(error));
-		 }
+    console.log(this.CollectData);
 
-}
 
-erroeMsg(e){
-    this.ErrorMsg += e+' | ';
-}
+    if (this.NewUploadData.hostAppList === this.NewUploadData.dealerConsent === this.NewUploadData.customerConsent === this.NewUploadData.intUserConsent === this.NewUploadData.partCompConsent === this.NewUploadData.perUserAssentReq === this.NewUploadData.docTypeID === true &&  this.DateErrorHandle == false) {
+      this._serveEdit.sendResponse(this.CollectData).subscribe(
+        done => this.reuploadDocument(done),
+        error => this.erroeMsg(error));
+    }
 
-reuploadDocument(e){
-  console.log();
-          //setTimeout(() => {
-          this.router.navigate(['/mydocuments']);
-         // },2000);
   }
- 
-  goBack() {
+
+  erroeMsg(e) {
+    this.ErrorMsg += e + ' | ';
+  }
+
+  reuploadDocument(e) {
+    console.log(e);
+    //setTimeout(() => {
     this.router.navigate(['/mydocuments']);
+    // },2000);
   }
 
-  DateValidation(x,y){
+  goBack() {
+    if(this.passData.checkFile === true){
+      this._serveEdit.deleteItem(this.passData.documentID).subscribe(
+      done => this.reuploadDocument(done),
+      error => this.erroeMsg(error))
+    }
+    else{
+      this.router.navigate(['/mydocuments']);
+    }
+  }
+
+  DateValidation(x, y) {
     console.log(x);
     let startData = x.split(" ");
     let endDate = y.split(" ");
 
-    if(startData[2] <= endDate[2]){
-       if(startData[1] <= endDate[1]){
-          if(startData[0] < endDate[0]){
-             return true;
-          }
-          else{
-            return false;
-          }
-       }
+    if (startData[2] <= endDate[2]) {
+      if (startData[1] <= endDate[1]) {
+        if (startData[0] < endDate[0]) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
     }
   }
 
@@ -440,20 +456,20 @@ reuploadDocument(e){
     this.selfile = file;
     this.fileName = file.name;
     this.fileSize = file.size;
-	this.fileType  =  file.type;
-	this.CheckSize = true;
-	
-	if(this.fileType === 'application/pdf' && this.fileSize < 2899417){
-		this.CheckUpload = true;
-	}
-	else{
-		this.CheckUpload = false;
-	}
+    this.fileType = file.type;
+    this.CheckSize = true;
+
+    if (this.fileType === 'application/pdf' && this.fileSize < 2899417) {
+      this.CheckUpload = true;
+    }
+    else {
+      this.CheckUpload = false;
+    }
   }
 
   uploadfile() {
     let fileList = this.selfile;
-    if (this.fileSize < 2899417 && 	this.CheckUpload === true) {
+    if (this.fileSize < 2899417 && this.CheckUpload === true) {
       let file = fileList;
       console.log(fileList);
       let formData: FormData = new FormData();
@@ -464,17 +480,23 @@ reuploadDocument(e){
         error => this.erroeMsg(error))
     }
   }
-  
-  uploadDocument(e){
-  this.CheckSize = false;
-  this.submitted = true;
-}
 
-  delete(params){
+  uploadDocument(e) {
+    console.log(e.document_id);
+    this.passData.documentID = e.document_id;
+    this.passData.documentName = e.document_name;
+    this.passData.submittedUser = e.uploaded_by;
+    this.passData.uploadedDate = e.uploaded_date;
+
+    this.passData.checkFile = true;
+    this.router.navigate(['mydocuments/edit', e.document_id])
+  }
+
+  delete(params) {
     this._serveEdit.deleteItem(params).subscribe(
       done => this.reuploadDocument(done),
       error => this.erroeMsg(error))
-    }
-  
-  
+  }
+
+
 }

@@ -7,7 +7,9 @@ import { Headers, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class EdituploadService {
+
   constructor(private http : Http) { }
+
   EditPage(val,e): Observable<any> {
     let newVal = '';
     if(val === 0){
@@ -53,10 +55,17 @@ console.log("url "+ environment.mainData.url);
                     .catch((error:any) => Observable.throw(error.json().error || 'Server error'));  
   }
 
+  reUploadDocDetails(files): Observable<any>{
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.put(environment.reUploaddResponse.url,files, options)
+                    .map((res:Response) => res)
+                    .catch((error:any) => Observable.throw(error.json().error || 'Server error'));  
+  }
+
   deleteItem(params: string): Observable <any> {
-    console.log("hai"+params);
     return this.http
-      .delete(environment.deleteResponse.url+{params})
+      .delete(environment.deleteResponse.url+params)
       .map((res: any) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }

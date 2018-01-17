@@ -1,5 +1,4 @@
 <div class="container-fluid wraper">
-  
     <h1 class="form-header">Document Upload</h1>
     <span class="block-class" *ngIf = "docSetting === false">document Uploaded successfully</span>
     <table class="table table-bordered">
@@ -67,12 +66,21 @@
               </div>
               <div class="col-sm-5 custom-scroll-height">
                 <table class="table table-bordered m-0">
-                  <tbody id="appsChosen" *ngIf = "filterItemss">
+                 <tbody id="appsChosen" *ngIf = "filterItemss && docSetting === false">
                     <tr *ngFor = "let hostsapp of filterItemss; let i = index">
                            <td (click)="righttSelectedArray(hostsapp, i)"  [ngClass]="{'active': hostsapp.active === 'true' }">
                               <a>{{hostsapp.hostAppName}}</a>
                            </td>
                     </tr>
+                  </tbody>
+                   <tbody id="appsChosen" *ngIf = "filterItemss && docSetting === true">
+                    <ng-container *ngFor="let hostsapp of filterItemss">
+                    <tr *ngFor = "let host of getHost | basicfilter: filterItemss : false ; let i = index">
+                           <td (click)="righttSelectedArray(host, i)"  *ngIf = "host.hostAppID == hostsapp.hostAppID" [ngClass]="{'active': host.active === 'true' }">
+                              <a>{{host.hostAppName}}</a>
+                           </td>
+                    </tr>
+                    </ng-container>
                   </tbody>
                 </table>
               </div>
@@ -170,20 +178,15 @@
                   <div class="d-flex flex-row-reverse"> 
                    <button [disabled] ="!CheckUpload" (click) = "uploadfile()" class="btn btn-primary">Upload</button>
                   </div>
+
                 </div>
-                  <div *ngIf="CheckSize === true" class="col-lg-12 infobox" [ngClass]="{error : fileType != 'application/pdf', high: fileSize >= 2899417}">
+				 <div *ngIf="CheckSize === true" class="col-lg-12 infobox" [ngClass]="{error : fileType != 'application/pdf', high: fileSize >= 2899417}">
 		          <span class="arrow"></span>
 			     <div class="col-lg-12" *ngIf=" fileType == 'application/pdf'"><h1 class="form-header">File Name</h1> <span> {{fileName}} </span></div>
 				 <div class="col-lg-12"  *ngIf=" fileType == 'application/pdf'"><h1 class="form-header">File Type</h1> <span> {{fileType}} </span> </div>
 				 <div class="col-lg-12"  *ngIf=" fileType == 'application/pdf'"><h1 class="form-header">File Size</h1> <span class="basic"> {{fileSize}} </span> <span class="error"><strong>File size is too high, upload under 2 MB</strong></span>  </div>
 				 <div class="red">Document must be <strong>PDF</strong> files</div>
-           </div>
-           
-            <div *ngIf="submitted" class="done">
-              <span class="iconsize"><i class="fa fa-check-circle" aria-hidden="true"></i></span>
-              <span class="col-lg-8"><h3>File Replaced</h3></span>
-            </div>
-                
+			     </div>
                 </div>
         <div class="form-group" *ngIf = "docSetting === true"  >
           <label class="d-block">What is the Document Type?</label>
@@ -208,25 +211,27 @@
           <div class="col-sm-6">
             <div class="form-group" *ngIf = "docSetting === true">
               <label for="datepicker2">Effective Date</label>
-              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value;"> </ng-datepicker>
+              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate" #startDate (ngModelChange)="CollectData.effectiveDate = startDate.value; validation()"> </ng-datepicker>
             </div>
+
             <div class="form-group" *ngIf = "docSetting === false"  [ngClass]= "{error: NewUploadData.effectiveDate === false}">
                 <label for="datepicker2">Effective Date</label>
-                <ng-datepicker class="form-control hasDatepicker" [options]="options_late" [(ngModel)]="newEffectiveDate" #startDate (change)="CollectData.effectiveDate = startDate.value; NewUploadData.effectiveDate = true"> </ng-datepicker>
-                <span class="message">Select Start Date</span>
-            </div>
+                <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newEffectiveDate" #startDate (ngModelChange)="validation()"> </ng-datepicker>
+              </div>
+
           </div>
           <div class="col-sm-6">
             <div class="form-group" *ngIf = "docSetting === true">
               <label for="datepicker2">Termination Date</label>
-              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.terminationDate" #endDate (change)="CollectData.terminationDate = endDate.value" > </ng-datepicker>
+              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.terminationDate" #endDate (ngModelChange)="CollectData.terminationDate = endDate.value; validation()" > </ng-datepicker>
             </div>
             <div class="form-group" *ngIf = "docSetting === false"  [ngClass]= "{error: NewUploadData.terminationDate === false}">
                 <label for="datepicker2">Termination Date</label>
-                <ng-datepicker class="form-control hasDatepicker" [options]="options_late" [(ngModel)]="newTerminationDate" #endDate (change)="CollectData.terminationDate = endDate.value; NewUploadData.terminationDate = true" > </ng-datepicker>
-                <span class="message">Select End Date</span>
+                <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newTerminationDate" #endDate (ngModelChange)="validation()" > </ng-datepicker>
+
             </div>
           </div>
+		  <div *ngIf="DateErrorHandle" class=" col-lg-12"> <span class="dateErro">Termination Date cannot be less than Effective Date </span></div>
         </div>
         <div class="row">
           <div class="col-sm-6" *ngIf = "docSetting === true">
@@ -237,7 +242,7 @@
 		      <div class="col-sm-6" *ngIf = "docSetting === false">
             <!-- Using anchor tag instead of button for prototype purposes only -->
             <a (click)="uploadData()" class="btn btn-primary btn-block">Save and Exit</a>
-            <a (click)="delete(passData.documentID)" class="btn btn-primary btn-block">Do Not Save and Exit</a>
+            <a (click)="delete(passData.document_id)" class="btn btn-primary btn-block">Do Not Save and Exit</a>
           </div>
           <div class="errormsg" *ngIf="ErrorMsg != null ">
               <span class="iconsize"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
