@@ -87,11 +87,7 @@ validation(){
 		 this.DateErrorHandle = false;
 	 }
 }
-  CurrentDates(sym, sel) {
-    const Months = configs.Months;
-	let getMontValue = 0;
-    return getMontValue;
-  }
+
 
   uploadFetchService(val, e) {
     this._serveEdit.EditPage(val, e).subscribe(
@@ -391,7 +387,7 @@ validation(){
     const effDate = this.CurrentDates(this.newEffectiveDate, '-');
     const terDate = this.CurrentDates(this.newTerminationDate, '-');
     const curDate = this.CurrentDates(Date(), '-');
-	 console.log(curDate);
+	  console.log(curDate);
     this.CollectData.status = 'Active';
     this.CollectData.documentID = this.passData.document_id;
     this.CollectData.documentName = this.passData.document_name;
@@ -410,6 +406,22 @@ validation(){
         error => this.erroeMsg(error));
     }
 
+  }
+
+  CurrentDates(sym, sel) {
+    const Months = configs.Months;
+    let getMontValue = 0;
+    const getNewDate = sym.toString().split(' ');
+    const getMonth =  getNewDate[1].toLowerCase();
+    const getDay =  getNewDate[2];
+    const getYear =  getNewDate[3];
+    for(let i=0; i<Months.length; i++){
+        if(getMonth === Months[i]){
+          getMontValue = i+1;
+        }
+    }
+    console.log(getMontValue+sel+getDay+sel+getYear);
+    return getMontValue+sel+getDay+sel+getYear;
   }
 
   erroeMsg(e) {
