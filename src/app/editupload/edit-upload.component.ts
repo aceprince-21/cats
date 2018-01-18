@@ -48,7 +48,7 @@ export class EditUploadComponent implements OnInit {
   private DateErrorHandle = false;
   private keys:any = [];
   private windowUrl : any;
-  private documentUrl : any;
+  private documentUrl: any =null;
 
   options: DatepickerOptions = {
   minYear: 1970,
@@ -124,7 +124,7 @@ validation(){
 			else{
 				  this.newEffectiveDate = new Date(this.passData.effectiveDate);
           this.newTerminationDate = new Date(this.passData.terminationDate);
-          this.documentUrl = this.windowUrl + "/documents/files/"+this.passData.documentURL;
+          this.documentUrl = this.windowUrl + "/documents/files/"+this.passData.documentID;
           console.log(this.documentUrl);
         }
 			
@@ -520,6 +520,7 @@ validation(){
     this.passData.uploadedDate = e.uploaded_date;
 
     this.passData.checkFile = true;
+    this.documentUrl = '';
     this.router.navigate(['mydocuments/edit', e.document_id])
   }
 
