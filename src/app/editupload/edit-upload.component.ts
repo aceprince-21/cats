@@ -108,8 +108,6 @@ validation(){
       }
       else{
       this.filterItemss = this.passData.hostAppList;
-      this.newEffectiveDate = this.passData.effectiveDate;
-      this.newTerminationDate = this.passData.terminationDate;
       }
 		  //this.filterItemss = this.passData.hostAppList;
 		    if (val === 1) {
@@ -120,8 +118,8 @@ validation(){
 			  this.passData.perUserAssentReq = false;
 			}
 			else{
-				 this.newEffectiveDate = this.CurrentDate;
-				 this.newTerminationDate = this.MaxDate;
+				  this.newEffectiveDate = new Date(this.passData.effectiveDate);
+          this.newTerminationDate = new Date(this.passData.terminationDate;
 			}
 			
 			this.hostAppService();
@@ -310,7 +308,7 @@ validation(){
     this.CollectData.documentURL = this.passData.documentID;
     this.CollectData.submittedUser = this.passData.submittedUser;
 	
-	const effDate = this.CurrentDates(this.newEffectiveDate, '-');
+	  const effDate = this.CurrentDates(this.newEffectiveDate, '-');
     const terDate = this.CurrentDates(this.newTerminationDate, '-');
     const curDate = this.CurrentDates(Date(), '-');
 	
@@ -324,16 +322,16 @@ validation(){
     } else {
       //let formData: FormData = new FormData();
       console.log(this.CollectData);
-      if (this.passData.checkFile === true) {
-        this._serveEdit.sendResponse(this.CollectData).subscribe(
-          done => this.reuploadDocument(done),
-          error => this.erroeMsg(error));
-      }
-      else {
+     // if (this.passData.checkFile === true) {
+     //   this._serveEdit.sendResponse(this.CollectData).subscribe(
+    //      done => this.reuploadDocument(done),
+     //     error => this.erroeMsg(error));
+     // }
+    //  else {
         this._serveEdit.reUpload(this.CollectData).subscribe(
           done => this.reuploadDocument(done),
           error => this.erroeMsg(error))
-      }
+    //  }
 
 
     }
@@ -435,7 +433,7 @@ validation(){
         }
     }
     console.log(getMontValue+sel+getDay+sel+getYear);
-    return getMontValue+sel+getDay+sel+getYear;
+    return getYear+sel+getMontValue+sel+getDay;
   }
 
   erroeMsg(e) {
