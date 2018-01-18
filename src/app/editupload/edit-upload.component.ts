@@ -47,7 +47,8 @@ export class EditUploadComponent implements OnInit {
   private MaxDate = new Date(Date.now());
   private DateErrorHandle = false;
   private keys:any = [];
-  
+  private windowUrl : any;
+  private documentUrl : any;
 
   options: DatepickerOptions = {
   minYear: 1970,
@@ -58,6 +59,7 @@ export class EditUploadComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.windowUrl = configs.domain;
     
     this.doctypeService();
     this.CollectData = uploadModel;
@@ -116,11 +118,16 @@ validation(){
 			  this.passData.intUserConsent = false;
 			  this.passData.partCompConsent = false;
 			  this.passData.perUserAssentReq = false;
+        this.documentUrl = this.windowUrl + "/documents/files/"+this.passData.document_id;
+        console.log(this.documentUrl);
 			}
 			else{
 				  this.newEffectiveDate = new Date(this.passData.effectiveDate);
-          this.newTerminationDate = new Date(this.passData.terminationDate;
-			}
+          this.newTerminationDate = new Date(this.passData.terminationDate);
+          this.documentUrl = this.windowUrl + "/documents/files/"+this.passData.documentURL;
+          console.log(this.documentUrl);
+        }
+			
 			
 			this.hostAppService();
 	  } );
@@ -305,7 +312,7 @@ validation(){
 
     this.CollectData.documentID = this.passData.documentID;
     this.CollectData.documentName = this.passData.documentName;
-    this.CollectData.documentURL = this.passData.documentID;
+    this.CollectData.documentURL = this.documentUrl;
     this.CollectData.submittedUser = this.passData.submittedUser;
 	
 	  const effDate = this.CurrentDates(this.newEffectiveDate, '-');
