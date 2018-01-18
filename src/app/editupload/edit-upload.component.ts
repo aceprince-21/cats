@@ -520,7 +520,7 @@ validation(){
     this.passData.uploadedDate = e.uploaded_date;
 
     this.passData.checkFile = true;
-    this.documentUrl = '';
+    this.documentUrl = this.windowUrl + "/documents/files/"+this.passData.documentID;
     this.router.navigate(['mydocuments/edit', e.document_id])
   }
 
