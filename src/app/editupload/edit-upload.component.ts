@@ -21,7 +21,7 @@ export class EditUploadComponent implements OnInit {
   private filterItemss: any = [];
   private hostapplist: any = [];
   private leftSelectedItem: any = [];
-  private rightSelectedItem: any = [];
+  private rightSelectedItem = [];
   private CollectData: any = [];
   private NewUploadData: any = [];
   private docSetting: boolean = false;
@@ -46,6 +46,8 @@ export class EditUploadComponent implements OnInit {
   private CurrentDate = new Date();
   private MaxDate = new Date(Date.now());
   private DateErrorHandle = false;
+  private keys:any = [];
+  
 
   options: DatepickerOptions = {
   minYear: 1970,
@@ -56,7 +58,7 @@ export class EditUploadComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.hostAppService();
+    
     this.doctypeService();
     this.CollectData = uploadModel;
     
@@ -71,6 +73,7 @@ export class EditUploadComponent implements OnInit {
       }
       else {
         this.uploadFetchService(1, this.filterItem.data);
+       // this.filterItemss = [];
         this.CollectData = this.passData;
         this.newEffectiveDate = this.CurrentDate;
         this.newTerminationDate = this.MaxDate;
@@ -93,18 +96,36 @@ validation(){
     this._serveEdit.EditPage(val, e).subscribe(
       data => {
         this.passData = data;
-        this.filterItemss = data.hostAppList;
-        this.hostAppService();
+        
         /*Yet to Confirm this logic is required */
-        if (val === 1) {
-          this.passData.dealerConsent = false;
-          this.passData.customerConsent = false;
-          this.passData.intUserConsent = false;
-          this.passData.partCompConsent = false;
-          this.passData.perUserAssentReq = false;
-        }
+      
         console.log(data);
-      })
+      },error => {
+		  console.log('error')
+		},() => {
+      if(!this.passData.hostAppList){
+      this.filterItemss = [];
+      }
+      else{
+      this.filterItemss = this.passData.hostAppList;
+      this.newEffectiveDate = this.passData.effectiveDate;
+      this.newTerminationDate = this.passData.terminationDate;
+      }
+		  //this.filterItemss = this.passData.hostAppList;
+		    if (val === 1) {
+			  this.passData.dealerConsent = false;
+			  this.passData.customerConsent = false;
+			  this.passData.intUserConsent = false;
+			  this.passData.partCompConsent = false;
+			  this.passData.perUserAssentReq = false;
+			}
+			else{
+				 this.newEffectiveDate = this.CurrentDate;
+				 this.newTerminationDate = this.MaxDate;
+			}
+			
+			this.hostAppService();
+	  } );
   }
   
 
@@ -146,75 +167,60 @@ validation(){
   }
   
   initialFilter(){
-	   const currentItem = this.getHost;
-	   const remItem = this.filterItemss;
-	     console.log(remItem ,currentItem );
-	      for(let i=0; i<currentItem.length; i++){
-			   for(let j=0; j<remItem.length; j++){
-			         if(currentItem[i].hostAppID === remItem[j].hostAppID ){
-						 currentItem.splice(i,1);
-					 }
-		         }
-		  }
-	   this.filterItemss = this.filterItemss.filter(function(elem, i, array) {
-        return array.indexOf(elem) === i;
-       });
-	   
-	   this.getHost = this.getHost.filter(function(elem, i, array) {
-        return array.indexOf(elem) === i;
-       });
-	   
-  }
+		let getFilterID = [];
+		let getHost = [];
+		getHost = this.getHost;
+	    getFilterID = this.filterItemss;
+			   for(let i=0; i<getHost.length; i++){
+				   for(let j=0; j<getFilterID.length; j++){
+						if(getHost[i].hostAppID === getFilterID[j].hostAppID){
+							 this.keys.push(getHost[i]);
+							 getHost.splice(i,1);
+						}
+			      }
+	         	}
+				this.getHost = getHost;
+				this.filterItemss = this.keys;
+				this.getHost.filter((elem,i,arr)=> { return arr.indexOf(elem) === i});
+				this.filterItemss.filter((elem,i,arr)=> {return arr.indexOf(elem) === i});
+    }
   
   moveSelectedtoright(){
-      const leftItem = this.leftSelectedItem;
-	  let rightItem = this.filterItemss;
-	  this.filterItemss = rightItem.concat(leftItem);
-	  this.filterItemss = this.filterItemss.filter(function(elem, i, array) {
-        return array.indexOf(elem) === i;
-       });
-	  this.removeTrue(this.getHost);
+	  let LeftSelected = this.leftSelectedItem;
+	  this.filterItemss = this.filterItemss.concat(LeftSelected);
+	  this.removeTrue(LeftSelected);
 	  this.initialFilter();
 	  this.leftSelectedItem = [];
   }
 
-  moveSelectedtoleft() {
-	  const rightItem = this.rightSelectedItem;
-	  const currentItem = this.getHost;
-	  console.log(rightItem);
-	  let alltItem = this.filterItemss;
-	  for(let i=0; i<alltItem.length; i++){
-			   for(let j=0; j<rightItem.length; j++){
-			         if(alltItem[i].hostAppID === rightItem[j].hostAppID ){
-						 this.filterItemss.splice(i,1);
-					 }
-		         }
-		  }
-
-	  this.getHost = currentItem.concat(rightItem);
-	   this.getHost = this.getHost.filter(function(elem, i, array) {
-        return array.indexOf(elem) === i;
-       });
-	   	  this.removeTrue(this.getHost);
-		  this.rightSelectedItem = [];
+  moveSelectedtoleft(){
+	    let getFilterID = [];
+		let getHost = [];
+		getHost = this.rightSelectedItem;
+		getFilterID = this.filterItemss;
+		     for(let i=0; i<getHost.length; i++){
+				   for(let j=0; j<getFilterID.length; j++){
+						if(getHost[i].hostAppID === getFilterID[j].hostAppID){
+							 getFilterID.splice(j,1);
+						}
+			      }
+	         	}
+		this.filterItemss = getFilterID;
+		this.getHost = this.getHost.concat(this.rightSelectedItem);
+	    this.removeTrue(getHost);
+	    this.initialFilter();
+		this.rightSelectedItem = [];
   }
   
   moveAlltoleft() {
-    const rightTable = this.filterItemss;
-    const leftTable = this.getHost;
-    let MoveTable = rightTable.concat(leftTable);
-    console.log(MoveTable);
-    this.getHost = this.removeTrue(MoveTable);
-    this.filterItemss = [];
-    this.initialFilter();
+		  this.getHost = this.getHost.concat(this.filterItemss);
+		  this.filterItemss = [];
+		  
   }
   
- moveAlltoright() {
-    const rightTable = this.filterItemss;
-    const leftTable = this.getHost;
-    let MoveTable = rightTable.concat(leftTable);
-    this.filterItemss = this.removeTrue(MoveTable);
-    this.initialFilter();
+  moveAlltoright() {
+			this.filterItemss = this.filterItemss.concat(this.getHost);
+		    this.getHost = [];
   }
   
   removeTrue(array) {
@@ -237,7 +243,10 @@ validation(){
     this._serveEdit.getHostapp().subscribe(
       data => {
         this.getHost = data;
-		this.initialFilter();
+      },error =>{
+		  console.log('error');
+	  },()=>{
+          this.initialFilter();
       })
   }
 
@@ -300,10 +309,16 @@ validation(){
     this.CollectData.documentName = this.passData.documentName;
     this.CollectData.documentURL = this.passData.documentID;
     this.CollectData.submittedUser = this.passData.submittedUser;
+	
+	const effDate = this.CurrentDates(this.newEffectiveDate, '-');
+    const terDate = this.CurrentDates(this.newTerminationDate, '-');
+    const curDate = this.CurrentDates(Date(), '-');
+	
     this.CollectData.status = 'Active';
-    this.CollectData.effectiveDate = '2018-1-6';
-    this.CollectData.terminationDate = '2018-2-2';
-
+    this.CollectData.effectiveDate = effDate;
+    this.CollectData.terminationDate = terDate;
+    this.CollectData.uploadedDate = curDate;
+	
     if (this.filterItemss === 0) {
       this.NewUploadData.hostAppList = false;
     } else {
@@ -387,10 +402,9 @@ validation(){
     const effDate = this.CurrentDates(this.newEffectiveDate, '-');
     const terDate = this.CurrentDates(this.newTerminationDate, '-');
     const curDate = this.CurrentDates(Date(), '-');
-	  console.log(curDate);
     this.CollectData.status = 'Active';
     this.CollectData.documentID = this.passData.document_id;
-    this.CollectData.documentName = this.passData.document_name;
+    this.CollectData.documentName = this.passData.curr_document_name;
     this.CollectData.submittedUser = this.passData.uploaded_by;
     this.CollectData.uploadedDate =  curDate;
     this.CollectData.effectiveDate =  effDate;
@@ -496,7 +510,7 @@ validation(){
   uploadDocument(e) {
     console.log(e.document_id);
     this.passData.documentID = e.document_id;
-    this.passData.documentName = e.document_name;
+    this.passData.documentName = e.curr_document_name;
     this.passData.submittedUser = e.uploaded_by;
     this.passData.uploadedDate = e.uploaded_date;
 

@@ -15,17 +15,17 @@
     "submittedUser": "CAT Product Owner",
     "uploadedDate": "2017-12-13",
     "hostAppList": [
-        {
-            "hostAppID": "1",
-            "hostAppName": "VisionLink"
-        },
-        {
-            "hostAppID": "2",
-            "hostAppName": "PLWeb"
-        },
-        {
-            "hostAppID": "3",
-            "hostAppName": "DSP"
-        }
+    {
+        "hostAppID": "1",
+        "hostAppName": "VisionLink"
+    },
+    {
+        "hostAppID": "2",
+        "hostAppName": "PLWeb"
+    },
+    {
+        "hostAppID": "3",
+        "hostAppName": "DSP"
+    }
     ]
 }

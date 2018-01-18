@@ -24,13 +24,18 @@
       <tbody *ngIf = "docSetting === false">
         <tr>
            <td>{{passData.document_id}}</td>
-           <td>{{passData.document_name}}</td>
+           <td>{{passData.curr_document_name}}</td>
            <td>{{passData.uploaded_by}}</td>
            <td>{{passData.uploaded_date}}</td>
            <td><a  target = "blank" href="http://localhost:8080/documents/files/{{passData.document_id}}">Download</a> </td>
          </tr>
-       </tbody> 
+       </tbody>
+	
     </table>
+
+	
+
+
     <div class="row">
       <div class="col-sm-6">
         <div class="form-panel">
@@ -74,13 +79,11 @@
                     </tr>
                   </tbody>
                    <tbody id="appsChosen" *ngIf = "filterItemss && docSetting === true">
-                    <ng-container *ngFor="let hostsapp of filterItemss">
-                    <tr *ngFor = "let host of getHost | basicfilter: filterItemss : false ; let i = index">
-                           <td (click)="righttSelectedArray(host, i)"  *ngIf = "host.hostAppID == hostsapp.hostAppID" [ngClass]="{'active': host.active === 'true' }">
+                    <tr *ngFor = "let host of filterItemss; let i = index">
+                           <td (click)="righttSelectedArray(host, i)" [ngClass]="{'active': host.active === 'true' }">
                               <a>{{host.hostAppName}}</a>
                            </td>
                     </tr>
-                    </ng-container>
                   </tbody>
                 </table>
               </div>
@@ -206,12 +209,12 @@
           <span class="message">Please select any one option</span>
          </div>
         </div>
-
-        <div class="row">
+   
+        <div class="row"> 
           <div class="col-sm-6">
             <div class="form-group" *ngIf = "docSetting === true">
               <label for="datepicker2">Effective Date</label>
-              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.effectiveDate" #startDate (ngModelChange)="CollectData.effectiveDate = startDate.value; validation()"> </ng-datepicker>
+              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newEffectiveDate" #startDate (ngModelChange)="validation()"> </ng-datepicker>
             </div>
 
             <div class="form-group" *ngIf = "docSetting === false"  [ngClass]= "{error: NewUploadData.effectiveDate === false}">
@@ -223,7 +226,7 @@
           <div class="col-sm-6">
             <div class="form-group" *ngIf = "docSetting === true">
               <label for="datepicker2">Termination Date</label>
-              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="passData.terminationDate" #endDate (ngModelChange)="CollectData.terminationDate = endDate.value; validation()" > </ng-datepicker>
+              <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newTerminationDate" #endDate (ngModelChange)="validation()" > </ng-datepicker>
             </div>
             <div class="form-group" *ngIf = "docSetting === false"  [ngClass]= "{error: NewUploadData.terminationDate === false}">
                 <label for="datepicker2">Termination Date</label>

@@ -78,6 +78,10 @@
                     </tr>
                      
                   </tbody>
+				  
+				  <tbody *ngIf="getData.length == 0">
+				         <tr> <td> <h3>No Document Available</h3></td> </tr>
+				  </tbody>
                 
                 </table>
                 <div class="row">
