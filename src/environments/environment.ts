@@ -2,36 +2,36 @@
   production: false,
   mainData: {
     method: "get",
-   url: "http://localhost:8080/user/document"
+   url: "{origin}/user/document"
   },
   postData: {
     method: "get",
-    url: "http://localhost:8080/documents/upload"
+    url: "{origin}/documents/upload"
   },
   reUploadData: {
     method: "get",
-    url: "http://localhost:8080/documents/edit"
+    url: "{origin}/documents/edit"
   },
   getData: {
-    url: "http://localhost:8080/user/document/"
+    url: "{origin}/user/document/"
   },
   setData:{
-	 url : "http://localhost:8080/documents/upload/"
+	 url : "{origin}/documents/upload/"
   }, 
   hostApp: {
-    url: "http://localhost:8080/document/hostapp-search"
+    url: "{origin}/document/hostapp-search"
   },
   doctype: {
-    url: "http://localhost:8080/document/doctype-search"
+    url: "{origin}/document/doctype-search"
   },
   editedResponse: {
-    url: "http://localhost:8080/document/doctype-search"
+    url: "{origin}/document/doctype-search"
   },
   reUploaddResponse: {
-    url: "http://localhost:8080/user/document"
+    url: "{origin}/user/document"
   },
    deleteResponse: {
-    url: "http://localhost:8080/documents/delete/"
+    url: "{origin}/documents/delete/"
   }
 }; 
 

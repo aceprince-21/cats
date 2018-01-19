@@ -59,7 +59,7 @@ export class EditUploadComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.windowUrl = configs.domain;
+    this.windowUrl = configs.origin;
     
     this.doctypeService();
     this.CollectData = uploadModel;
@@ -118,7 +118,7 @@ validation(){
 			  this.passData.intUserConsent = false;
 			  this.passData.partCompConsent = false;
 			  this.passData.perUserAssentReq = false;
-        this.documentUrl = this.windowUrl + "/documents/files/"+this.passData.document_id;
+        this.documentUrl = this.windowUrl + "/documents/files/"+this.passData.docId;
         console.log(this.documentUrl);
 			}
 			else{
@@ -329,16 +329,16 @@ validation(){
     } else {
       //let formData: FormData = new FormData();
       console.log(this.CollectData);
-     // if (this.passData.checkFile === true) {
-     //   this._serveEdit.sendResponse(this.CollectData).subscribe(
-    //      done => this.reuploadDocument(done),
-     //     error => this.erroeMsg(error));
-     // }
-    //  else {
+      if (this.passData.checkFile === true) {
+        this._serveEdit.sendResponse(this.CollectData).subscribe(
+         done => this.reuploadDocument(done),
+          error => this.erroeMsg(error));
+      }
+      else {
         this._serveEdit.reUpload(this.CollectData).subscribe(
           done => this.reuploadDocument(done),
           error => this.erroeMsg(error))
-    //  }
+      }
 
 
     }
@@ -408,15 +408,13 @@ validation(){
     const terDate = this.CurrentDates(this.newTerminationDate, '-');
     const curDate = this.CurrentDates(Date(), '-');
     this.CollectData.status = 'Active';
-    this.CollectData.documentID = this.passData.document_id;
-    this.CollectData.documentName = this.passData.curr_document_name;
-    this.CollectData.submittedUser = this.passData.uploaded_by;
+    this.CollectData.documentID = this.passData.docId;
+    this.CollectData.documentName = this.passData.docName;
+    this.CollectData.submittedUser = this.passData.uploadedBy;
     this.CollectData.uploadedDate =  curDate;
     this.CollectData.effectiveDate =  effDate;
     this.CollectData.terminationDate = terDate ; 
-    this.CollectData.documentURL = this.passData.document_id;
-
-    console.log(this.CollectData);
+    this.CollectData.documentURL = this.documentUrl;
 
 
     if (this.NewUploadData.hostAppList === this.NewUploadData.dealerConsent === this.NewUploadData.customerConsent === this.NewUploadData.intUserConsent === this.NewUploadData.partCompConsent === this.NewUploadData.perUserAssentReq === this.NewUploadData.docTypeID === true &&  this.DateErrorHandle == false) {
@@ -513,15 +511,15 @@ validation(){
   }
 
   uploadDocument(e) {
-    console.log(e.document_id);
-    this.passData.documentID = e.document_id;
-    this.passData.documentName = e.curr_document_name;
-    this.passData.submittedUser = e.uploaded_by;
-    this.passData.uploadedDate = e.uploaded_date;
+    console.log(e.docId);
+    this.passData.documentID = e.docId;
+    this.passData.documentName = e.docName;
+    this.passData.submittedUser = e.uploadedBy;
+    this.passData.uploadedDate = e.uploadedDate;
 
     this.passData.checkFile = true;
     this.documentUrl = this.windowUrl + "/documents/files/"+this.passData.documentID;
-    this.router.navigate(['mydocuments/edit', e.document_id])
+    this.router.navigate(['mydocuments/edit', e.docId])
   }
 
   delete(params) {

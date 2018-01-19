@@ -23,10 +23,10 @@
 
       <tbody *ngIf = "docSetting === false">
         <tr>
-           <td>{{passData.document_id}}</td>
-           <td>{{passData.curr_document_name}}</td>
-           <td>{{passData.uploaded_by}}</td>
-           <td>{{passData.uploaded_date}}</td>
+           <td>{{passData.docId}}</td>
+           <td>{{passData.docName}}</td>
+           <td>{{passData.uploadedBy}}</td>
+           <td>{{passData.uploadedDate}}</td>
            <td><a  target = "blank" href="{{documentUrl}}">Download</a> </td>
          </tr>
        </tbody>
@@ -245,7 +245,7 @@
 		      <div class="col-sm-6" *ngIf = "docSetting === false">
             <!-- Using anchor tag instead of button for prototype purposes only -->
             <a (click)="uploadData()" class="btn btn-primary btn-block">Save and Exit</a>
-            <a (click)="delete(passData.document_id)" class="btn btn-primary btn-block">Do Not Save and Exit</a>
+            <a (click)="delete(passData.docId)" class="btn btn-primary btn-block">Do Not Save and Exit</a>
           </div>
           <div class="errormsg" *ngIf="ErrorMsg != null ">
               <span class="iconsize"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>

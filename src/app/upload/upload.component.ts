@@ -75,8 +75,8 @@ export class UploadComponent implements OnInit {
   }
   
   uploadDocument(e){
-  console.log(e.document_id);
-  this.router.navigate(['mydocuments/upload', e.document_id])
+  console.log(e.docId);
+  this.router.navigate(['mydocuments/upload', e.docId])
 }
 
 erroeMsg(e){
