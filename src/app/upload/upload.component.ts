@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UploadService } from './upload.service';
+import { EdituploadService } from '../editupload/editupload.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { configs } from '../../environments/config';
+import { DatepickerOptions } from 'ng2-datepicker';
 
 @Component({
   selector: 'app-upload',
@@ -23,13 +25,27 @@ export class UploadComponent implements OnInit {
   public CheckSize: boolean = false;
   public CheckUpload: boolean = false;
   public ErrorMsg;
-  constructor(public _serv: UploadService, public route: ActivatedRoute, public router: Router) { }
+  public UploadedDate = new Date(Date.now());
+  public getDocTypes;
+  public getStatus;
+  public selectedItems;
+  public selectedStatus;
+  constructor(public _serv: UploadService, public _serveEdit: EdituploadService,public route: ActivatedRoute, public router: Router) { }
+  
+  options: DatepickerOptions = {
+    minYear: 1970,
+    maxYear: 2030,
+    displayFormat: 'MM/DD/YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    firstCalendarDay: 0 // 0 - Sunday, 1 - Monday
+    };
 
   ngOnInit() {
     this.uploadFetchService();
-
+    this.doctypeService();
     this.DropDowns = configs.DropDowns;
     this.perPage = configs.DropDowns[0];
+    this.getStatus = configs.Status;
   }
 
   uploadFetchService() {
@@ -38,7 +54,7 @@ export class UploadComponent implements OnInit {
         this.getData = data;
         this.totalCount = data.length;
         console.log(this.getData);
-      })
+      }
   }
 
   parseData(info) {
@@ -78,6 +94,15 @@ export class UploadComponent implements OnInit {
   uploadDocument(e){
   console.log(e.docId);
   this.router.navigate(['mydocuments/upload', e.docId])
+}
+
+
+doctypeService() {
+  this._serveEdit.doctype().subscribe(
+    data => {
+      this.getDocType = data;
+      console.log( this.getDocType);
+    })
 }
 
 erroeMsg(e){
