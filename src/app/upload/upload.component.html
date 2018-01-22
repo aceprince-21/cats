@@ -17,7 +17,7 @@
                       <label for="input2" class="col col-form-label">Document Type</label>
                       <div class="col">
                         <select class="custom-select col-lg-6" [(ngModel)]="selectedItems">
-                          <option *ngFor = "let item of getDocType; let i = index" [ngValue]="item.docTypeID" >{{item.docTypeName}}</option>
+                          <option *ngFor = "let item of getDocTypes; let i = index" [ngValue]="item.docTypeID" >{{item.docTypeName}}</option>
                         </select>
                       </div>
                     </div>

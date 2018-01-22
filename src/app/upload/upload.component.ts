@@ -54,7 +54,7 @@ export class UploadComponent implements OnInit {
         this.getData = data;
         this.totalCount = data.length;
         console.log(this.getData);
-      }
+      });
   }
 
   parseData(info) {
@@ -100,8 +100,8 @@ export class UploadComponent implements OnInit {
 doctypeService() {
   this._serveEdit.doctype().subscribe(
     data => {
-      this.getDocType = data;
-      console.log( this.getDocType);
+      this.getDocTypes = data;
+      console.log( this.getDocTypes);
     })
 }
 
