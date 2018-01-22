@@ -12,6 +12,9 @@
 .table th, .table td.active{
     background: palegreen;
 }
+.table td{
+    word-break: break-all;
+}
 .wraper{
     margin-bottom: 50px;
 }

@@ -11,18 +11,19 @@ import { configs } from '../../environments/config';
 export class UploadComponent implements OnInit {
   getData: any;
   result: any;
-  private perPage = 0;
-  private Configs = [];
-  private DropDowns: any;
-  private totalCount = 0;
-  private fileName: any;
-  private selfile: any;
-  private fileSize: any;
-  private fileType: any;
-  private CheckSize: boolean = false;
-  private CheckUpload: boolean = false;
-  private ErrorMsg;
-  constructor(private _serv: UploadService, private route: ActivatedRoute, private router: Router) { }
+  p: number = 1;
+  public perPage = 0;
+  public Configs = [];
+  public DropDowns: any;
+  public totalCount = 0;
+  public fileName: any;
+  public selfile: any;
+  public fileSize: any;
+  public fileType: any;
+  public CheckSize: boolean = false;
+  public CheckUpload: boolean = false;
+  public ErrorMsg;
+  constructor(public _serv: UploadService, public route: ActivatedRoute, public router: Router) { }
 
   ngOnInit() {
     this.uploadFetchService();

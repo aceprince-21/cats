@@ -12,43 +12,43 @@ import { configs } from '../../environments/config'
   styleUrls: ['./edit-upload.component.scss']
 })
 export class EditUploadComponent implements OnInit {
-  constructor(private _passdata: UploadService, private _serveEdit: EdituploadService, private route: ActivatedRoute, private router: Router) { }
-  private passData: any = [];
-  private getHost: any = [];
-  private getDocType: any = [];
-  private id: any = [];
-  private filterItem;
-  private filterItemss: any = [];
-  private hostapplist: any = [];
-  private leftSelectedItem: any = [];
-  private rightSelectedItem = [];
-  private CollectData: any = [];
-  private NewUploadData: any = [];
-  private docSetting: boolean = false;
-  private newEffectiveDate: any = null;
-  private newTerminationDate: any = null;
-  private fileName: any;
-  private selfile: any;
-  private fileSize: any;
-  private fileType: any;
-  private CheckSize: boolean = false;
-  private CheckUpload: boolean = false;
-  private messageBox: boolean = false;
-  private dealerCon;
-  private customerCon;
-  private intUser;
-  private partComp;
-  private perUser;
-  private selectedItem;
-  private startDate;
-  private endDate;
-  private ErrorMsg;
-  private CurrentDate = new Date();
-  private MaxDate = new Date(Date.now());
-  private DateErrorHandle = false;
-  private keys:any = [];
-  private windowUrl : any;
-  private documentUrl: any =null;
+  constructor(public _passdata: UploadService, public _serveEdit: EdituploadService, public route: ActivatedRoute, public router: Router) { }
+  public passData: any = [];
+  public getHost: any = [];
+  public getDocType: any = [];
+  public id: any = [];
+  public filterItem;
+  public filterItemss: any = [];
+  public hostapplist: any = [];
+  public leftSelectedItem: any = [];
+  public rightSelectedItem = [];
+  public CollectData: any = [];
+  public NewUploadData: any = [];
+  public docSetting: boolean = false;
+  public newEffectiveDate: any = null;
+  public newTerminationDate: any = null;
+  public fileName: any;
+  public selfile: any;
+  public fileSize: any;
+  public fileType: any;
+  public CheckSize: boolean = false;
+  public CheckUpload: boolean = false;
+  public messageBox: boolean = false;
+  public dealerCon;
+  public customerCon;
+  public intUser;
+  public partComp;
+  public perUser;
+  public selectedItem;
+  public startDate;
+  public endDate;
+  public ErrorMsg;
+  public CurrentDate = new Date();
+  public MaxDate = new Date(Date.now());
+  public DateErrorHandle = false;
+  public keys:any = [];
+  public windowUrl : any;
+  public documentUrl: any =null;
 
   options: DatepickerOptions = {
   minYear: 1970,

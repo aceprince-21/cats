@@ -65,7 +65,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of getData |  paginate:{ itemsPerPage: perPage, currentPage: p }">
+                    <tr *ngFor="let item of getData | paginate:{ itemsPerPage: perPage, currentPage: p }">
                       <td>{{item.status}}</td>
                       <td>{{item.documentID}}</td>
                       <td>{{item.documentName}}</td>
@@ -83,7 +83,7 @@
                 
                 </table>
                 <div class="row">
-                  <pagination-controls class="col-lg-9"(pageChange)="p = $event"></pagination-controls> <span class="col-lg-3 pull-right">&nbsp; &nbsp; &nbsp; &nbsp;Records Per Page &nbsp;
+                  <pagination-controls class="col-lg-9" (pageChange)="p = $event"></pagination-controls> <span class="col-lg-3 pull-right">&nbsp; &nbsp; &nbsp; &nbsp;Records Per Page &nbsp;
                   <select class="pull-right"   [(ngModel)]="perPage" #perPageVal>
                     <option *ngFor = "let dropDown of DropDowns" [ngValue]="dropDown" >{{dropDown}}</option>
                   </select> </span> </div>
