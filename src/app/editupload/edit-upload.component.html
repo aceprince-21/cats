@@ -231,7 +231,6 @@
             <div class="form-group" *ngIf = "docSetting === false"  [ngClass]= "{error: NewUploadData.terminationDate === false}">
                 <label for="datepicker2">Termination Date</label>
                 <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="newTerminationDate" #endDate (ngModelChange)="validation()" > </ng-datepicker>
-
             </div>
           </div>
 		  <div *ngIf="DateErrorHandle" class=" col-lg-12"> <span class="dateErro">Termination Date cannot be less than Effective Date </span></div>

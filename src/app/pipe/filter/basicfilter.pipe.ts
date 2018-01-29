@@ -6,29 +6,33 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 
 export class BasicfilterPipe implements PipeTransform {
-  
-  transform(value: any[], args?:any, type?:boolean ): any {
-	   let keys = [];
-       if(type === false){
-		     value.forEach(item => {
-				  args.forEach(arg =>{
-					 if(arg.hostAppID === item.hostAppID){
-						 keys.push(item);
-					 }
-				  }); 
-			 });
-			 return keys;
-	   }
-	   if(type === true){
-		     let newValue = value;
-		      newValue.forEach((item,index) => {
-				  args.forEach(arg =>{
-					 if(arg.hostAppID != item.hostAppID){
-						newValue.splice(index,1);	
-					 }
-				  }); 
-			 });
-			 return newValue;
-	   }
-  }  
+  //documentIds:selectedItems:uploaderCws:doucmentName:UploadedDate:selectedStatus
+
+	transform(items: any, documentIds: string, selectedItems: string, uploaderCws: string, doucmentName: string, UploadedDate: string, selectedStatus:String ){
+        if (items && items.length){
+            return items.filter(item =>{
+                if (documentIds && item.documentID.toLowerCase().indexOf(documentIds.toLowerCase()) === -1){
+                    return false;
+                }
+                if (selectedItems && item.docTypeName.toLowerCase().indexOf(selectedItems.toLowerCase()) === -1){
+                    return false;
+                }
+                if (uploaderCws && item.submittedUser.toLowerCase().indexOf(uploaderCws.toLowerCase()) === -1){
+                    return false;
+				}
+				
+				if (doucmentName && item.company.toLowerCase().indexOf(doucmentName.toLowerCase()) === -1){
+                    return false;
+				}
+				
+				if (selectedStatus && item.status.toLowerCase().indexOf(selectedStatus.toLowerCase()) === -1){
+                    return false;
+				}
+                return true;
+           })
+        }
+        else{
+            return items;
+        }
+    }
 }

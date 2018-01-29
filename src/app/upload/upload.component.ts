@@ -28,9 +28,14 @@ export class UploadComponent implements OnInit {
   public UploadedDate = new Date(Date.now());
   public getDocTypes;
   public getStatus;
-  public selectedItems;
-  public selectedStatus;
-  constructor(public _serv: UploadService, public _serveEdit: EdituploadService,public route: ActivatedRoute, public router: Router) { }
+  public selectedItems = '';
+  public selectedStatus = '';
+  public itemItems= '';
+  public documentIds = '';
+  public documentName = '';
+  public uploaderCws = '';
+  public filterItems;
+  constructor(public _serv: UploadService, public _serveEdit: EdituploadService, public route: ActivatedRoute, public router: Router) { }
   
   options: DatepickerOptions = {
     minYear: 1970,
@@ -41,11 +46,13 @@ export class UploadComponent implements OnInit {
     };
 
   ngOnInit() {
+    this.getData = [];
     this.uploadFetchService();
     this.doctypeService();
     this.DropDowns = configs.DropDowns;
     this.perPage = configs.DropDowns[0];
     this.getStatus = configs.Status;
+    this.filterItems = '';
   }
 
   uploadFetchService() {
@@ -66,15 +73,15 @@ export class UploadComponent implements OnInit {
     this.selfile = file;
     this.fileName = file.name;
     this.fileSize = file.size;
-	this.fileType  =  file.type;
-	this.CheckSize = true;
+	  this.fileType  =  file.type;
+	  this.CheckSize = true;
 	
-	if(this.fileType === 'application/pdf' && this.fileSize < 2899417){
-		this.CheckUpload = true;
-	}
-	else{
-		this.CheckUpload = false;
-	}
+	  if(this.fileType === 'application/pdf' && this.fileSize < 2899417){
+	 	this.CheckUpload = true;
+	  }
+    else{
+      this.CheckUpload = false;
+    }
   }
 
   uploadfile() {
@@ -107,6 +114,22 @@ doctypeService() {
 
 erroeMsg(e){
   this.ErrorMsg = e;
+}
+
+search(){
+   /* this.filterItems = {'documentID':this.documentID, 'uploadedDate':this.UploadedDate,
+    'docTypeName':this.selectedItems, 'submittedUser':this.uploaderCws, 'documentName':this.documentName,
+     'status':this.selectedStatus}*/
+
+     this.filterItems = "documentIds:selectedItems:uploaderCws:doucmentName:UploadedDate:selectedStatus"
+}
+
+reset() {
+  this.documentIds = '';
+  this.selectedItems='';
+  this.uploaderCws ='';
+  this.documentName='';
+  this.selectedStatus = '';
 }
 
 }

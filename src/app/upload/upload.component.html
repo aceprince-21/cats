@@ -10,21 +10,21 @@
                     <div class="form-group row">
                       <label for="input1" class="col col-form-label">Document ID</label>
                       <div class="col">
-                        <input type="text" class="form-control" id="input1">
+                        <input type="text" class="form-control" id="input1" [(ngModel)]="documentIds" >
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="input2" class="col col-form-label">Document Type</label>
                       <div class="col">
                         <select class="custom-select col-lg-6" [(ngModel)]="selectedItems">
-                          <option *ngFor = "let item of getDocTypes; let i = index" [ngValue]="item.docTypeID" >{{item.docTypeName}}</option>
+                          <option *ngFor = "let item of getDocTypes; let i = index" [ngValue]="item.docTypeName" >{{item.docTypeName}}</option>
                         </select>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="input3" class="col col-form-label">Uploader CWS</label>
                       <div class="col">
-                        <input type="text" class="form-control" id="input3">
+                        <input type="text" class="form-control" id="input3" [(ngModel)]="uploaderCws">
                       </div>
                     </div>
                   </div>
@@ -32,7 +32,7 @@
                     <div class="form-group row">
                       <label for="input4" class="col col-form-label">Document Name</label>
                       <div class="col">
-                        <input type="text" class="form-control" id="input4">
+                        <input type="text" class="form-control" id="input4" [(ngModel)]="doucmentName">
                       </div>
                     </div>
                     <div class="form-group row">
@@ -52,7 +52,7 @@
                   </div>
                 </div>
                 <div class="row">
-                 <div class="col-lg-9"> &nbsp;</div>  <div class="col-lg-3 col-lg-offset-right"> <button class="btn btn-primary">Search</button> <button class="btn btn-primary">Reset</button></div>
+                 <div class="col-lg-9"> &nbsp;</div>  <div class="col-lg-3 col-lg-offset-right">  <button class="btn btn-primary"(click)= "reset()">Reset</button></div>
                </div>
               </div>
             </div>
@@ -71,8 +71,8 @@
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr *ngFor="let item of getData | paginate:{ itemsPerPage: perPage, currentPage: p }">
+                  <tbody *ngIf = "getData.length > 0" >
+                    <tr *ngFor="let item of getData | basicfilter: documentIds:selectedItems:uploaderCws:doucmentName:UploadedDate:selectedStatus | paginate:{ itemsPerPage: perPage, currentPage: p }">
                       <td>{{item.status}}</td>
                       <td>{{item.documentID}}</td>
                       <td>{{item.documentName}}</td>
