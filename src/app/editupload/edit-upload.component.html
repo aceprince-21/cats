@@ -16,7 +16,7 @@
           <td>{{passData.documentID}}</td>
           <td>{{passData.documentName}}</td>
           <td>{{passData.submittedUser}}</td>
-          <td>{{passData.uploadedDate}}</td>
+          <td>{{passData.uploadedDate | date: 'MM/dd/yyyy'}}</td>
           <td><a  target = "blank" href="{{documentUrl}}">Download</a> </td>
         </tr>
       </tbody> 
@@ -26,7 +26,7 @@
            <td>{{passData.docId}}</td>
            <td>{{passData.docName}}</td>
            <td>{{passData.uploadedBy}}</td>
-           <td>{{passData.uploadedDate}}</td>
+           <td>{{passData.uploadedDate | date: 'MM/dd/yyyy'}}</td>
            <td><a  target = "blank" href="{{documentUrl}}">Download</a> </td>
          </tr>
        </tbody>

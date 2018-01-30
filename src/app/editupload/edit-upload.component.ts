@@ -511,15 +511,14 @@ validation(){
   }
 
   uploadDocument(e) {
-    console.log(e.docId);
     this.passData.documentID = e.docId;
     this.passData.documentName = e.docName;
     this.passData.submittedUser = e.uploadedBy;
     this.passData.uploadedDate = e.uploadedDate;
-
+    
     this.passData.checkFile = true;
     this.documentUrl = this.windowUrl + "/documents/files/"+this.passData.documentID;
-    this.router.navigate(['mydocuments/edit', e.docId])
+    //this.router.navigate(['mydocuments/edit', e.docId])
   }
 
   delete(params) {
