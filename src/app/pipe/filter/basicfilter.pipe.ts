@@ -8,7 +8,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class BasicfilterPipe implements PipeTransform {
   //documentIds:selectedItems:uploaderCws:doucmentName:UploadedDate:selectedStatus
 
-	transform(items: any, documentIds: string, selectedItems: string, uploaderCws: string, doucmentName: string, UploadedDate: string, selectedStatus:String ){
+	transform(items: any, documentIds: string, selectedItems: string, uploaderCws: string, documentName: string, uploadedDate:number, selectedStatus:String ){
         if (items && items.length){
             return items.filter(item =>{
                 if (documentIds && item.documentID.toLowerCase().indexOf(documentIds.toLowerCase()) === -1){
@@ -21,9 +21,9 @@ export class BasicfilterPipe implements PipeTransform {
                     return false;
 				}
 				
-				if (doucmentName && item.company.toLowerCase().indexOf(doucmentName.toLowerCase()) === -1){
+				if (documentName && item.documentName.toLowerCase().indexOf(documentName.toLowerCase()) === -1){
                     return false;
-				}
+                }
 				
 				if (selectedStatus && item.status.toLowerCase().indexOf(selectedStatus.toLowerCase()) === -1){
                     return false;

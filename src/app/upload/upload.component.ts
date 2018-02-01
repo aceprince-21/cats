@@ -26,14 +26,20 @@ export class UploadComponent implements OnInit {
   public CheckUpload: boolean = false;
   public ErrorMsg;
   public UploadedDate = new Date(Date.now());
+  public getUploadedDate:any = '';
   public getDocTypes;
   public getStatus;
   public selectedItems = '';
+  public getselectedItems = '';
   public selectedStatus = '';
+  public getselectedStatus = '';
   public itemItems= '';
   public documentIds = '';
+  public getdocumentIds = '';
   public documentName = '';
+  public getdocumentName = '';
   public uploaderCws = '';
+  public getuploaderCws = '';
   public filterItems;
   constructor(public _serv: UploadService, public _serveEdit: EdituploadService, public route: ActivatedRoute, public router: Router) { }
   
@@ -117,11 +123,17 @@ erroeMsg(e){
 }
 
 search(){
-   /* this.filterItems = {'documentID':this.documentID, 'uploadedDate':this.UploadedDate,
-    'docTypeName':this.selectedItems, 'submittedUser':this.uploaderCws, 'documentName':this.documentName,
-     'status':this.selectedStatus}*/
-
-     this.filterItems = "documentIds:selectedItems:uploaderCws:doucmentName:UploadedDate:selectedStatus"
+let strr:any;
+let res:any;
+this.getdocumentIds= this.documentIds;
+this.getselectedItems= this.selectedItems;
+this.getuploaderCws = this.uploaderCws;
+this.getdocumentName = this.documentName;
+strr = new Date(this.UploadedDate).getTime();
+res = strr.toString().substring(0, 6);
+this.getUploadedDate = parseInt(res);
+this.getselectedStatus = this.selectedStatus;
+console.log(this.getUploadedDate);
 }
 
 reset() {
@@ -130,6 +142,14 @@ reset() {
   this.uploaderCws ='';
   this.documentName='';
   this.selectedStatus = '';
+  this.getdocumentIds= ''
+  this.getselectedItems= '';
+  this.getuploaderCws = '';
+  this.getdocumentName = '';
+  this.getUploadedDate = '';
+  this.getselectedStatus = '';
 }
+
+
 
 }
