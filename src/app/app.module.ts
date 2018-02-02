@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { HelpComponent } from './help/help.component';
 import {NgxPaginationModule} from 'ngx-pagination'; 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: 'mydocuments', pathMatch: 'full' },
@@ -58,12 +59,14 @@ export const ROUTES: Routes = [
     CommonModule, 
     FormsModule,
     NgDatepickerModule,
+    
     AngularFontAwesomeModule,
     NgxPaginationModule,
     RouterModule.forRoot(ROUTES),
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgbModule.forRoot()
   ],
   providers: [UploadService, EdituploadService],
   bootstrap: [AppComponent]

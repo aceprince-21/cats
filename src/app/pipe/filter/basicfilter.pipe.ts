@@ -24,7 +24,7 @@ export class BasicfilterPipe implements PipeTransform {
 				if (documentName && item.documentName.toLowerCase().indexOf(documentName.toLowerCase()) === -1){
                     return false;
                 }
-				
+
 				if (selectedStatus && item.status.toLowerCase().indexOf(selectedStatus.toLowerCase()) === -1){
                     return false;
 				}

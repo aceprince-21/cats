@@ -4,6 +4,7 @@ import { EdituploadService } from '../editupload/editupload.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { configs } from '../../environments/config';
 import { DatepickerOptions } from 'ng2-datepicker';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-upload',
@@ -41,7 +42,7 @@ export class UploadComponent implements OnInit {
   public uploaderCws = '';
   public getuploaderCws = '';
   public filterItems;
-  constructor(public _serv: UploadService, public _serveEdit: EdituploadService, public route: ActivatedRoute, public router: Router) { }
+  constructor(private modalService:NgbModal, public _serv: UploadService, public _serveEdit: EdituploadService, public route: ActivatedRoute, public router: Router) { }
   
   options: DatepickerOptions = {
     minYear: 1970,
@@ -123,17 +124,17 @@ erroeMsg(e){
 }
 
 search(){
-let strr:any;
-let res:any;
-this.getdocumentIds= this.documentIds;
-this.getselectedItems= this.selectedItems;
-this.getuploaderCws = this.uploaderCws;
-this.getdocumentName = this.documentName;
-strr = new Date(this.UploadedDate).getTime();
-res = strr.toString().substring(0, 6);
-this.getUploadedDate = parseInt(res);
-this.getselectedStatus = this.selectedStatus;
-console.log(this.getUploadedDate);
+  let strr:any;
+  let res:any;
+  this.getdocumentIds= this.documentIds;
+  this.getselectedItems= this.selectedItems;
+  this.getuploaderCws = this.uploaderCws;
+  this.getdocumentName = this.documentName;
+  strr = new Date(this.UploadedDate).getTime();
+  res = strr.toString().substring(0, 6);
+  this.getUploadedDate = parseInt(res);
+  this.getselectedStatus = this.selectedStatus;
+  console.log(this.getUploadedDate);
 }
 
 reset() {
@@ -148,6 +149,20 @@ reset() {
   this.getdocumentName = '';
   this.getUploadedDate = '';
   this.getselectedStatus = '';
+}
+
+open(content) {
+  this.modalService.open(content);
+}
+
+getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+    return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+    return 'by clicking on a backdrop';
+  } else {
+    return  `with: ${reason}`;
+  }
 }
 
 

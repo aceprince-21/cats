@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody *ngIf = "passData && docSetting === true" >
-       <tr>
+        <tr>
           <td>{{passData.documentID}}</td>
           <td>{{passData.documentName}}</td>
           <td>{{passData.submittedUser}}</td>
@@ -27,15 +27,10 @@
            <td>{{passData.docName}}</td>
            <td>{{passData.uploadedBy}}</td>
            <td>{{passData.uploadedDate | date: 'MM/dd/yyyy'}}</td>
-           <td><a  target = "blank" href="{{documentUrl}}">Download</a> </td>
-         </tr>
+           <td><a  target = "blank" href="{{documentUrl}}">Download</a></td>
+        </tr>
        </tbody>
-	
     </table>
-
-	
-
-
     <div class="row">
       <div class="col-sm-6">
         <div class="form-panel">
@@ -179,7 +174,7 @@
                 </div>
                 <div class="form-group">
                   <div class="d-flex flex-row-reverse"> 
-                   <button [disabled] ="!CheckUpload" (click) = "uploadfile()" class="btn btn-primary">Upload</button>
+                   <button [disabled] ="!CheckUpload" (click) = "open(fileUpload)" class="btn btn-primary">Upload</button>
                   </div>
 
                 </div>
@@ -193,16 +188,15 @@
                 </div>
         <div class="form-group" *ngIf = "docSetting === true"  >
           <label class="d-block">What is the Document Type?</label>
-          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = doctypes.value" >
-            <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeName"  [selected]="item.docTypeID === passData.docTypeID">{{item.docTypeName}}</option>
+          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = selectedItem; NewUploadData.docTypeID  = true">
+            <option *ngFor = "let item of getDocType" [ngValue]="item.docTypeID"  [selected]="item.docTypeID === passData.docTypeID">{{item.docTypeName}}</option>
           </select>
         </div>
 
         <div class="form-group" *ngIf = "docSetting === false" [ngClass]= "{error: NewUploadData.docTypeID === false}">
           <label class="d-block">What is the Document Type?</label>
           <div [ngClass]= "{error: NewUploadData.docTypeID === false}">
-          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = selectedItem; NewUploadData.docTypeID  = true" >
-            
+          <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = selectedItem; NewUploadData.docTypeID  = true" >   
             <option *ngFor = "let item of getDocType; let i = index" [ngValue]="item.docTypeID" >{{item.docTypeName}}</option>
           </select>
           <br/>
@@ -238,12 +232,12 @@
         <div class="row">
           <div class="col-sm-6" *ngIf = "docSetting === true">
             <!-- Using anchor tag instead of button for prototype purposes only -->
-            <a (click)="editdata()" class="btn btn-primary btn-block">Save and Exit</a>
+            <a (click)="open(editData)" class="btn btn-primary btn-block">Save and Exit</a>
             <a (click)="goBack()" class="btn btn-primary btn-block">Do Not Save and Exit</a>
           </div>
 		      <div class="col-sm-6" *ngIf = "docSetting === false">
             <!-- Using anchor tag instead of button for prototype purposes only -->
-            <a (click)="uploadData()" class="btn btn-primary btn-block">Save and Exit</a>
+            <a (click)="open(uploaddata)" class="btn btn-primary btn-block">Save and Exit</a>
             <a (click)="delete(passData.docId)" class="btn btn-primary btn-block">Do Not Save and Exit</a>
           </div>
           <div class="errormsg" *ngIf="ErrorMsg != null ">
@@ -253,6 +247,56 @@
         </div>
       </div>
     </div>
-   
   </div>
+
+
+<ng-template #fileUpload let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Do you want to Upload File ?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Do you want to Save ?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="uploadfile(); c('Close click')">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #editData let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Submit Data</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Changes will be over written.. ! </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="editdata(); c('Close click')">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #uploaddata let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Submit Data</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Do you want to upload the file..</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="uploadData(); c('Close click')">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>
+
+  
 

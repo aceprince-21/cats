@@ -5,6 +5,7 @@ import { UploadService } from '../upload/upload.service';
 import { DatepickerOptions } from 'ng2-datepicker';
 import { uploadModel } from './exportmodel';
 import { configs } from '../../environments/config'
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-edit-upload',
@@ -12,7 +13,7 @@ import { configs } from '../../environments/config'
   styleUrls: ['./edit-upload.component.scss']
 })
 export class EditUploadComponent implements OnInit {
-  constructor(public _passdata: UploadService, public _serveEdit: EdituploadService, public route: ActivatedRoute, public router: Router) { }
+  constructor(private modalService: NgbModal, public _passdata: UploadService, public _serveEdit: EdituploadService, public route: ActivatedRoute, public router: Router) { }
   public passData: any = [];
   public getHost: any = [];
   public getDocType: any = [];
@@ -258,7 +259,6 @@ validation(){
   editdata() {
     this.CollectData = {};
 	 /* dealerCon; customerCon; intUser; partComp; perUser;*/
-	 console.log(this.dealerCon);
     if (!this.dealerCon) {
       this.CollectData.dealerConsent = this.passData.dealerConsent;
     }
@@ -292,6 +292,7 @@ validation(){
 
     if (this.filterItemss.length === 0) {
       this.NewUploadData.hostAppList = false;
+      return false;
     } else {
       this.CollectData.hostAppList = this.filterItemss;
       this.NewUploadData.hostAppList = true;
@@ -303,11 +304,6 @@ validation(){
 
     if (!this.CollectData.terminationDate) {
       this.CollectData.terminationDate = this.passData.terminationDate;
-    }
-
-    if (!this.CollectData.docTypeID) {
-      this.CollectData.docTypeID = this.passData.docTypeID;
-      this.CollectData.docTypeName = this.passData.docTypeName;
     }
 
     this.CollectData.documentID = this.passData.documentID;
@@ -323,13 +319,12 @@ validation(){
     this.CollectData.effectiveDate = effDate;
     this.CollectData.terminationDate = terDate;
     this.CollectData.uploadedDate = curDate;
-	
-    if (this.filterItemss === 0) {
-      this.NewUploadData.hostAppList = false;
-    } else {
-      //let formData: FormData = new FormData();
-      console.log(this.CollectData);
-      if (this.passData.checkFile === true) {
+    this.CollectData.hostAppList = [];
+    this.CollectData.hostAppList = this.filterItemss;
+    this.CollectData.docTypeID = this.selectedItem;
+
+    if (this.NewUploadData.hostAppList != false) {
+    if (this.passData.checkFile === true) {
         this._serveEdit.sendResponse(this.CollectData).subscribe(
          done => this.reuploadDocument(done),
           error => this.erroeMsg(error));
@@ -339,8 +334,6 @@ validation(){
           done => this.reuploadDocument(done),
           error => this.erroeMsg(error))
       }
-
-
     }
   }
 
@@ -352,6 +345,7 @@ validation(){
     if (this.filterItemss.length == 0) {
       this.CollectData.hostAppList = [];
       this.NewUploadData.hostAppList = false;
+      return false;
     } else {
       this.CollectData.hostAppList = this.filterItemss;
       this.NewUploadData.hostAppList = true;
@@ -397,8 +391,9 @@ validation(){
       this.NewUploadData.perUserAssentReq = true;
     }
 
-    if (!this.selectedItem || this.selectedItem === null) {
+    if (!this.selectedItem) {
       this.NewUploadData.docTypeID = false;
+      return false;
     } else {
       this.CollectData.docTypeID = this.selectedItem;
       this.NewUploadData.docTypeID = true;
@@ -446,10 +441,8 @@ validation(){
   }
 
   reuploadDocument(e) {
-    console.log(e);
-    //setTimeout(() => {
-    this.router.navigate(['/mydocuments']);
-    // },2000);
+   console.log(e);
+   this.router.navigate(['/mydocuments']);
   }
 
   goBack() {
@@ -525,6 +518,21 @@ validation(){
     this._serveEdit.deleteItem(params).subscribe(
       done => this.reuploadDocument(done),
       error => this.erroeMsg(error))
+  }
+
+
+  open(content) {
+    this.modalService.open(content);
+  }
+
+  getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
 
