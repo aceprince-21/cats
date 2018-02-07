@@ -46,7 +46,7 @@
                     <div class="form-group row">
                       <label for="input6" class="col col-form-label">Uploaded Date</label>
                       <div class="col">
-                        <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="UploadedDate" #endDate> </ng-datepicker>
+                        <ng-datepicker class="form-control hasDatepicker" [options]="options" [(ngModel)]="UploadedDate" #endDate (ngModelChange)="SelectDate()"> </ng-datepicker>
                       </div>
                     </div>
                   </div>
@@ -62,12 +62,22 @@
                 <table class="table table-bordered">
                   <thead class="thead-light">
                     <tr>
-                      <th scope="col">Status</th>
-                      <th scope="col">Document ID</th>
+                      <th scope="col">Status </th>
+                      <th scope="col " (click)="sort('documentID')">Document ID <i class="fa pull-right" 
+                        [ngClass]="{'fa-sort': column != 'documentID', 
+                                            'fa-sort-asc': (column == 'documentID' && !isDesc), 
+                                            'fa-sort-desc': (column == 'documentID' && isDesc) }"
+                        aria-hidden="true"> </i>
+                      </th>
                       <th scope="col">Document Name</th>
                       <th scope="col">Type</th>
                       <th scope="col">Uploader</th>
-                      <th scope="col">Upload Date</th>
+                      <th scope="col" (click)="sort('uploadedDate')">Upload Date <i class="fa pull-right" 
+                        [ngClass]="{'fa-sort': column != 'CategoryID', 
+                                            'fa-sort-asc': (column == 'uploadedDate' && !isDesc), 
+                                            'fa-sort-desc': (column == 'uploadedDate' && isDesc) }"
+                        aria-hidden="true"> </i>
+                      </th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -83,7 +93,6 @@
                         <a (click)="parseData(item.documentID)"class="btn btn-primary btn-sm btn-block">Review / Edit</a>
                       </td>
                     </tr>
-                     
                   </tbody>
 				  
 				 
@@ -99,7 +108,6 @@
           </div>
 
       <div class="col-sm-4">
-          
               <h2 class="form-header">Document Upload</h2>
               <div class="form-group">
                 <div class="d-flex flex-row-reverse">

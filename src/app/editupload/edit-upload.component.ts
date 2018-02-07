@@ -61,7 +61,6 @@ export class EditUploadComponent implements OnInit {
 
   ngOnInit() {
     this.windowUrl = configs.origin;
-    
     this.doctypeService();
     this.CollectData = uploadModel;
     
@@ -111,6 +110,7 @@ validation(){
       }
       else{
       this.filterItemss = this.passData.hostAppList;
+      this.selectedItem = this.passData.docTypeID;
       }
 		  //this.filterItemss = this.passData.hostAppList;
 		    if (val === 1) {
@@ -321,8 +321,16 @@ validation(){
     this.CollectData.uploadedDate = curDate;
     this.CollectData.hostAppList = [];
     this.CollectData.hostAppList = this.filterItemss;
-    this.CollectData.docTypeID = this.selectedItem;
 
+    if(!this.selectedItem){
+      this.CollectData.docTypeID = this.passData.docTypeID;
+      this.CollectData.docTypeName = this.passData.docTypeName;
+    }else{
+      this.CollectData.docTypeID = this.selectedItem;
+      this.CollectData.docTypeName = this.selectedItem;
+    }
+
+    console.log(this.CollectData);
     if (this.NewUploadData.hostAppList != false) {
     if (this.passData.checkFile === true) {
         this._serveEdit.sendResponse(this.CollectData).subscribe(

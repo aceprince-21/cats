@@ -199,6 +199,7 @@
           <select class="custom-select col-lg-6" [(ngModel)]="selectedItem" #doctypes (ngModelChange)="CollectData.docTypeID = selectedItem; NewUploadData.docTypeID  = true" >   
             <option *ngFor = "let item of getDocType; let i = index" [ngValue]="item.docTypeID" >{{item.docTypeName}}</option>
           </select>
+          
           <br/>
           <span class="message">Please select any one option</span>
          </div>

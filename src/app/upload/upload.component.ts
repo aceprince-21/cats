@@ -28,6 +28,7 @@ export class UploadComponent implements OnInit {
   public ErrorMsg;
   public UploadedDate = new Date(Date.now());
   public getUploadedDate:any = '';
+  public getnewUploadedDate:any ='';
   public getDocTypes;
   public getStatus;
   public selectedItems = '';
@@ -42,6 +43,8 @@ export class UploadComponent implements OnInit {
   public uploaderCws = '';
   public getuploaderCws = '';
   public filterItems;
+  isDesc;
+  column;
   constructor(private modalService:NgbModal, public _serv: UploadService, public _serveEdit: EdituploadService, public route: ActivatedRoute, public router: Router) { }
   
   options: DatepickerOptions = {
@@ -130,11 +133,17 @@ search(){
   this.getselectedItems= this.selectedItems;
   this.getuploaderCws = this.uploaderCws;
   this.getdocumentName = this.documentName;
-  strr = new Date(this.UploadedDate).getTime();
-  res = strr.toString().substring(0, 6);
-  this.getUploadedDate = parseInt(res);
+  if(this.getnewUploadedDate === ''){
+    this.getUploadedDate = '';
+  }
+  else{
+    this.getUploadedDate = this.getnewUploadedDate;
+  }
   this.getselectedStatus = this.selectedStatus;
-  console.log(this.getUploadedDate);
+}
+
+SelectDate(){
+  this.getnewUploadedDate = this.CurrentDates(this.UploadedDate, '-');
 }
 
 reset() {
@@ -148,6 +157,7 @@ reset() {
   this.getuploaderCws = '';
   this.getdocumentName = '';
   this.getUploadedDate = '';
+  this.getnewUploadedDate = '';
   this.getselectedStatus = '';
 }
 
@@ -164,6 +174,43 @@ getDismissReason(reason: any): string {
     return  `with: ${reason}`;
   }
 }
+
+CurrentDates(sym, sel) {
+  const Months = configs.Months;
+  let getMontValue:any;
+  const getNewDate = sym.toString().split(' ');
+  const getMonth =  getNewDate[1].toLowerCase();
+  const getDay =  getNewDate[2];
+  const getYear =  getNewDate[3];
+  for(let i=0; i<Months.length; i++){
+      if(getMonth === Months[i]){
+        getMontValue = i+1;
+      }
+  }
+  if(getMontValue.toString.length === 1){
+    getMontValue = '0'+getMontValue;
+  }
+  return getYear+sel+getMontValue+sel+getDay;
+}
+
+
+sort(property){
+  this.isDesc = !this.isDesc; //change the direction    
+  this.column = property;
+  let direction = this.isDesc ? 1 : -1;
+
+  this.getData.sort(function(a, b){
+      if(a[property] < b[property]){
+          return -1 * direction;
+      }
+      else if( a[property] > b[property]){
+          return 1 * direction;
+      }
+      else{
+          return 0;
+      }
+  });
+};
 
 
 

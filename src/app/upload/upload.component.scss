@@ -5,6 +5,12 @@
     margin: 0;
     opacity: 0;
 }
+.thead-light{
+    .fa{
+        margin: 5px 0 0 0;
+    }
+}
+
 
 .custom-file-control {
     position: absolute;
@@ -158,4 +164,6 @@
     span{
         float:left;
     }
+
+    
 }
